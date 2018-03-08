@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCard3", "MyCard3\MyCard3.csproj", "{B8BE5493-94B9-4D4C-974A-81FA503D9E55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyCard3.Tests", "MyCard3.Tests\MyCard3.Tests.csproj", "{74F19DCD-2E9A-41E1-9124-3C6B45D4CDEC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8BE5493-94B9-4D4C-974A-81FA503D9E55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8BE5493-94B9-4D4C-974A-81FA503D9E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8BE5493-94B9-4D4C-974A-81FA503D9E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8BE5493-94B9-4D4C-974A-81FA503D9E55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74F19DCD-2E9A-41E1-9124-3C6B45D4CDEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74F19DCD-2E9A-41E1-9124-3C6B45D4CDEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74F19DCD-2E9A-41E1-9124-3C6B45D4CDEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74F19DCD-2E9A-41E1-9124-3C6B45D4CDEC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {259525B0-B4A9-4D5D-AB70-7378B530BD41}
+	EndGlobalSection
+EndGlobal
