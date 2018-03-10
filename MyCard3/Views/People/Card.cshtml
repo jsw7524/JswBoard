@@ -1,0 +1,74 @@
+﻿@model MyCard3.Models.Person
+
+@{
+    ViewBag.Title = "Card";
+}
+
+<h2>Card</h2>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+            <div class="card" style="width:300px">
+                <img class="card-img-top" src="~/Content/img_avatar1.png" alt="Card image" style="width:100%">
+                <a href="#" class="btn btn-primary btn-block">See Profile</a>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.DisplayNameFor(model => model.Name)
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DisplayFor(model => model.Name)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.DisplayNameFor(model => model.Gender)
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DisplayFor(model => model.Gender)
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.DisplayNameFor(model => model.Birthday)
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DisplayFor(model => model.Birthday)
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.DisplayNameFor(model => model.Mail)
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DisplayFor(model => model.Mail)
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="col-md-4">
+                            @Html.DisplayNameFor(model => model.Description)
+                        </div>
+                        <div class="col-md-4">
+                            @Html.DisplayFor(model => model.Description)
+                        </div>
+                    </div>
+
+                    @*<h4 class="card-title">John Doe</h4>
+        <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>*@
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+</div>
