@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MyCard3.Models;
+using Microsoft.AspNet.Identity;
 
 namespace MyCard3.Controllers
 {
@@ -11,6 +12,7 @@ namespace MyCard3.Controllers
     {
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
+
             int articleId = int.Parse((string)httpContext.Request.RequestContext.RouteData.Values["id"]);
             Article article;
             string pMail ;

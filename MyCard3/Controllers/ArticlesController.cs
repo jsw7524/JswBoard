@@ -18,7 +18,7 @@ namespace MyCard3.Controllers
         [Authorize]
         public ActionResult Index(int? boardId=1)
         {
-            var articleSet = db.ArticleSet.AsNoTracking();
+            var articleSet = db.ArticleSet.AsNoTracking().Where(a => a.BoardId == boardId);
             ViewData["BoardName"] = articleSet.FirstOrDefault().Board.Name;
             ViewData["BoardId"] = articleSet.FirstOrDefault().Board.Id;
             return View(articleSet.ToList());

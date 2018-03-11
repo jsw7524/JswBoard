@@ -35,6 +35,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BootstrapMvc.Bootstrap3, Version=2.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BootstrapMvc.Bootstrap3.2.7.0\lib\net451\BootstrapMvc.Bootstrap3.dll</HintPath>
+    </Reference>
+    <Reference Include="BootstrapMvc.Bootstrap3Mvc5, Version=2.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BootstrapMvc.Bootstrap3Mvc5.2.3.1\lib\net451\BootstrapMvc.Bootstrap3Mvc5.dll</HintPath>
+    </Reference>
+    <Reference Include="BootstrapMvc.Bootstrap4, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BootstrapMvc.Bootstrap4.1.2.0\lib\net451\BootstrapMvc.Bootstrap4.dll</HintPath>
+    </Reference>
+    <Reference Include="BootstrapMvc.Core, Version=2.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BootstrapMvc.Core.2.3.0\lib\net451\BootstrapMvc.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="BootstrapMvc.Mvc5, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\BootstrapMvc.Mvc5.2.2.0\lib\net451\BootstrapMvc.Mvc5.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.2.0\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
