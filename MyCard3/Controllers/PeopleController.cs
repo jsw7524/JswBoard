@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using MyCard3.Models;
 
 namespace MyCard3.Controllers
@@ -18,8 +20,35 @@ namespace MyCard3.Controllers
 
         public ActionResult Card()
         {
-            return View(db.People.FirstOrDefault());
+            string tmp=User.Identity.GetUserId();
+            return View(db.People.AsNoTracking().Where(p=>p.authenticationId==tmp).FirstOrDefault());
         }
+
+        public ActionResult FileUpload(HttpPostedFileBase file)
+        {
+            if (file != null)
+            {
+                ///string pic = System.IO.Path.GetFileName(file.FileName);
+                string path = System.IO.Path.Combine(
+                                       Server.MapPath("~/Content/Images/"), "Photo"+User.Identity.GetUserId() + ".png");
+                // file is uploaded
+                file.SaveAs(path);
+
+                // save the image path path to the database or you can send image 
+                // directly to database
+                // in-case if you want to store byte[] ie. for DB
+                //using (MemoryStream ms = new MemoryStream())
+                //{
+                //    file.InputStream.CopyTo(ms);
+                //    byte[] array = ms.GetBuffer();
+                //}
+
+            }
+            // after successfully uploading redirect the user
+            return RedirectToAction("Card", "People");
+        }
+
+
 
         public ActionResult Index()
         {

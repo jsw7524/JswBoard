@@ -16,7 +16,7 @@ namespace MyCard3.Controllers
             MyCardContainer db = new MyCardContainer();
 
             Article article =db.ArticleSet.Find(articleId);
-            string pMail = (db.People.Where(p => p.Id == article.PersonId).FirstOrDefault()).Mail;
+            string pMail = (db.People.Where(p => p.Id == article.PersonId).FirstOrDefault()).authenticationId;
 
             if (pMail!=filterContext.HttpContext.User.Identity.Name)
             {

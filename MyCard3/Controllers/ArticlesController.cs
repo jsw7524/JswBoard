@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using MyCard3.Models;
+
 
 namespace MyCard3.Controllers
 {
@@ -18,7 +20,7 @@ namespace MyCard3.Controllers
         [Authorize]
         public ActionResult Index(int? boardId=1)
         {
-            var articleSet = db.ArticleSet.AsNoTracking().Where(a => a.BoardId == boardId);
+            var articleSet = db.ArticleSet.AsNoTracking().Where(a => a.BoardId == boardId).ToList();
             ViewData["BoardName"] = articleSet.FirstOrDefault().Board.Name;
             ViewData["BoardId"] = articleSet.FirstOrDefault().Board.Id;
             return View(articleSet.ToList());
@@ -60,11 +62,12 @@ namespace MyCard3.Controllers
             if (ModelState.IsValid)
             {
                 article.Time = DateTime.Now;
-                article.PersonId = db.People.Where(p => p.Mail == User.Identity.Name).FirstOrDefault().Id;
+                var authenticationId = User.Identity.GetUserId();
+                article.PersonId = db.People.Where(p => p.authenticationId == authenticationId).FirstOrDefault().Id;
                 article.BoardId = boardId;
                 db.ArticleSet.Add(article);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new { boardId= article.BoardId});
             }
 
             //ViewBag.BoardId = new SelectList(db.BoardSet, "Id", "Name", article.BoardId);

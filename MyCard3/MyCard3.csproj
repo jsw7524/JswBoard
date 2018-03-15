@@ -238,6 +238,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MyCard.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MyCard.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Person.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -251,11 +256,19 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\Photo9a5e1425-eae5-4007-8e7b-cb4bb1e672ce.png" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\Test.html" />
     <Content Include="Content\img_avatar1.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="ApplicationInsights.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="Models\MyCard.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MyCard.Designer.cs</LastGenOutput>
+    </EntityDeploy>
     <Content Include="Models\Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
@@ -266,13 +279,7 @@
       <LastGenOutput>Model1.cs</LastGenOutput>
       <DependentUpon>MyCard.edmx</DependentUpon>
     </Content>
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <EntityDeploy Include="Models\MyCard.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>MyCard.Designer.cs</LastGenOutput>
-    </EntityDeploy>
+    <Content Include="Models\MyCard.edmx.sql" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -388,6 +395,7 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Comments\CommentList.cshtml" />
+    <Content Include="Views\Comments\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using MyCard3.Models;
 
 namespace MyCard3.Controllers
@@ -36,32 +37,33 @@ namespace MyCard3.Controllers
         //    return View(comment);
         //}
 
-        //// GET: Comments/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.ArticleId = new SelectList(db.ArticleSet, "Id", "Title");
-        //    ViewBag.PersonId = new SelectList(db.People, "Id", "Name");
-        //    return View();
-        //}
+        // GET: Comments/Create
+        public ActionResult Create(int articleId = 1,int personId=1)
+        {
+            ViewBag.ArticleId = articleId;
+            ViewBag.PersonId = personId;
+            return View();
+        }
 
-        //// POST: Comments/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "Id,Opinion,ArticleId,PersonId")] Comment comment)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.CommentSet.Add(comment);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
+        // POST: Comments/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create([Bind(Include = "Id,Opinion,ArticleId,PersonId")] Comment comment, int articleId = 99)
+        {
+            if (ModelState.IsValid)
+            {
+                comment.ArticleId = articleId;
+                Person p = Session["CurrentUserData"] as Person;
+                comment.PersonId = p.Id;
+                db.CommentSet.Add(comment);
+                db.SaveChanges();
+                return RedirectToAction("Details", "Articles", new { Id = articleId });
+            }
+            return RedirectToAction("Details", "Articles",new { Id= articleId });
 
-        //    ViewBag.ArticleId = new SelectList(db.ArticleSet, "Id", "Title", comment.ArticleId);
-        //    ViewBag.PersonId = new SelectList(db.People, "Id", "Name", comment.PersonId);
-        //    return View(comment);
-        //}
+        }
 
         //// GET: Comments/Edit/5
         //public ActionResult Edit(int? id)

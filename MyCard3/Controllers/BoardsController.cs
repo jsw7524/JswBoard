@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using MyCard3.Models;
 
 namespace MyCard3.Controllers
@@ -17,6 +18,12 @@ namespace MyCard3.Controllers
         // GET: Boards
         public ActionResult Index()
         {
+            //////////////
+            Session["CurrentUserAuthenticationID"] = User.Identity.GetUserId();
+            string tmp = Session["CurrentUserAuthenticationID"] as string;
+            Session["CurrentUserData"] = db.People.AsNoTracking().Where(p => p.authenticationId == tmp).FirstOrDefault();
+            //////////////
+
             return View(db.BoardSet.ToList());
         }
 
@@ -51,6 +58,8 @@ namespace MyCard3.Controllers
             if (ModelState.IsValid)
             {
                 db.BoardSet.Add(board);
+                db.SaveChanges();
+                db.ArticleSet.Add(new Article() { Title = "版規", Time = DateTime.Now, BoardId = board.Id, PersonId = 1 });
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

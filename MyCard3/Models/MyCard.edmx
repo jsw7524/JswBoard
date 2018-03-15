@@ -35,7 +35,7 @@
     <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="64" />
     <Property Name="Gender" Type="bit" Nullable="false" />
     <Property Name="Birthday" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="Mail" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="authenticationId" Type="nvarchar" Nullable="false" MaxLength="128" />
     <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Picture" Type="varbinary(max)" Nullable="true" />
   </EntityType>
@@ -148,12 +148,12 @@
           <Property Name="Name" Type="String" Nullable="false" Unicode="true" MaxLength="64" />
           <Property Name="Gender" Type="Boolean" Nullable="false" />
           <Property Name="Birthday" Type="String" Nullable="false" />
-          <Property Name="Mail" Type="String" Nullable="false" Unicode="true" MaxLength="64" />
+          <Property Name="authenticationId" Type="String" Nullable="false" Unicode="true" MaxLength="128" />
           <Property Name="Description" Type="String" Nullable="true" Unicode="true" MaxLength="Max" />
           <Property Name="Picture" Type="Binary" Nullable="true" />
           <NavigationProperty Name="Article" Relationship="MyCard.PersonArticle" FromRole="Person" ToRole="Article" />
           <NavigationProperty Name="Comment" Relationship="MyCard.PersonComment" FromRole="Person" ToRole="Comment" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="Article">
           <Key>
             <PropertyRef Name="Id" />
@@ -248,7 +248,7 @@
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="Gender" ColumnName="Gender" />
           <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-          <ScalarProperty Name="Mail" ColumnName="Mail" />
+          <ScalarProperty Name="authenticationId" ColumnName="authenticationId" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Picture" ColumnName="Picture" />
         </MappingFragment>
@@ -307,7 +307,7 @@
       <Diagram DiagramId="47ecab7153e54fb19871c880a2148b5e" Name="Diagram1">
         <EntityTypeShape EntityType="MyCard.Person" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="MyCard.Article" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyCard.Board" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyCard.Board" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
         <EntityTypeShape EntityType="MyCard.Comment" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="MyCard.BoardArticle" ManuallyRouted="false" />
         <AssociationConnector Association="MyCard.PersonArticle" ManuallyRouted="false" />

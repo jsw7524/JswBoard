@@ -25,7 +25,7 @@ namespace MyCard3.Models
         public string Name { get; set; }
         public bool Gender { get; set; }
         public string Birthday { get; set; }
-        public string Mail { get; set; }
+        public string authenticationId { get; set; }
         public string Description { get; set; }
         public byte[] Picture { get; set; }
     

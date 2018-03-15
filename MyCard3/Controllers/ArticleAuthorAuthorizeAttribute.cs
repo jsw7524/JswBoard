@@ -15,14 +15,14 @@ namespace MyCard3.Controllers
 
             int articleId = int.Parse((string)httpContext.Request.RequestContext.RouteData.Values["id"]);
             Article article;
-            string pMail ;
+            string authenticationId;
             using (MyCardContainer db = new MyCardContainer())
             {
                 article = db.ArticleSet.Find(articleId);
-                pMail = (db.People.Where(p => p.Id == article.PersonId).FirstOrDefault()).Mail;
+                authenticationId = (db.People.Where(p => p.Id == article.PersonId).FirstOrDefault()).authenticationId;
             }
 
-            if (pMail == httpContext.User.Identity.Name)
+            if (authenticationId == httpContext.User.Identity.GetUserId())
             {
                 return true;
             }

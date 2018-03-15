@@ -147,7 +147,7 @@ namespace MyCard3.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(RegisterViewModel model, Person newUser)
         {
             if (ModelState.IsValid)
             {
@@ -155,6 +155,14 @@ namespace MyCard3.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+
+                    using (MyCardContainer db = new MyCardContainer())
+                    {
+                        newUser.authenticationId = user.Id;
+                        db.People.Add(newUser);
+                        db.SaveChanges();
+                    }
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -392,6 +400,8 @@ namespace MyCard3.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
+            Session.Remove("CurrentUserAuthenticationID");
+            Session.Remove("CurrentUserData");
             return RedirectToAction("Index", "Home");
         }
 
@@ -445,6 +455,8 @@ namespace MyCard3.Controllers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
+
+
             if (Url.IsLocalUrl(returnUrl))
             {
                 return Redirect(returnUrl);
