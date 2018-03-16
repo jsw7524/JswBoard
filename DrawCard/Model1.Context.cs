@@ -7,16 +7,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MyCard3.Models
+namespace DrawCard
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class MyCardContainer : DbContext
+    public partial class MyCardEntities : DbContext
     {
-        public MyCardContainer()
-            : base("name=MyCardContainer")
+        public MyCardEntities()
+            : base("name=MyCardEntities")
         {
         }
     
@@ -25,10 +25,7 @@ namespace MyCard3.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Person> People { get; set; }
-        public virtual DbSet<Article> ArticleSet { get; set; }
-        public virtual DbSet<Board> BoardSet { get; set; }
-        public virtual DbSet<Comment> CommentSet { get; set; }
-        public virtual DbSet<Match> Matches { get; set; }
+        public virtual DbSet<Matches> Matches { get; set; }
+        public virtual DbSet<People> People { get; set; }
     }
 }

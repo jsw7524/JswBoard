@@ -10,6 +10,8 @@
     <EntitySet Name="ArticleSet" EntityType="MyCard.Store.ArticleSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="BoardSet" EntityType="MyCard.Store.BoardSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CommentSet" EntityType="MyCard.Store.CommentSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Matches" EntityType="MyCard.Store.Matches" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Friends" EntityType="MyCard.Store.Friends" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="BoardArticle" Association="MyCard.Store.BoardArticle">
       <End Role="Board" EntitySet="BoardSet" />
       <End Role="Article" EntitySet="ArticleSet" />
@@ -25,6 +27,14 @@
     <AssociationSet Name="PersonComment" Association="MyCard.Store.PersonComment">
       <End Role="Person" EntitySet="People" />
       <End Role="Comment" EntitySet="CommentSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Friends_Person" Association="MyCard.Store.FK_Friends_Person">
+      <End Role="Person" EntitySet="People" />
+      <End Role="Friends" EntitySet="Friends" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Friends_Person1" Association="MyCard.Store.FK_Friends_Person1">
+      <End Role="Person1" EntitySet="People" />
+      <End Role="Friends" EntitySet="Friends" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="People">
@@ -65,6 +75,24 @@
     <Property Name="Opinion" Type="nvarchar(max)" Nullable="true" />
     <Property Name="ArticleId" Type="int" Nullable="false" />
     <Property Name="PersonId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Matches">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="A_ID" Type="int" Nullable="false" />
+    <Property Name="B_ID" Type="int" Nullable="false" />
+    <Property Name="A_OK" Type="bit" Nullable="true" />
+    <Property Name="B_OK" Type="bit" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Friends">
+    <Key>
+      <PropertyRef Name="Person1_Id" />
+      <PropertyRef Name="Person2_Id" />
+    </Key>
+    <Property Name="Person1_Id" Type="int" Nullable="false" />
+    <Property Name="Person2_Id" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="BoardArticle">
     <End Role="Board" Type="MyCard.Store.BoardSet" Multiplicity="1" />
@@ -114,6 +142,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_Friends_Person">
+    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
+    <End Role="Friends" Type="MyCard.Store.Friends" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Friends">
+        <PropertyRef Name="Person1_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Friends_Person1">
+    <End Role="Friends" Type="MyCard.Store.Friends" Multiplicity="*" />
+    <End Role="Person1" Type="MyCard.Store.People" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Person1">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Friends">
+        <PropertyRef Name="Person2_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -139,6 +191,11 @@
             <End Role="Person" EntitySet="People" />
             <End Role="Comment" EntitySet="CommentSet" />
           </AssociationSet>
+          <AssociationSet Name="Friends" Association="MyCard.Friends">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Person1" EntitySet="People" />
+          </AssociationSet>
+          <EntitySet Name="Matches" EntityType="MyCard.Match" />
         </EntityContainer>
         <EntityType Name="Person">
           <Key>
@@ -153,6 +210,8 @@
           <Property Name="Picture" Type="Binary" Nullable="true" />
           <NavigationProperty Name="Article" Relationship="MyCard.PersonArticle" FromRole="Person" ToRole="Article" />
           <NavigationProperty Name="Comment" Relationship="MyCard.PersonComment" FromRole="Person" ToRole="Comment" />
+          <NavigationProperty Name="Person2" Relationship="MyCard.Friends" FromRole="Person" ToRole="Person1" />
+          <NavigationProperty Name="Person1" Relationship="MyCard.Friends" FromRole="Person1" ToRole="Person" />
           </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -235,6 +294,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="Friends">
+          <End Type="MyCard.Person" Role="Person" Multiplicity="*" />
+          <End Type="MyCard.Person" Role="Person1" Multiplicity="*" />
+        </Association>
+        <EntityType Name="Match">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="A_ID" Type="Int32" Nullable="false" />
+          <Property Name="B_ID" Type="Int32" Nullable="false" />
+          <Property Name="A_OK" Type="Boolean" Nullable="true" />
+          <Property Name="B_OK" Type="Boolean" Nullable="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -284,6 +357,25 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Matches">
+      <EntityTypeMapping TypeName="IsTypeOf(MyCard.Match)">
+        <MappingFragment StoreEntitySet="Matches">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="A_ID" ColumnName="A_ID" />
+          <ScalarProperty Name="B_ID" ColumnName="B_ID" />
+          <ScalarProperty Name="A_OK" ColumnName="A_OK" />
+          <ScalarProperty Name="B_OK" ColumnName="B_OK" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Friends" TypeName="MyCard.Friends" StoreEntitySet="Friends">
+      <EndProperty Name="Person">
+        <ScalarProperty Name="Id" ColumnName="Person1_Id" />
+      </EndProperty>
+      <EndProperty Name="Person1">
+        <ScalarProperty Name="Id" ColumnName="Person2_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
   </edmx:Runtime>
@@ -313,6 +405,8 @@
         <AssociationConnector Association="MyCard.PersonArticle" ManuallyRouted="false" />
         <AssociationConnector Association="MyCard.ArticleComment" ManuallyRouted="false" />
         <AssociationConnector Association="MyCard.PersonComment" ManuallyRouted="false" />
+        <AssociationConnector Association="MyCard.Friends" />
+        <EntityTypeShape EntityType="MyCard.Match" Width="1.5" PointX="7.5" PointY="1.25" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

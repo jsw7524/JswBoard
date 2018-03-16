@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/13/2018 21:09:13
+-- Date Created: 03/16/2018 22:14:02
 -- Generated from EDMX file: D:\SourceCode\CSharp\MyCard3\MyCard3\Models\MyCard.edmx
 -- --------------------------------------------------
 
@@ -29,6 +29,12 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_PersonComment]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CommentSet] DROP CONSTRAINT [FK_PersonComment];
 GO
+IF OBJECT_ID(N'[dbo].[FK_Friends_Person]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Friends] DROP CONSTRAINT [FK_Friends_Person];
+GO
+IF OBJECT_ID(N'[dbo].[FK_Friends_Person1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Friends] DROP CONSTRAINT [FK_Friends_Person1];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -45,6 +51,9 @@ IF OBJECT_ID(N'[dbo].[BoardSet]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[CommentSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CommentSet];
+GO
+IF OBJECT_ID(N'[dbo].[Friends]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Friends];
 GO
 
 -- --------------------------------------------------
@@ -90,6 +99,23 @@ CREATE TABLE [dbo].[CommentSet] (
 );
 GO
 
+-- Creating table 'Matches'
+CREATE TABLE [dbo].[Matches] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [A_ID] int  NOT NULL,
+    [B_ID] int  NOT NULL,
+    [A_OK] bit  NULL,
+    [B_OK] bit  NULL
+);
+GO
+
+-- Creating table 'Friends'
+CREATE TABLE [dbo].[Friends] (
+    [Person1_Id] int  NOT NULL,
+    [Person2_Id] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -116,6 +142,18 @@ GO
 ALTER TABLE [dbo].[CommentSet]
 ADD CONSTRAINT [PK_CommentSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Matches'
+ALTER TABLE [dbo].[Matches]
+ADD CONSTRAINT [PK_Matches]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Person1_Id], [Person2_Id] in table 'Friends'
+ALTER TABLE [dbo].[Friends]
+ADD CONSTRAINT [PK_Friends]
+    PRIMARY KEY CLUSTERED ([Person1_Id], [Person2_Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -180,6 +218,30 @@ GO
 CREATE INDEX [IX_FK_PersonComment]
 ON [dbo].[CommentSet]
     ([PersonId]);
+GO
+
+-- Creating foreign key on [Person1_Id] in table 'Friends'
+ALTER TABLE [dbo].[Friends]
+ADD CONSTRAINT [FK_Friends_Person]
+    FOREIGN KEY ([Person1_Id])
+    REFERENCES [dbo].[People]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating foreign key on [Person2_Id] in table 'Friends'
+ALTER TABLE [dbo].[Friends]
+ADD CONSTRAINT [FK_Friends_Person1]
+    FOREIGN KEY ([Person2_Id])
+    REFERENCES [dbo].[People]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_Friends_Person1'
+CREATE INDEX [IX_FK_Friends_Person1]
+ON [dbo].[Friends]
+    ([Person2_Id]);
 GO
 
 -- --------------------------------------------------

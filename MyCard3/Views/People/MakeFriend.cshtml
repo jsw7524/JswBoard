@@ -1,0 +1,74 @@
+﻿@model MyCard3.Models.Person
+
+@{
+    ViewBag.Title = "MakeFriend";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>MakeFriend</h2>
+
+<div>
+    <h4>Person</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Birthday)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Birthday)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.authenticationId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.authenticationId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Picture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Picture)
+        </dd>
+
+    </dl>
+    @using(Html.BeginForm())
+    {
+       // @Html.ActionLink("MakeFriend", "MakeFriend",new { aId = Model.authenticationId})
+       <input type="hidden" name="aId" value="@Model.authenticationId" />
+       <input type="submit" value="MakeFriend"/>
+    }
+
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -48,7 +48,25 @@ namespace MyCard3.Controllers
             return RedirectToAction("Card", "People");
         }
 
+        public ActionResult MakeFriend()
+        {
+            return View(db.People.Where(p=>p.Name=="netsphere").FirstOrDefault());
+        }
 
+        [HttpPost]
+        public ActionResult MakeFriend(string aId)
+        {
+            var uId=User.Identity.GetUserId();
+            Person me = db.People.Where(p => p.authenticationId == uId).FirstOrDefault();
+            Person friend = db.People.Where(p => p.authenticationId == aId).FirstOrDefault();
+
+            me.Person1.Add(friend);
+            friend.Person1.Add(me);
+
+            db.SaveChanges();
+
+            return View(db.People.Where(p => p.Name == "netsphere").FirstOrDefault());
+        }
 
         public ActionResult Index()
         {
