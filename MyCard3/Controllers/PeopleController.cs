@@ -18,13 +18,30 @@ namespace MyCard3.Controllers
 
         // GET: People
 
-        public ActionResult Card()
+        public ActionResult Card(int Id=0)
         {
-            string tmp=User.Identity.GetUserId();
-            return View(db.People.AsNoTracking().Where(p=>p.authenticationId==tmp).FirstOrDefault());
+            Person currentUser = Session["CurrentUserData"] as Person;
+            if (Id== 0)
+            {
+                return View(db.People.AsNoTracking().Where(p=>p.Id== currentUser.Id).FirstOrDefault());
+            }
+            else
+            {
+                if (db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().Person2.Select(p=>p.Id).Contains(Id))
+                {
+                    return View(db.People.AsNoTracking().Where(p => p.Id == Id).FirstOrDefault());
+                }
+            }
+            return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
+        
+        //public ActionResult Card(int FriendId)
+        //{
+        //    string tmp = User.Identity.GetUserId();
+        //    return View(db.People.AsNoTracking().Where(p => p.Id == FriendId).FirstOrDefault());
+        //}
 
-        public ActionResult FileUpload(HttpPostedFileBase file)
+        public ActionResult PhotoUpload(HttpPostedFileBase file)
         {
             if (file != null)
             {
@@ -50,22 +67,34 @@ namespace MyCard3.Controllers
 
         public ActionResult MakeFriend()
         {
-            return View(db.People.Where(p=>p.Name=="netsphere").FirstOrDefault());
+            Person currentUser = Session["CurrentUserData"] as Person;
+            int partnerId = db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().B_ID;
+            return View(db.People.Where(p=>p.Id== partnerId).FirstOrDefault());
         }
 
         [HttpPost]
-        public ActionResult MakeFriend(string aId)
+        public ActionResult MakeFriend(string message="")
         {
-            var uId=User.Identity.GetUserId();
-            Person me = db.People.Where(p => p.authenticationId == uId).FirstOrDefault();
-            Person friend = db.People.Where(p => p.authenticationId == aId).FirstOrDefault();
-
-            me.Person1.Add(friend);
-            friend.Person1.Add(me);
-
+            Person currentUser = Session["CurrentUserData"] as Person;
+            int partnerId = db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().B_ID;
+            Person me = db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault();
+            Person friend = db.People.Where(p => p.Id == partnerId).FirstOrDefault();
+            db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().A_OK = true;
+            db.Matches.Where(p => p.A_ID == friend.Id).FirstOrDefault().B_OK = true;
+            if(true==db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().B_OK)
+            {
+                me.Person1.Add(friend);
+                friend.Person1.Add(me);
+            }
             db.SaveChanges();
+            return View(db.People.Where(p => p.Id == partnerId).FirstOrDefault());
+        }
 
-            return View(db.People.Where(p => p.Name == "netsphere").FirstOrDefault());
+        public ActionResult ListFriends()
+        {
+            Person currentUser = Session["CurrentUserData"] as Person;
+            Person me = db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault();
+            return View(me.Person2);
         }
 
         public ActionResult Index()

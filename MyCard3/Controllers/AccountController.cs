@@ -461,7 +461,7 @@ namespace MyCard3.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Boards");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

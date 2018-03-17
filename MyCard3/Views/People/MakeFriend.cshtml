@@ -62,8 +62,7 @@
     </dl>
     @using(Html.BeginForm())
     {
-       // @Html.ActionLink("MakeFriend", "MakeFriend",new { aId = Model.authenticationId})
-       <input type="hidden" name="aId" value="@Model.authenticationId" />
+       <input type="hidden" name="message" value="Hello" />
        <input type="submit" value="MakeFriend"/>
     }
 

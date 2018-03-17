@@ -14,7 +14,7 @@
                 @*<img class="card-img-top" src="~/Content/img_avatar1.png" alt="Card image" style="width:50%">*@
                 <img class="card-img-top" src="@("/Content/Images/Photo"+User.Identity.GetUserId()+".png")" alt="Card image" style="width:50%">
                 @*------------------------*@
-                @using (Html.BeginForm("FileUpload", "People", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @using (Html.BeginForm("PhotoUpload", "People", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     <label for="file">Upload Image:</label>
                     <input type="file" name="file" id="file" style="width: 100%;" />
