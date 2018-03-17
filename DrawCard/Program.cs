@@ -17,25 +17,16 @@ namespace DrawCard
                 var people = db.People.ToList();
                 var matchesDB = db.Matches;
 
-                var matches = people.Select(p => new { Match = new Matches() { A_ID = p.Id, B_ID = p.Id, A_OK = false, B_OK = false }, Gender = p.Gender }).ToList();
-
+                var matches = people.Select(p => new { Match = new Matches() { A_ID = p.Id, B_ID = p.Id, A_OK = false, B_OK = false }, Gender = p.Gender }).OrderBy(m=>Guid.NewGuid()).OrderBy(m=>m.Gender).ToList();
                 int count = matches.Count();
-                Random rnd = new Random(Guid.NewGuid().GetHashCode());
+                int left = 0, right = count - 1;
 
-                foreach (var m in matches)
+                while (left < right)
                 {
-                    int index = rnd.Next(1, count);
-                    //for (int t = 0; t < 2; t++)
-                    //{
-                    //    if (m.Gender != matches[index].Gender)
-                    //    {
-                    //        index = rnd.Next(1, count);
-                    //        break;
-                    //    }
-                    //}
-                    int tmp = m.Match.B_ID;
-                    m.Match.B_ID = matches[index].Match.B_ID;
-                    matches[index].Match.B_ID = tmp;
+                    matches[left].Match.B_ID = matches[right].Match.A_ID;
+                    matches[right].Match.B_ID = matches[left].Match.A_ID;
+                    left++;
+                    right--;
                 }
 
 
