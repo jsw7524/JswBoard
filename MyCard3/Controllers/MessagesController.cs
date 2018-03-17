@@ -15,9 +15,11 @@ namespace MyCard3.Controllers
         private MyCardContainer db = new MyCardContainer();
 
         // GET: Messages
-        public ActionResult Index()
+        public ActionResult Index(int Id = 0)
         {
-            var messages = db.Messages.Include(m => m.SendPerson);
+            Person me = Session["CurrentUserData"] as Person;
+            var messages = db.Messages.Where(m => ((m.SendPersonId == Id) && (m.ReceivePerson.Id == me.Id)) || ((m.SendPersonId == me.Id) && (m.ReceivePerson.Id == Id)));
+            ViewBag.SendMessageToID = Id;
             return View(messages.ToList());
         }
 
@@ -37,10 +39,11 @@ namespace MyCard3.Controllers
         }
 
         // GET: Messages/Create
-        public ActionResult Create()
+        public ActionResult Create(int id = 0)
         {
-            ViewBag.SendPersonId = new SelectList(db.People, "Id", "Name");
-            return View();
+            Person friend = db.People.Where(p => p.Id == id).FirstOrDefault();
+            TempData["ToFriend"] = friend;
+            return View(new Message() { ReceivePerson = friend });
         }
 
         // POST: Messages/Create
@@ -52,6 +55,13 @@ namespace MyCard3.Controllers
         {
             if (ModelState.IsValid)
             {
+                Person me = Session["CurrentUserData"] as Person;
+                message.SendPersonId = me.Id;
+                message.SendPerson = db.People.Where(p => p.Id == me.Id).FirstOrDefault();
+                Person friend = TempData["ToFriend"] as Person;
+                message.ReceivePerson = db.People.Where(p => p.Id == friend.Id).FirstOrDefault();
+                message.Time = DateTime.Now;
+
                 db.Messages.Add(message);
                 db.SaveChanges();
                 return RedirectToAction("Index");

@@ -31,7 +31,12 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Content)
+            @*@Html.DisplayFor(model => model.Content)*@
+            @*@Html.TextAreaFor(model => model.Content)*@
+            <div name="ArticleContent">
+                @Model.Content
+            </div>
+
         </dd>
 
         <dt>

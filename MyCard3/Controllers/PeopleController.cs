@@ -69,7 +69,7 @@ namespace MyCard3.Controllers
         {
             Person currentUser = Session["CurrentUserData"] as Person;
             int partnerId = db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().B_ID;
-            return View(db.People.Where(p=>p.Id== partnerId).FirstOrDefault());
+            return View("Card",db.People.Where(p=>p.Id== partnerId).FirstOrDefault());
         }
 
         [HttpPost]

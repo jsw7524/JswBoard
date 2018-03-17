@@ -60,12 +60,18 @@
         </dd>
 
     </dl>
-    @using(Html.BeginForm())
-    {
-       <input type="hidden" name="message" value="Hello" />
-       <input type="submit" value="MakeFriend"/>
-    }
 
+    @{
+        @using Microsoft.AspNet.Identity;
+        if (User.Identity.GetUserId() != Model.authenticationId)
+        {
+            @using (Html.BeginForm())
+            {
+                <input type="hidden" name="message" value="Hello" />
+                <input type="submit" value="MakeFriend" />
+            }
+        }
+    }
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |

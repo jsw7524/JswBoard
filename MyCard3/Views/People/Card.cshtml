@@ -12,17 +12,31 @@
         <div class="col-md-8">
             <div class="card" style="width:600px">
                 @*<img class="card-img-top" src="~/Content/img_avatar1.png" alt="Card image" style="width:50%">*@
-                <img class="card-img-top" src="@("/Content/Images/Photo"+User.Identity.GetUserId()+".png")" alt="Card image" style="width:50%">
+                <img class="card-img-top" src="@("/Content/Images/Photo"+Model.authenticationId+".png")" alt="Card image" style="width:50%">
                 @*------------------------*@
-                @using (Html.BeginForm("PhotoUpload", "People", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                @if (User.Identity.GetUserId() == Model.authenticationId)
                 {
-                    <label for="file">Upload Image:</label>
-                    <input type="file" name="file" id="file" style="width: 100%;" />
-                    <input type="submit" value="Upload" class="submit" />
-                }
-                @*-----------------------*@
+                    using (Html.BeginForm("PhotoUpload", "People", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    {
+                        <label for="file">Upload Image:</label>
+                        <input type="file" name="file" id="file" style="width: 100%;" />
+                        <input type="submit" value="Upload" class="submit" />
 
-                <a href="#" class="btn btn-primary btn-block">See Profile</a>
+                    }
+                }
+                else
+                {
+
+                    using (Html.BeginForm())
+                    {
+                        <input type="hidden" name="message" value="Hello" />
+                        <input type="submit" value="MakeFriend" class="btn btn-primary btn-block"/>
+                    }
+
+                    @*<a href="#" class="btn btn-primary btn-block">See Profile</a>*@
+                }
+
+
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4">
@@ -51,8 +65,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="row">
                         <div class="col-md-4">
                             @Html.DisplayNameFor(model => model.Description)
@@ -64,7 +76,6 @@
 
                     @*<h4 class="card-title">John Doe</h4>
                         <p class="card-text">Some example text some example text. John Doe is an architect and engineer</p>*@
-
                 </div>
             </div>
         </div>
