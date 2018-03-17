@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/16/2018 22:14:02
+-- Date Created: 03/18/2018 00:22:46
 -- Generated from EDMX file: D:\SourceCode\CSharp\MyCard3\MyCard3\Models\MyCard.edmx
 -- --------------------------------------------------
 
@@ -35,6 +35,12 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_Friends_Person1]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Friends] DROP CONSTRAINT [FK_Friends_Person1];
 GO
+IF OBJECT_ID(N'[dbo].[FK_SendMessage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_SendMessage];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ReceiveMessage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_ReceiveMessage];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -51,6 +57,12 @@ IF OBJECT_ID(N'[dbo].[BoardSet]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[CommentSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CommentSet];
+GO
+IF OBJECT_ID(N'[dbo].[Matches]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Matches];
+GO
+IF OBJECT_ID(N'[dbo].[Messages]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Messages];
 GO
 IF OBJECT_ID(N'[dbo].[Friends]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Friends];
@@ -109,6 +121,16 @@ CREATE TABLE [dbo].[Matches] (
 );
 GO
 
+-- Creating table 'Messages'
+CREATE TABLE [dbo].[Messages] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [SendPersonId] int  NOT NULL,
+    [MessageContent] nvarchar(max)  NULL,
+    [Time] datetime  NOT NULL,
+    [ReceivePerson_Id] int  NOT NULL
+);
+GO
+
 -- Creating table 'Friends'
 CREATE TABLE [dbo].[Friends] (
     [Person1_Id] int  NOT NULL,
@@ -147,6 +169,12 @@ GO
 -- Creating primary key on [Id] in table 'Matches'
 ALTER TABLE [dbo].[Matches]
 ADD CONSTRAINT [PK_Matches]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Messages'
+ALTER TABLE [dbo].[Messages]
+ADD CONSTRAINT [PK_Messages]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -242,6 +270,36 @@ GO
 CREATE INDEX [IX_FK_Friends_Person1]
 ON [dbo].[Friends]
     ([Person2_Id]);
+GO
+
+-- Creating foreign key on [SendPersonId] in table 'Messages'
+ALTER TABLE [dbo].[Messages]
+ADD CONSTRAINT [FK_SendMessage]
+    FOREIGN KEY ([SendPersonId])
+    REFERENCES [dbo].[People]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_SendMessage'
+CREATE INDEX [IX_FK_SendMessage]
+ON [dbo].[Messages]
+    ([SendPersonId]);
+GO
+
+-- Creating foreign key on [ReceivePerson_Id] in table 'Messages'
+ALTER TABLE [dbo].[Messages]
+ADD CONSTRAINT [FK_ReceiveMessage]
+    FOREIGN KEY ([ReceivePerson_Id])
+    REFERENCES [dbo].[People]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ReceiveMessage'
+CREATE INDEX [IX_FK_ReceiveMessage]
+ON [dbo].[Messages]
+    ([ReceivePerson_Id]);
 GO
 
 -- --------------------------------------------------

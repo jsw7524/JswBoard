@@ -15,9 +15,9 @@ namespace MyCard3.Models
     public partial class Message
     {
         public int Id { get; set; }
-        public int PersonId { get; set; }
+        public int SendPersonId { get; set; }
         public string MessageContent { get; set; }
-        public string Time { get; set; }
+        public System.DateTime Time { get; set; }
     
         public virtual Person SendPerson { get; set; }
         public virtual Person ReceivePerson { get; set; }

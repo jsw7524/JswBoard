@@ -4,169 +4,212 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MyCard.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="ArticleSet">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Title" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="Time" Type="datetime" Nullable="false" />
-          <Property Name="Content" Type="nvarchar(max)" />
-          <Property Name="BoardId" Type="int" Nullable="false" />
-          <Property Name="PersonId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="BoardSet">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
-        </EntityType>
-        <EntityType Name="CommentSet">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Opinion" Type="nvarchar(max)" />
-          <Property Name="ArticleId" Type="int" Nullable="false" />
-          <Property Name="PersonId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Friends">
-          <Key>
-            <PropertyRef Name="Person1_Id" />
-            <PropertyRef Name="Person2_Id" />
-          </Key>
-          <Property Name="Person1_Id" Type="int" Nullable="false" />
-          <Property Name="Person2_Id" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Matches">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="A_ID" Type="int" Nullable="false" />
-          <Property Name="B_ID" Type="int" Nullable="false" />
-          <Property Name="A_OK" Type="bit" />
-          <Property Name="B_OK" Type="bit" />
-        </EntityType>
-        <EntityType Name="People">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
-          <Property Name="Gender" Type="bit" Nullable="false" />
-          <Property Name="Birthday" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="authenticationId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="Picture" Type="varbinary(max)" />
-        </EntityType>
-        <Association Name="FK_ArticleComment">
-          <End Role="ArticleSet" Type="Self.ArticleSet" Multiplicity="1" />
-          <End Role="CommentSet" Type="Self.CommentSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ArticleSet">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CommentSet">
-              <PropertyRef Name="ArticleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BoardArticle">
-          <End Role="BoardSet" Type="Self.BoardSet" Multiplicity="1" />
-          <End Role="ArticleSet" Type="Self.ArticleSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BoardSet">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ArticleSet">
-              <PropertyRef Name="BoardId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Friends_Person">
-          <End Role="People" Type="Self.People" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="People">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="Person1_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Friends_Person1">
-          <End Role="People" Type="Self.People" Multiplicity="1" />
-          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="People">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Friends">
-              <PropertyRef Name="Person2_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PersonArticle">
-          <End Role="People" Type="Self.People" Multiplicity="1" />
-          <End Role="ArticleSet" Type="Self.ArticleSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="People">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ArticleSet">
-              <PropertyRef Name="PersonId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PersonComment">
-          <End Role="People" Type="Self.People" Multiplicity="1" />
-          <End Role="CommentSet" Type="Self.CommentSet" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="People">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CommentSet">
-              <PropertyRef Name="PersonId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityContainer Name="MyCardStoreContainer">
-          <EntitySet Name="ArticleSet" EntityType="Self.ArticleSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="BoardSet" EntityType="Self.BoardSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CommentSet" EntityType="Self.CommentSet" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Friends" EntityType="Self.Friends" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Matches" EntityType="Self.Matches" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_ArticleComment" Association="Self.FK_ArticleComment">
-            <End Role="ArticleSet" EntitySet="ArticleSet" />
-            <End Role="CommentSet" EntitySet="CommentSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BoardArticle" Association="Self.FK_BoardArticle">
-            <End Role="BoardSet" EntitySet="BoardSet" />
-            <End Role="ArticleSet" EntitySet="ArticleSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Friends_Person" Association="Self.FK_Friends_Person">
-            <End Role="People" EntitySet="People" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Friends_Person1" Association="Self.FK_Friends_Person1">
-            <End Role="People" EntitySet="People" />
-            <End Role="Friends" EntitySet="Friends" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PersonArticle" Association="Self.FK_PersonArticle">
-            <End Role="People" EntitySet="People" />
-            <End Role="ArticleSet" EntitySet="ArticleSet" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PersonComment" Association="Self.FK_PersonComment">
-            <End Role="People" EntitySet="People" />
-            <End Role="CommentSet" EntitySet="CommentSet" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema></edmx:StorageModels>
+    <Schema Namespace="MyCard.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MyCardStoreContainer">
+    <EntitySet Name="People" EntityType="MyCard.Store.People" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ArticleSet" EntityType="MyCard.Store.ArticleSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BoardSet" EntityType="MyCard.Store.BoardSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CommentSet" EntityType="MyCard.Store.CommentSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Matches" EntityType="MyCard.Store.Matches" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Messages" EntityType="MyCard.Store.Messages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Friends" EntityType="MyCard.Store.Friends" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="BoardArticle" Association="MyCard.Store.BoardArticle">
+      <End Role="Board" EntitySet="BoardSet" />
+      <End Role="Article" EntitySet="ArticleSet" />
+    </AssociationSet>
+    <AssociationSet Name="PersonArticle" Association="MyCard.Store.PersonArticle">
+      <End Role="Person" EntitySet="People" />
+      <End Role="Article" EntitySet="ArticleSet" />
+    </AssociationSet>
+    <AssociationSet Name="ArticleComment" Association="MyCard.Store.ArticleComment">
+      <End Role="Article" EntitySet="ArticleSet" />
+      <End Role="Comment" EntitySet="CommentSet" />
+    </AssociationSet>
+    <AssociationSet Name="PersonComment" Association="MyCard.Store.PersonComment">
+      <End Role="Person" EntitySet="People" />
+      <End Role="Comment" EntitySet="CommentSet" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Friends_Person" Association="MyCard.Store.FK_Friends_Person">
+      <End Role="Person" EntitySet="People" />
+      <End Role="Friends" EntitySet="Friends" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Friends_Person1" Association="MyCard.Store.FK_Friends_Person1">
+      <End Role="Person1" EntitySet="People" />
+      <End Role="Friends" EntitySet="Friends" />
+    </AssociationSet>
+    <AssociationSet Name="SendMessage" Association="MyCard.Store.SendMessage">
+      <End Role="Person" EntitySet="People" />
+      <End Role="Message" EntitySet="Messages" />
+    </AssociationSet>
+    <AssociationSet Name="ReceiveMessage" Association="MyCard.Store.ReceiveMessage">
+      <End Role="Message" EntitySet="Messages" />
+      <End Role="Person" EntitySet="People" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="People">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Gender" Type="bit" Nullable="false" />
+    <Property Name="Birthday" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="authenticationId" Type="nvarchar" Nullable="false" MaxLength="128" />
+    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Picture" Type="varbinary(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="ArticleSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="64" />
+    <Property Name="Time" Type="datetime" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="BoardId" Type="int" Nullable="false" />
+    <Property Name="PersonId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BoardSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="64" />
+  </EntityType>
+  <EntityType Name="CommentSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Opinion" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="ArticleId" Type="int" Nullable="false" />
+    <Property Name="PersonId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Matches">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="A_ID" Type="int" Nullable="false" />
+    <Property Name="B_ID" Type="int" Nullable="false" />
+    <Property Name="A_OK" Type="bit" Nullable="true" />
+    <Property Name="B_OK" Type="bit" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Messages">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SendPersonId" Type="int" Nullable="false" />
+    <Property Name="MessageContent" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Time" Type="datetime" Nullable="false" />
+    <Property Name="ReceivePerson_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Friends">
+    <Key>
+      <PropertyRef Name="Person1_Id" />
+      <PropertyRef Name="Person2_Id" />
+    </Key>
+    <Property Name="Person1_Id" Type="int" Nullable="false" />
+    <Property Name="Person2_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="BoardArticle">
+    <End Role="Board" Type="MyCard.Store.BoardSet" Multiplicity="1" />
+    <End Role="Article" Type="MyCard.Store.ArticleSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Board">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Article">
+        <PropertyRef Name="BoardId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PersonArticle">
+    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
+    <End Role="Article" Type="MyCard.Store.ArticleSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Article">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ArticleComment">
+    <End Role="Article" Type="MyCard.Store.ArticleSet" Multiplicity="1" />
+    <End Role="Comment" Type="MyCard.Store.CommentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Article">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="ArticleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="PersonComment">
+    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
+    <End Role="Comment" Type="MyCard.Store.CommentSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Comment">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SendMessage">
+    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
+    <End Role="Message" Type="MyCard.Store.Messages" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="SendPersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ReceiveMessage">
+    <End Role="Message" Type="MyCard.Store.Messages" Multiplicity="*" />
+    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Message">
+        <PropertyRef Name="ReceivePerson_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Friends_Person">
+    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
+    <End Role="Friends" Type="MyCard.Store.Friends" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Friends">
+        <PropertyRef Name="Person1_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Friends_Person1">
+    <End Role="Friends" Type="MyCard.Store.Friends" Multiplicity="*" />
+    <End Role="Person1" Type="MyCard.Store.People" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="Person1">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Friends">
+        <PropertyRef Name="Person2_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MyCard" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -325,10 +368,10 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="SendPerson" Relationship="MyCard.SendMessage" FromRole="Message" ToRole="Person" />
-          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="SendPersonId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ReceivePerson" Relationship="MyCard.ReceiveMessage" FromRole="Message" ToRole="Person" />
-          <Property Name="MessageContent" Type="String" Nullable="false" />
-          <Property Name="Time" Type="String" Nullable="false" />
+          <Property Name="MessageContent" Type="String" Nullable="true" Unicode="true" MaxLength="Max" />
+          <Property Name="Time" Type="DateTime" Nullable="false" />
         </EntityType>
         <Association Name="SendMessage">
           <End Type="MyCard.Person" Role="Person" Multiplicity="1" />
@@ -338,7 +381,7 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Message">
-              <PropertyRef Name="PersonId" />
+              <PropertyRef Name="SendPersonId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -406,12 +449,30 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Messages">
+      <EntityTypeMapping TypeName="IsTypeOf(MyCard.Message)">
+        <MappingFragment StoreEntitySet="Messages">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="SendPersonId" ColumnName="SendPersonId" />
+          <ScalarProperty Name="MessageContent" ColumnName="MessageContent" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="Friends" TypeName="MyCard.Friends" StoreEntitySet="Friends">
       <EndProperty Name="Person">
         <ScalarProperty Name="Id" ColumnName="Person1_Id" />
       </EndProperty>
       <EndProperty Name="Person1">
         <ScalarProperty Name="Id" ColumnName="Person2_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ReceiveMessage" TypeName="MyCard.ReceiveMessage" StoreEntitySet="Messages">
+      <EndProperty Name="Person">
+        <ScalarProperty Name="Id" ColumnName="ReceivePerson_Id" />
+      </EndProperty>
+      <EndProperty Name="Message">
+        <ScalarProperty Name="Id" ColumnName="Id" />
       </EndProperty>
     </AssociationSetMapping>
   </EntityContainerMapping>
