@@ -8,7 +8,7 @@
 <h2>ListFrineds</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+
 </p>
 <table class="table">
     <tr>
@@ -55,7 +55,7 @@
             @Html.DisplayFor(modelItem => item.Picture)
         </td>
         <td>
-            @Html.ActionLink("Send Message", "Index", "Messages", new { Id=item.Id }, null) 
+            @Html.ActionLink("Messages", "Index", "Messages", new { Id=item.Id }, null) 
            @* @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
         </td>
     </tr>
