@@ -16,6 +16,12 @@ namespace MyCard3.Controllers
     {
         private MyCardContainer db = new MyCardContainer();
 
+        [HttpPost, ValidateInput(false)]
+        public void EditorTest(string editordata)
+        {
+            int i=1;
+        }
+
         // GET: Articles
         [Authorize]
         public ActionResult Index(int? boardId=1)

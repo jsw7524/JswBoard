@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>@Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -18,7 +24,7 @@
 })
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="nav-item">@Html.ActionLink("Boards", "Index", "Boards", new { @class = "nav-link" },null)</li>
+                    <li class="nav-item">@Html.ActionLink("Boards", "Index", "Boards", new { @class = "nav-link" }, null)</li>
                     @*<li class="nav-item">@Html.ActionLink("Home", "Index", "Home",new {@class="nav-link" })</li>
                         <li
                         class="nav-item">@Html.ActionLink("About", "About", "Home",new { @class = "nav-link" })</li>
@@ -30,12 +36,12 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-    <hr>
-    <footer>
-        <p>&#xA9; @DateTime.Now.Year - My ASP.NET Application</p>
-    </footer>
-</div>@Scripts.Render("~/bundles/jquery") @Scripts.Render("~/bundles/bootstrap")
-@RenderSection("scripts", required: false)
+        <hr>
+        <footer>
+            <p>&#xA9; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>@Scripts.Render("~/bundles/jquery") @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 </body>
 
 </html>
