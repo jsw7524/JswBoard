@@ -208,6 +208,7 @@
     <Compile Include="Controllers\ArticlesController.cs" />
     <Compile Include="Controllers\AuthorizedIdActionFilters.cs" />
     <Compile Include="Controllers\BoardsController.cs" />
+    <Compile Include="Controllers\CommentAuthorAuthorizeAttribute.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ArticleAuthorAuthorizeAttribute.cs" />

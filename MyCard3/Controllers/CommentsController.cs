@@ -66,6 +66,7 @@ namespace MyCard3.Controllers
         }
 
         // GET: Comments/Edit/5
+        [CommentAuthorAuthorizeAttribute(Roles = "BoardAdmin,ArticleOwner")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -88,6 +89,7 @@ namespace MyCard3.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CommentAuthorAuthorizeAttribute(Roles = "BoardAdmin,ArticleOwner")]
         public ActionResult Edit([Bind(Include = "Id,Opinion,ArticleId,PersonId")] Comment comment)
         {
             if (ModelState.IsValid)
@@ -102,6 +104,7 @@ namespace MyCard3.Controllers
         }
 
         //// GET: Comments/Delete/5
+        [CommentAuthorAuthorizeAttribute(Roles = "BoardAdmin,ArticleOwner")]
         public ActionResult Delete(int? Id)
         {
             if (Id == null)
