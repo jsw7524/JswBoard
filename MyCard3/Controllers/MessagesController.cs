@@ -15,11 +15,11 @@ namespace MyCard3.Controllers
         private MyCardContainer db = new MyCardContainer();
 
         // GET: Messages
-        public ActionResult Index(int Id = 0)
+        public ActionResult Index(int id = 0)
         {
             Person me = Session["CurrentUserData"] as Person;
-            var messages = db.Messages.Where(m => ((m.SendPersonId == Id) && (m.ReceivePerson.Id == me.Id)) || ((m.SendPersonId == me.Id) && (m.ReceivePerson.Id == Id)));
-            ViewBag.SendMessageToID = Id;
+            var messages = db.Messages.Where(m => ((m.SendPersonId == id) && (m.ReceivePerson.Id == me.Id)) || ((m.SendPersonId == me.Id) && (m.ReceivePerson.Id == id)));
+            ViewBag.SendMessageToID = id;
             return View(messages.ToList());
         }
 
@@ -64,7 +64,7 @@ namespace MyCard3.Controllers
 
                 db.Messages.Add(message);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index",new { id= friend.Id});
             }
 
             ViewBag.SendPersonId = new SelectList(db.People, "Id", "Name", message.SendPersonId);
