@@ -87,7 +87,7 @@ namespace MyCard3.Controllers
                 friend.Person1.Add(me);
             }
             db.SaveChanges();
-            return View(db.People.Where(p => p.Id == partnerId).FirstOrDefault());
+            return View("Card", db.People.Where(p => p.Id == partnerId).FirstOrDefault());
         }
 
         public ActionResult ListFriends()

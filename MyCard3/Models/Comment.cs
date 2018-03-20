@@ -11,10 +11,12 @@ namespace MyCard3.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web.Mvc;
+
     public partial class Comment
     {
         public int Id { get; set; }
+        [AllowHtml]
         public string Opinion { get; set; }
         public int ArticleId { get; set; }
         public int PersonId { get; set; }

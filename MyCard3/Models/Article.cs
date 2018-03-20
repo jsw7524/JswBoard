@@ -11,7 +11,8 @@ namespace MyCard3.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Web.Mvc;
+
     public partial class Article
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,6 +24,7 @@ namespace MyCard3.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public System.DateTime Time { get; set; }
+        [AllowHtml]
         public string Content { get; set; }
         public int BoardId { get; set; }
         public int PersonId { get; set; }

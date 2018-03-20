@@ -63,6 +63,7 @@ namespace MyCard3.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Create([Bind(Include = "Id,Title,Content")] Article article, int boardId = 1)
         {
             if (ModelState.IsValid)

@@ -50,6 +50,7 @@ namespace MyCard3.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Create([Bind(Include = "Id,Opinion,ArticleId,PersonId")] Comment comment, int articleId = 0)
         {
             if (ModelState.IsValid)

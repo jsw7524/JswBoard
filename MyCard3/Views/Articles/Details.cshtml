@@ -34,7 +34,7 @@
             @*@Html.DisplayFor(model => model.Content)*@
             @*@Html.TextAreaFor(model => model.Content)*@
             <div name="ArticleContent">
-                @Model.Content
+                @Html.Raw(Model.Content)
             </div>
 
         </dd>

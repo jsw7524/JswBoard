@@ -1,5 +1,5 @@
 ﻿@model MyCard3.Models.Person
-
+@using Microsoft.AspNet.Identity;
 @{
     ViewBag.Title = "MakeFriend";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -62,10 +62,9 @@
     </dl>
 
     @{
-        @using Microsoft.AspNet.Identity;
         if (User.Identity.GetUserId() != Model.authenticationId)
         {
-            @using (Html.BeginForm())
+            using (Html.BeginForm())
             {
                 <input type="hidden" name="message" value="Hello" />
                 <input type="submit" value="MakeFriend" />

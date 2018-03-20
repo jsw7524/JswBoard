@@ -18,18 +18,19 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Opinion)
+            @Html.DisplayFor(modelItem => item.Article.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Article.Title)
+            @Html.Raw(item.Opinion)
+            @*@Html.DisplayFor(modelItem => item.Opinion)*@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Person.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit","Comments" , new { id=item.Id }, null) |
+            @Html.ActionLink("Edit", "Edit", "Comments", new { id = item.Id }, null) |
             @*@Html.ActionLink("Details", "Details","Comments", new { id=item.Id }, null) |*@
-            @Html.ActionLink("Delete", "Delete", "Comments", new { id=item.Id}, null)
+            @Html.ActionLink("Delete", "Delete", "Comments", new { id = item.Id }, null)
         </td>
     </tr>
 }
