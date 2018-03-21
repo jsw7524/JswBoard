@@ -51,7 +51,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Details","Articles",new {id= Model.ArticleId })
+    @Html.ActionLink("Back to List", "Details","Articles",new {id= ViewBag.ArticleId }, null)
 </div>
 
 @section Scripts {
