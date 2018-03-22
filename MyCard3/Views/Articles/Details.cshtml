@@ -10,15 +10,18 @@
     <h4>Article</h4>
     <hr />
     <dl class="dl-horizontal">
-        <div name="ArticleInfo" class="bg-info">
+        <div name="ArticleInfo" class="bg-success text-white">
             <div class="row">
-                <div class="col-lg-12">
-                    標題: @Html.DisplayFor(model => model.Title)
+                <div class="col-lg-8">
+                    標題: @Html.DisplayFor(model => model.Title) | @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) | @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+                </div>
+                <div class="col-lg-4">
+                    看板: @Html.DisplayFor(model => model.Board.Name)
                 </div>
             </div>
             <div class="row">
-                <div class="col-lg-6">作者:@Html.DisplayFor(model => model.Person.Name)</div>
-                <div class="col-lg-6">時間:@Html.DisplayFor(model => model.Time)</div>
+                <div class="col-lg-8">作者:@Html.DisplayFor(model => model.Person.Name)</div>
+                <div class="col-lg-4">時間:@Html.DisplayFor(model => model.Time)</div>
             </div>
         </div>
         @*
