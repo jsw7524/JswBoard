@@ -2,7 +2,7 @@
 
 
 <table class="table">
-    <tr>
+    @*<tr>
         <th>
             @Html.DisplayNameFor(model => model.Opinion)
         </th>
@@ -13,25 +13,30 @@
             @Html.DisplayNameFor(model => model.Person.Name)
         </th>
         <th></th>
-    </tr>
+    </tr>*@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Article.Title)
-        </td>
+        </td>*@
         <td>
+            <div name="author" class="bg-success">
+                @Html.DisplayFor(modelItem => item.Person.Name) |
+                @Html.ActionLink("Edit", "Edit", "Comments", new { id = item.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "Comments", new { id = item.Id }, null)
+            </div>
             @Html.Raw(item.Opinion)
             @*@Html.DisplayFor(modelItem => item.Opinion)*@
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.Person.Name)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", "Comments", new { id = item.Id }, null) |
-            @*@Html.ActionLink("Details", "Details","Comments", new { id=item.Id }, null) |*@
+            @Html.ActionLink("Details", "Details","Comments", new { id=item.Id }, null) |
             @Html.ActionLink("Delete", "Delete", "Comments", new { id = item.Id }, null)
-        </td>
+        </td>*@
     </tr>
 }
 

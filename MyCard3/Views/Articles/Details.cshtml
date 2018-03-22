@@ -10,12 +10,31 @@
     <h4>Article</h4>
     <hr />
     <dl class="dl-horizontal">
+        <div name="ArticleInfo" class="bg-info">
+            <div class="row">
+                <div class="col-lg-12">
+                    標題: @Html.DisplayFor(model => model.Title)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">作者:@Html.DisplayFor(model => model.Person.Name)</div>
+                <div class="col-lg-6">時間:@Html.DisplayFor(model => model.Time)</div>
+            </div>
+        </div>
+        @*
         <dt>
             @Html.DisplayNameFor(model => model.Title)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Person)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Person.Name)
         </dd>
 
         <dt>
@@ -25,10 +44,11 @@
         <dd>
             @Html.DisplayFor(model => model.Time)
         </dd>
+        *@
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Content)
-        </dt>
+        </dt>*@
 
         <dd>
             @*@Html.DisplayFor(model => model.Content)*@
@@ -39,7 +59,7 @@
 
         </dd>
 
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Board.Name)
         </dt>
 
@@ -49,16 +69,12 @@
 
         <dt>
             @Html.DisplayNameFor(model => model.Person.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Person.Name)
-        </dd>
+        </dt>*@
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
     @Html.ActionLink("Back to List", "Index",new {boardId=Model.BoardId })
 </p>
 <p>
@@ -67,3 +83,6 @@
 @{
     Html.RenderPartial("~/Views/Comments/CommentList.cshtml",Model.Comment);
 }
+<p>
+    @Html.ActionLink("Back to List", "Index", new { boardId = Model.BoardId })
+</p>
