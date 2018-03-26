@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using MyCard3.Models;
+using Newtonsoft.Json;
 
 namespace MyCard3.Controllers
 {
@@ -16,8 +17,18 @@ namespace MyCard3.Controllers
     {
         private MyCardContainer db = new MyCardContainer();
 
-        // GET: People
 
+        public ActionResult GetMyNotifications()
+        {
+            Person currentUser = Session["CurrentUserData"] as Person;
+            var myNotifications=db.NotificationSet.Where(n => n.PersonId == currentUser.Id).Select(n=>n.Content);
+
+            var json = JsonConvert.SerializeObject(myNotifications);
+            //return Json(json,JsonRequestBehavior.AllowGet);
+            return Content(json);
+        }
+
+        // GET: People
         public ActionResult Card(int Id=0)
         {
             Person currentUser = Session["CurrentUserData"] as Person;

@@ -11,41 +11,46 @@
 <ul class="nav navbar-nav ml-auto">
 
     <li class="nav-item">
+        @Ajax.ActionLink("Notifications",
+                    "GetMyNotifications", "People",new AjaxOptions {UpdateTargetId="MyNotifications", InsertionMode=InsertionMode.Replace })
+    </li>
+
+    <li class="nav-item">
         @Html.ActionLink("MyFriends",
-              "ListFriends", "People", routeValues: null, htmlAttributes:
-                      new
-                      {
-                          title = "Manage",
-                          @class = "nav-link"
-                      })
+                   "ListFriends", "People", routeValues: null, htmlAttributes:
+                           new
+                           {
+                               title = "Manage",
+                               @class = "nav-link"
+                           })
     </li>
 
     <li class="nav-item">
         @Html.ActionLink("MakeFriend",
-              "MakeFriend", "People", routeValues: null, htmlAttributes:
-                      new
-                      {
-                          title = "Manage",
-                          @class = "nav-link"
-                      })
+                   "MakeFriend", "People", routeValues: null, htmlAttributes:
+                           new
+                           {
+                               title = "Manage",
+                               @class = "nav-link"
+                           })
     </li>
     <li class="nav-item">
         @Html.ActionLink("Card",
-                             "Card", "People", routeValues: new { id=0}, htmlAttributes:
-                                     new
-                                     {
-                                         title = "Manage",
-                                         @class = "nav-link"
-                                     })
+                                  "Card", "People", routeValues: new { id = 0 }, htmlAttributes:
+                                          new
+                                          {
+                                              title = "Manage",
+                                              @class = "nav-link"
+                                          })
     </li>
     <li class="nav-item">
         @Html.ActionLink(User.Identity.GetUserName(),
-                                   "Index", "Manage", routeValues: null, htmlAttributes:
-                                           new
-                                           {
-                                               title = "Manage",
-                                               @class = "nav-link"
-                                           })
+                                        "Index", "Manage", routeValues: null, htmlAttributes:
+                                                new
+                                                {
+                                                    title = "Manage",
+                                                    @class = "nav-link"
+                                                })
     </li>
     <li class="nav-item">
         <a href="javascript:document.getElementById(&apos;logoutForm&apos;).submit()"
@@ -69,3 +74,6 @@ else
                                    routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })
     </li>
 </ul>}
+<div id="MyNotifications">
+
+</div>

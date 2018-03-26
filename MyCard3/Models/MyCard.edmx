@@ -13,6 +13,7 @@
     <EntitySet Name="Matches" EntityType="MyCard.Store.Matches" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Messages" EntityType="MyCard.Store.Messages" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ArticleThumberUpSet" EntityType="MyCard.Store.ArticleThumberUpSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="NotificationSet" EntityType="MyCard.Store.NotificationSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Friends" EntityType="MyCard.Store.Friends" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="BoardArticle" Association="MyCard.Store.BoardArticle">
       <End Role="Board" EntitySet="BoardSet" />
@@ -53,6 +54,10 @@
     <AssociationSet Name="ArticleArticleThumberUp" Association="MyCard.Store.ArticleArticleThumberUp">
       <End Role="Article" EntitySet="ArticleSet" />
       <End Role="ArticleThumberUp" EntitySet="ArticleThumberUpSet" />
+    </AssociationSet>
+    <AssociationSet Name="PersonNotification" Association="MyCard.Store.PersonNotification">
+      <End Role="Person" EntitySet="People" />
+      <End Role="Notification" EntitySet="NotificationSet" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="People">
@@ -122,6 +127,15 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="PersonId" Type="int" Nullable="false" />
     <Property Name="ArticleId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="NotificationSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PersonId" Type="int" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="Time" Type="datetime" Nullable="false" />
   </EntityType>
   <EntityType Name="Friends">
     <Key>
@@ -227,6 +241,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="PersonNotification">
+    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
+    <End Role="Notification" Type="MyCard.Store.NotificationSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Notification">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Friends_Person">
     <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
     <End Role="Friends" Type="MyCard.Store.Friends" Multiplicity="*" />
@@ -299,6 +325,11 @@
             <End Role="Article" EntitySet="ArticleSet" />
             <End Role="ArticleThumberUp" EntitySet="ArticleThumberUpSet" />
           </AssociationSet>
+          <EntitySet Name="NotificationSet" EntityType="MyCard.Notification" />
+          <AssociationSet Name="PersonNotification" Association="MyCard.PersonNotification">
+            <End Role="Person" EntitySet="People" />
+            <End Role="Notification" EntitySet="NotificationSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Person">
           <Key>
@@ -318,6 +349,7 @@
           <NavigationProperty Name="SendMessage" Relationship="MyCard.SendMessage" FromRole="Person" ToRole="Message" />
           <NavigationProperty Name="ReceiveMessage" Relationship="MyCard.ReceiveMessage" FromRole="Person" ToRole="Message" />
           <NavigationProperty Name="ArticleThumberUp" Relationship="MyCard.PersonArticleThumberUp" FromRole="Person" ToRole="ArticleThumberUp" />
+          <NavigationProperty Name="Notification" Relationship="MyCard.PersonNotification" FromRole="Person" ToRole="Notification" />
           </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -477,6 +509,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Notification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <Property Name="Content" Type="String" Nullable="true" Unicode="true" />
+          <Property Name="Time" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Person" Relationship="MyCard.PersonNotification" FromRole="Notification" ToRole="Person" />
+        </EntityType>
+        <Association Name="PersonNotification">
+          <End Type="MyCard.Person" Role="Person" Multiplicity="1" />
+          <End Type="MyCard.Notification" Role="Notification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notification">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -557,6 +611,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="NotificationSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MyCard.Notification)">
+        <MappingFragment StoreEntitySet="NotificationSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="Friends" TypeName="MyCard.Friends" StoreEntitySet="Friends">
       <EndProperty Name="Person">
         <ScalarProperty Name="Id" ColumnName="Person1_Id" />
@@ -594,9 +658,9 @@
     </edmx:Options>
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="47ecab7153e54fb19871c880a2148b5e" Name="Diagram1">
+      <Diagram DiagramId="47ecab7153e54fb19871c880a2148b5e" Name="Diagram1" ZoomLevel="86">
         <EntityTypeShape EntityType="MyCard.Person" Width="1.5" PointX="0.75" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyCard.Article" Width="1.75" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyCard.Article" Width="1.75" PointX="3" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="MyCard.Board" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MyCard.Comment" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="MyCard.BoardArticle" ManuallyRouted="false" />
@@ -605,12 +669,14 @@
         <AssociationConnector Association="MyCard.PersonComment" ManuallyRouted="false" />
         <AssociationConnector Association="MyCard.Friends" />
         <EntityTypeShape EntityType="MyCard.Match" Width="1.5" PointX="7.5" PointY="1.25" />
-        <EntityTypeShape EntityType="MyCard.Message" Width="1.5" PointX="0.75" PointY="4.5" />
+        <EntityTypeShape EntityType="MyCard.Message" Width="1.5" PointX="0.75" PointY="5" />
         <AssociationConnector Association="MyCard.SendMessage" />
         <AssociationConnector Association="MyCard.ReceiveMessage" />
-        <EntityTypeShape EntityType="MyCard.ArticleThumberUp" Width="2.125" PointX="5.625" PointY="4.125" />
+        <EntityTypeShape EntityType="MyCard.ArticleThumberUp" Width="2.125" PointX="5.25" PointY="3.75" />
         <AssociationConnector Association="MyCard.PersonArticleThumberUp" />
         <AssociationConnector Association="MyCard.ArticleArticleThumberUp" />
+        <EntityTypeShape EntityType="MyCard.Notification" Width="1.5" PointX="7.75" PointY="3.625" />
+        <AssociationConnector Association="MyCard.PersonNotification" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -24,6 +24,7 @@ namespace MyCard3.Models
             this.SendMessage = new HashSet<Message>();
             this.ReceiveMessage = new HashSet<Message>();
             this.ArticleThumberUp = new HashSet<ArticleThumberUp>();
+            this.Notification = new HashSet<Notification>();
         }
     
         public int Id { get; set; }
@@ -48,5 +49,7 @@ namespace MyCard3.Models
         public virtual ICollection<Message> ReceiveMessage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArticleThumberUp> ArticleThumberUp { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Notification> Notification { get; set; }
     }
 }
