@@ -11,31 +11,30 @@ namespace MyCard3.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Web.Mvc;
-
+    
     public partial class Article
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Article()
         {
+            this.ThumbUpNumber = 0;
             this.Comment = new HashSet<Comment>();
+            this.ArticleThumberUp = new HashSet<ArticleThumberUp>();
         }
     
         public int Id { get; set; }
-        [DisplayName("標題")]
         public string Title { get; set; }
-        [DisplayName("發表時間")]
         public System.DateTime Time { get; set; }
-        [AllowHtml]
         public string Content { get; set; }
         public int BoardId { get; set; }
         public int PersonId { get; set; }
+        public int ThumbUpNumber { get; set; }
     
         public virtual Board Board { get; set; }
-        [DisplayName("作者")]
         public virtual Person Person { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comment { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ArticleThumberUp> ArticleThumberUp { get; set; }
     }
 }

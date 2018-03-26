@@ -222,6 +222,9 @@
     <Compile Include="Models\Article.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ArticleThumberUp.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Board.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>

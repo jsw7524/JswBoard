@@ -12,6 +12,7 @@
     <EntitySet Name="CommentSet" EntityType="MyCard.Store.CommentSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Matches" EntityType="MyCard.Store.Matches" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Messages" EntityType="MyCard.Store.Messages" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ArticleThumberUpSet" EntityType="MyCard.Store.ArticleThumberUpSet" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Friends" EntityType="MyCard.Store.Friends" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="BoardArticle" Association="MyCard.Store.BoardArticle">
       <End Role="Board" EntitySet="BoardSet" />
@@ -45,6 +46,14 @@
       <End Role="Message" EntitySet="Messages" />
       <End Role="Person" EntitySet="People" />
     </AssociationSet>
+    <AssociationSet Name="PersonArticleThumberUp" Association="MyCard.Store.PersonArticleThumberUp">
+      <End Role="Person" EntitySet="People" />
+      <End Role="ArticleThumberUp" EntitySet="ArticleThumberUpSet" />
+    </AssociationSet>
+    <AssociationSet Name="ArticleArticleThumberUp" Association="MyCard.Store.ArticleArticleThumberUp">
+      <End Role="Article" EntitySet="ArticleSet" />
+      <End Role="ArticleThumberUp" EntitySet="ArticleThumberUpSet" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="People">
     <Key>
@@ -68,6 +77,7 @@
     <Property Name="Content" Type="nvarchar(max)" Nullable="true" />
     <Property Name="BoardId" Type="int" Nullable="false" />
     <Property Name="PersonId" Type="int" Nullable="false" />
+    <Property Name="ThumbUpNumber" Type="int" Nullable="false" DefaultValue="0" />
   </EntityType>
   <EntityType Name="BoardSet">
     <Key>
@@ -104,6 +114,14 @@
     <Property Name="MessageContent" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Time" Type="datetime" Nullable="false" />
     <Property Name="ReceivePerson_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArticleThumberUpSet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PersonId" Type="int" Nullable="false" />
+    <Property Name="ArticleId" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Friends">
     <Key>
@@ -185,6 +203,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="PersonArticleThumberUp">
+    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
+    <End Role="ArticleThumberUp" Type="MyCard.Store.ArticleThumberUpSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Person">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArticleThumberUp">
+        <PropertyRef Name="PersonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ArticleArticleThumberUp">
+    <End Role="Article" Type="MyCard.Store.ArticleSet" Multiplicity="1" />
+    <End Role="ArticleThumberUp" Type="MyCard.Store.ArticleThumberUpSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Article">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ArticleThumberUp">
+        <PropertyRef Name="ArticleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_Friends_Person">
     <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
     <End Role="Friends" Type="MyCard.Store.Friends" Multiplicity="*" />
@@ -248,6 +290,15 @@
             <End Role="Message" EntitySet="Messages" />
             <End Role="Person" EntitySet="People" />
           </AssociationSet>
+          <EntitySet Name="ArticleThumberUpSet" EntityType="MyCard.ArticleThumberUp" />
+          <AssociationSet Name="PersonArticleThumberUp" Association="MyCard.PersonArticleThumberUp">
+            <End Role="Person" EntitySet="People" />
+            <End Role="ArticleThumberUp" EntitySet="ArticleThumberUpSet" />
+          </AssociationSet>
+          <AssociationSet Name="ArticleArticleThumberUp" Association="MyCard.ArticleArticleThumberUp">
+            <End Role="Article" EntitySet="ArticleSet" />
+            <End Role="ArticleThumberUp" EntitySet="ArticleThumberUpSet" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Person">
           <Key>
@@ -266,6 +317,7 @@
           <NavigationProperty Name="Person1" Relationship="MyCard.Friends" FromRole="Person1" ToRole="Person" />
           <NavigationProperty Name="SendMessage" Relationship="MyCard.SendMessage" FromRole="Person" ToRole="Message" />
           <NavigationProperty Name="ReceiveMessage" Relationship="MyCard.ReceiveMessage" FromRole="Person" ToRole="Message" />
+          <NavigationProperty Name="ArticleThumberUp" Relationship="MyCard.PersonArticleThumberUp" FromRole="Person" ToRole="ArticleThumberUp" />
           </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -280,6 +332,8 @@
           <NavigationProperty Name="Person" Relationship="MyCard.PersonArticle" FromRole="Article" ToRole="Person" />
           <Property Name="PersonId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Comment" Relationship="MyCard.ArticleComment" FromRole="Article" ToRole="Comment" />
+          <Property Name="ThumbUpNumber" Type="Int32" Nullable="false" DefaultValue="0" />
+          <NavigationProperty Name="ArticleThumberUp" Relationship="MyCard.ArticleArticleThumberUp" FromRole="Article" ToRole="ArticleThumberUp" />
         </EntityType>
         <EntityType Name="Board">
           <Key>
@@ -389,6 +443,40 @@
           <End Type="MyCard.Message" Role="Message" Multiplicity="*" />
           <End Type="MyCard.Person" Role="Person" Multiplicity="1" />
         </Association>
+        <EntityType Name="ArticleThumberUp">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Person" Relationship="MyCard.PersonArticleThumberUp" FromRole="ArticleThumberUp" ToRole="Person" />
+          <Property Name="PersonId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="MyCard.ArticleArticleThumberUp" FromRole="ArticleThumberUp" ToRole="Article" />
+          <Property Name="ArticleId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="PersonArticleThumberUp">
+          <End Type="MyCard.Person" Role="Person" Multiplicity="1" />
+          <End Type="MyCard.ArticleThumberUp" Role="ArticleThumberUp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Person">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleThumberUp">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ArticleArticleThumberUp">
+          <End Type="MyCard.Article" Role="Article" Multiplicity="1" />
+          <End Type="MyCard.ArticleThumberUp" Role="ArticleThumberUp" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Article">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleThumberUp">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -417,6 +505,7 @@
           <ScalarProperty Name="Content" ColumnName="Content" />
           <ScalarProperty Name="BoardId" ColumnName="BoardId" />
           <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+          <ScalarProperty Name="ThumbUpNumber" ColumnName="ThumbUpNumber" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -459,6 +548,15 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="ArticleThumberUpSet">
+      <EntityTypeMapping TypeName="IsTypeOf(MyCard.ArticleThumberUp)">
+        <MappingFragment StoreEntitySet="ArticleThumberUpSet">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="PersonId" ColumnName="PersonId" />
+          <ScalarProperty Name="ArticleId" ColumnName="ArticleId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="Friends" TypeName="MyCard.Friends" StoreEntitySet="Friends">
       <EndProperty Name="Person">
         <ScalarProperty Name="Id" ColumnName="Person1_Id" />
@@ -498,8 +596,8 @@
     <edmx:Diagrams>
       <Diagram DiagramId="47ecab7153e54fb19871c880a2148b5e" Name="Diagram1">
         <EntityTypeShape EntityType="MyCard.Person" Width="1.5" PointX="0.75" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyCard.Article" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="MyCard.Board" Width="1.5" PointX="3" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyCard.Article" Width="1.75" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="MyCard.Board" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MyCard.Comment" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="MyCard.BoardArticle" ManuallyRouted="false" />
         <AssociationConnector Association="MyCard.PersonArticle" ManuallyRouted="false" />
@@ -510,6 +608,9 @@
         <EntityTypeShape EntityType="MyCard.Message" Width="1.5" PointX="0.75" PointY="4.5" />
         <AssociationConnector Association="MyCard.SendMessage" />
         <AssociationConnector Association="MyCard.ReceiveMessage" />
+        <EntityTypeShape EntityType="MyCard.ArticleThumberUp" Width="2.125" PointX="5.625" PointY="4.125" />
+        <AssociationConnector Association="MyCard.PersonArticleThumberUp" />
+        <AssociationConnector Association="MyCard.ArticleArticleThumberUp" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

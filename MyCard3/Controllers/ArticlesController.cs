@@ -19,12 +19,29 @@ namespace MyCard3.Controllers
         [HttpPost, ValidateInput(false)]
         public void EditorTest(string editordata)
         {
-            int i=1;
+            int i = 1;
         }
+
+        [HttpPost]
+        public ActionResult ThumberUp(int articleId)
+        {
+            int i = 1;
+            Person currentUser = Session["CurrentUserData"] as Person;
+            if (!db.ArticleThumberUpSet.Where(tu => (tu.PersonId == currentUser.Id) && (tu.ArticleId == articleId)).Any())
+            {
+                db.ArticleThumberUpSet.Add(new ArticleThumberUp {PersonId= currentUser.Id, ArticleId = articleId });
+                db.ArticleSet.Where(a => a.Id == articleId).FirstOrDefault().ThumbUpNumber += 1;
+                db.SaveChanges();
+            }
+
+
+            return Json(new { n = 123 });
+        }
+
 
         // GET: Articles
         [Authorize]
-        public ActionResult Index(int? boardId=1)
+        public ActionResult Index(int? boardId = 1)
         {
             var articleSet = db.ArticleSet.AsNoTracking().Where(a => a.BoardId == boardId).ToList();
             ViewData["BoardName"] = articleSet.FirstOrDefault().Board.Name;
@@ -74,7 +91,7 @@ namespace MyCard3.Controllers
                 article.BoardId = boardId;
                 db.ArticleSet.Add(article);
                 db.SaveChanges();
-                return RedirectToAction("Index",new { boardId= article.BoardId});
+                return RedirectToAction("Index", new { boardId = article.BoardId });
             }
 
             //ViewBag.BoardId = new SelectList(db.BoardSet, "Id", "Name", article.BoardId);

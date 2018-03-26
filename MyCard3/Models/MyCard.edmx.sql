@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/18/2018 00:22:46
+-- Date Created: 03/26/2018 15:45:46
 -- Generated from EDMX file: D:\SourceCode\CSharp\MyCard3\MyCard3\Models\MyCard.edmx
 -- --------------------------------------------------
 
@@ -91,7 +91,8 @@ CREATE TABLE [dbo].[ArticleSet] (
     [Time] datetime  NOT NULL,
     [Content] nvarchar(max)  NULL,
     [BoardId] int  NOT NULL,
-    [PersonId] int  NOT NULL
+    [PersonId] int  NOT NULL,
+    [ThumbUpNumber] int  NOT NULL
 );
 GO
 
@@ -128,6 +129,14 @@ CREATE TABLE [dbo].[Messages] (
     [MessageContent] nvarchar(max)  NULL,
     [Time] datetime  NOT NULL,
     [ReceivePerson_Id] int  NOT NULL
+);
+GO
+
+-- Creating table 'ArticleThumberUpSet'
+CREATE TABLE [dbo].[ArticleThumberUpSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [PersonId] int  NOT NULL,
+    [ArticleId] int  NOT NULL
 );
 GO
 
@@ -175,6 +184,12 @@ GO
 -- Creating primary key on [Id] in table 'Messages'
 ALTER TABLE [dbo].[Messages]
 ADD CONSTRAINT [PK_Messages]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'ArticleThumberUpSet'
+ALTER TABLE [dbo].[ArticleThumberUpSet]
+ADD CONSTRAINT [PK_ArticleThumberUpSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -300,6 +315,36 @@ GO
 CREATE INDEX [IX_FK_ReceiveMessage]
 ON [dbo].[Messages]
     ([ReceivePerson_Id]);
+GO
+
+-- Creating foreign key on [PersonId] in table 'ArticleThumberUpSet'
+ALTER TABLE [dbo].[ArticleThumberUpSet]
+ADD CONSTRAINT [FK_PersonArticleThumberUp]
+    FOREIGN KEY ([PersonId])
+    REFERENCES [dbo].[People]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PersonArticleThumberUp'
+CREATE INDEX [IX_FK_PersonArticleThumberUp]
+ON [dbo].[ArticleThumberUpSet]
+    ([PersonId]);
+GO
+
+-- Creating foreign key on [ArticleId] in table 'ArticleThumberUpSet'
+ALTER TABLE [dbo].[ArticleThumberUpSet]
+ADD CONSTRAINT [FK_ArticleArticleThumberUp]
+    FOREIGN KEY ([ArticleId])
+    REFERENCES [dbo].[ArticleSet]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ArticleArticleThumberUp'
+CREATE INDEX [IX_FK_ArticleArticleThumberUp]
+ON [dbo].[ArticleThumberUpSet]
+    ([ArticleId]);
 GO
 
 -- --------------------------------------------------

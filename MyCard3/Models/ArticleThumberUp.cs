@@ -12,14 +12,13 @@ namespace MyCard3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Comment
+    public partial class ArticleThumberUp
     {
         public int Id { get; set; }
-        public string Opinion { get; set; }
-        public int ArticleId { get; set; }
         public int PersonId { get; set; }
+        public int ArticleId { get; set; }
     
-        public virtual Article Article { get; set; }
         public virtual Person Person { get; set; }
+        public virtual Article Article { get; set; }
     }
 }

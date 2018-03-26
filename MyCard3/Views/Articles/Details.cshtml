@@ -25,33 +25,33 @@
             </div>
         </div>
         @*
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Title)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Title)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Person)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Person)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Person.Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Person.Name)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Time)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.Time)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Time)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Time)
+            </dd>
         *@
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>*@
+                @Html.DisplayNameFor(model => model.Content)
+            </dt>*@
 
         <dd>
             @*@Html.DisplayFor(model => model.Content)*@
@@ -63,29 +63,52 @@
         </dd>
 
         @*<dt>
-            @Html.DisplayNameFor(model => model.Board.Name)
-        </dt>
+                @Html.DisplayNameFor(model => model.Board.Name)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Board.Name)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Board.Name)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Person.Name)
-        </dt>*@
+            <dt>
+                @Html.DisplayNameFor(model => model.Person.Name)
+            </dt>*@
 
     </dl>
 </div>
+
+<button type="button" id="btnLike" >Like this Article!</button>
+
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
-    @Html.ActionLink("Back to List", "Index",new {boardId=Model.BoardId })
+    @Html.ActionLink("Back to List", "Index", new { boardId = Model.BoardId })
 </p>
 <p>
-    @Html.ActionLink("Create New Comments", "Create", "Comments", new { articleId =Model.Id, personId = Model.PersonId }, null)
+    @Html.ActionLink("Create New Comments", "Create", "Comments", new { articleId = Model.Id, personId = Model.PersonId }, null)
 </p>
 @{
-    Html.RenderPartial("~/Views/Comments/CommentList.cshtml",Model.Comment);
+    Html.RenderPartial("~/Views/Comments/CommentList.cshtml", Model.Comment);
 }
 <p>
     @Html.ActionLink("Back to List", "Index", new { boardId = Model.BoardId })
 </p>
+@section Scripts {
+    <script>
+        $(function () {
+            $("#btnLike").click(function () {
+
+                $.post("@Url.Action("ThumberUp", "Articles")", { "articleId":@Model.Id }, function (data, textStatus) {
+                    alert(data.n)
+                    //data contains the JSON object
+                    //textStatus contains the status: success, error, etc
+                }, "json");
+
+
+
+                @*$.post(@Html.Action("ThumberUp", "Articles"), function (data) {
+                    alert(data)
+                });*@
+            });
+        });
+    </script>
+}

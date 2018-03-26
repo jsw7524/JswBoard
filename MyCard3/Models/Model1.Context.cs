@@ -31,5 +31,6 @@ namespace MyCard3.Models
         public virtual DbSet<Comment> CommentSet { get; set; }
         public virtual DbSet<Match> Matches { get; set; }
         public virtual DbSet<Message> Messages { get; set; }
+        public virtual DbSet<ArticleThumberUp> ArticleThumberUpSet { get; set; }
     }
 }
