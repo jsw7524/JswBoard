@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/26/2018 23:42:52
+-- Date Created: 03/27/2018 23:21:00
 -- Generated from EDMX file: D:\SourceCode\CSharp\MyCard3\MyCard3\Models\MyCard.edmx
 -- --------------------------------------------------
 
@@ -47,6 +47,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_ArticleArticleThumberUp]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ArticleThumberUpSet] DROP CONSTRAINT [FK_ArticleArticleThumberUp];
 GO
+IF OBJECT_ID(N'[dbo].[FK_PersonNotification]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[NotificationSet] DROP CONSTRAINT [FK_PersonNotification];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -72,6 +75,9 @@ IF OBJECT_ID(N'[dbo].[Messages]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[ArticleThumberUpSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ArticleThumberUpSet];
+GO
+IF OBJECT_ID(N'[dbo].[NotificationSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[NotificationSet];
 GO
 IF OBJECT_ID(N'[dbo].[Friends]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Friends];
@@ -117,7 +123,8 @@ CREATE TABLE [dbo].[CommentSet] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Opinion] nvarchar(max)  NULL,
     [ArticleId] int  NOT NULL,
-    [PersonId] int  NOT NULL
+    [PersonId] int  NOT NULL,
+    [ThumberUpNumber] int  NOT NULL
 );
 GO
 
@@ -155,6 +162,14 @@ CREATE TABLE [dbo].[NotificationSet] (
     [PersonId] int  NOT NULL,
     [Content] nvarchar(max)  NULL,
     [Time] datetime  NOT NULL
+);
+GO
+
+-- Creating table 'CommentThumberUpSet'
+CREATE TABLE [dbo].[CommentThumberUpSet] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [PersonId] int  NOT NULL,
+    [CommentId] int  NOT NULL
 );
 GO
 
@@ -214,6 +229,12 @@ GO
 -- Creating primary key on [Id] in table 'NotificationSet'
 ALTER TABLE [dbo].[NotificationSet]
 ADD CONSTRAINT [PK_NotificationSet]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'CommentThumberUpSet'
+ALTER TABLE [dbo].[CommentThumberUpSet]
+ADD CONSTRAINT [PK_CommentThumberUpSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -384,6 +405,36 @@ GO
 CREATE INDEX [IX_FK_PersonNotification]
 ON [dbo].[NotificationSet]
     ([PersonId]);
+GO
+
+-- Creating foreign key on [PersonId] in table 'CommentThumberUpSet'
+ALTER TABLE [dbo].[CommentThumberUpSet]
+ADD CONSTRAINT [FK_PersonCommentThumberUp]
+    FOREIGN KEY ([PersonId])
+    REFERENCES [dbo].[People]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PersonCommentThumberUp'
+CREATE INDEX [IX_FK_PersonCommentThumberUp]
+ON [dbo].[CommentThumberUpSet]
+    ([PersonId]);
+GO
+
+-- Creating foreign key on [CommentId] in table 'CommentThumberUpSet'
+ALTER TABLE [dbo].[CommentThumberUpSet]
+ADD CONSTRAINT [FK_CommentCommentThumberUp]
+    FOREIGN KEY ([CommentId])
+    REFERENCES [dbo].[CommentSet]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CommentCommentThumberUp'
+CREATE INDEX [IX_FK_CommentCommentThumberUp]
+ON [dbo].[CommentThumberUpSet]
+    ([CommentId]);
 GO
 
 -- --------------------------------------------------

@@ -15,6 +15,38 @@ namespace MyCard3.Controllers
     {
         private MyCardContainer db = new MyCardContainer();
 
+
+        [HttpPost]
+        public ActionResult ThumberUp(int commentId)
+        {
+            int i = 1;
+            Person currentUser = Session["CurrentUserData"] as Person;
+            if (!db.CommentThumberUpSet.Where(tu => (tu.PersonId == currentUser.Id) && (tu.CommentId == commentId)).Any())
+            {
+                db.CommentThumberUpSet.Add(new CommentThumberUp { PersonId = currentUser.Id, CommentId = commentId });
+                Comment comment = db.CommentSet.Where(c => c.Id == commentId).Include(c=>c.Article).FirstOrDefault();
+                comment.ThumberUpNumber += 1;
+
+                switch (comment.ThumberUpNumber)
+                {
+                    case 10:
+                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 10 ThumbUp in {comment.Article.Title}" });
+                        break;
+                    case 5:
+                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 5 ThumbUp in {comment.Article.Title}" });
+                        break;
+                    case 1:
+                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 1 ThumbUp in {comment.Article.Title}" });
+                        break;
+                }
+
+
+                db.SaveChanges();
+
+            }
+            return Json(new { n = 123 });
+        }
+
         // GET: Comments
         public ActionResult CommentList(int articleId = 1)
         {

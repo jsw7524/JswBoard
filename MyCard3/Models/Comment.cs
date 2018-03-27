@@ -14,12 +14,22 @@ namespace MyCard3.Models
     
     public partial class Comment
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Comment()
+        {
+            this.ThumberUpNumber = 0;
+            this.CommentThumberUp = new HashSet<CommentThumberUp>();
+        }
+    
         public int Id { get; set; }
         public string Opinion { get; set; }
         public int ArticleId { get; set; }
         public int PersonId { get; set; }
+        public int ThumberUpNumber { get; set; }
     
         public virtual Article Article { get; set; }
         public virtual Person Person { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CommentThumberUp> CommentThumberUp { get; set; }
     }
 }

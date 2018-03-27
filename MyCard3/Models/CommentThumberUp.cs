@@ -12,13 +12,13 @@ namespace MyCard3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Notification
+    public partial class CommentThumberUp
     {
         public int Id { get; set; }
         public int PersonId { get; set; }
-        public string Content { get; set; }
-        public System.DateTime Time { get; set; }
+        public int CommentId { get; set; }
     
         public virtual Person Person { get; set; }
+        public virtual Comment Comment { get; set; }
     }
 }
