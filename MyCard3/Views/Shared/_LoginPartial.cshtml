@@ -12,7 +12,7 @@
 
     <li class="nav-item">
         @Ajax.ActionLink("Notifications",
-                    "GetMyNotifications", "People",new AjaxOptions {UpdateTargetId="MyNotifications", InsertionMode=InsertionMode.Replace })
+                    "GetMyNotifications", "People",null,new AjaxOptions {UpdateTargetId="MyNotifications", InsertionMode=InsertionMode.Replace},new { id = "LinkNotification" })
     </li>
 
     <li class="nav-item">
@@ -74,6 +74,6 @@ else
                                    routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })
     </li>
 </ul>}
-<div id="MyNotifications">
+<div id="MyNotifications" class="bg-info" style="position:absolute;top: 0px;left: 0px;width: 500px;">
 
 </div>
