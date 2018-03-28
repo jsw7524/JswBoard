@@ -21,12 +21,11 @@ namespace MyCard3.Controllers
         {
             int i = 1;
             Person currentUser = Session["CurrentUserData"] as Person;
+            Comment comment = db.CommentSet.Where(c => c.Id == commentId).Include(c=>c.Article).FirstOrDefault();
             if (!db.CommentThumberUpSet.Where(tu => (tu.PersonId == currentUser.Id) && (tu.CommentId == commentId)).Any())
             {
                 db.CommentThumberUpSet.Add(new CommentThumberUp { PersonId = currentUser.Id, CommentId = commentId });
-                Comment comment = db.CommentSet.Where(c => c.Id == commentId).Include(c=>c.Article).FirstOrDefault();
                 comment.ThumberUpNumber += 1;
-
                 switch (comment.ThumberUpNumber)
                 {
                     case 10:
@@ -39,12 +38,9 @@ namespace MyCard3.Controllers
                         db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 1 ThumbUp in {comment.Article.Title}" });
                         break;
                 }
-
-
                 db.SaveChanges();
-
             }
-            return Json(new { n = 123 });
+            return Json(new { n = comment.ThumberUpNumber });
         }
 
         // GET: Comments
@@ -114,7 +110,6 @@ namespace MyCard3.Controllers
             ViewBag.ArticleId = new SelectList(db.ArticleSet, "Id", "Title", comment.ArticleId);
             ViewBag.PersonId = new SelectList(db.People, "Id", "Name", comment.PersonId);
             return View(comment);
-
         }
 
         // POST: Comments/Edit/5
