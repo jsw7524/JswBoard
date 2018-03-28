@@ -11,8 +11,20 @@
 <ul class="nav navbar-nav ml-auto">
 
     <li class="nav-item">
-        @Ajax.ActionLink("Notifications",
-                    "GetMyNotifications", "People",null,new AjaxOptions {UpdateTargetId="MyNotifications", InsertionMode=InsertionMode.Replace},new { id = "LinkNotification" })
+
+        <div class="dropdown">
+            @Ajax.ActionLink("Notifications",
+                  "GetMyNotifications", "People", null, new AjaxOptions { UpdateTargetId = "MyNotifications", InsertionMode = InsertionMode.Replace }, new { id = "LinkNotification", @class = "nav-link", data_toggle = "dropdown" })
+            
+            <div id="MyNotifications" class="dropdown-menu ">
+                <a class="dropdown-menu" href="#">A</a>
+                <a class="dropdown-menu" href="#">B</a>
+                <a class="dropdown-menu" href="#">C</a>
+            </div>
+
+        </div>
+
+
     </li>
 
     <li class="nav-item">
@@ -74,6 +86,6 @@ else
                                    routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link" })
     </li>
 </ul>}
-<div id="MyNotifications" class="bg-info" style="position:absolute;top: 0px;left: 0px;width: 500px;">
+@*<div id="MyNotifications" class="bg-info" style="position:absolute;top: 0px;left: 0px;width: 500px;">
 
-</div>
+</div>*@
