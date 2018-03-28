@@ -27,10 +27,10 @@ namespace MyCard3.Controllers
         {
             int i = 1;
             Person currentUser = Session["CurrentUserData"] as Person;
+            Article article = db.ArticleSet.Where(a => a.Id == articleId).FirstOrDefault();
             if (!db.ArticleThumberUpSet.Where(tu => (tu.PersonId == currentUser.Id) && (tu.ArticleId == articleId)).Any())
             {
                 db.ArticleThumberUpSet.Add(new ArticleThumberUp {PersonId= currentUser.Id, ArticleId = articleId });
-                Article article = db.ArticleSet.Where(a => a.Id == articleId).FirstOrDefault();
                 article.ThumbUpNumber += 1;
 
                 switch (article.ThumbUpNumber)
@@ -45,14 +45,9 @@ namespace MyCard3.Controllers
                         db.NotificationSet.Add(new Notification { PersonId = article.PersonId, Time = DateTime.Now, Content = $"You got 1 ThumbUp in {article.Title}" });
                         break;
                 }
-
-
                 db.SaveChanges();
-
             }
-
-
-            return Json(new { n = 123 });
+            return Json(new { n = article.ThumbUpNumber });
         }
 
 

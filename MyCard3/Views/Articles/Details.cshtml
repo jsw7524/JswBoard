@@ -76,8 +76,13 @@
 
     </dl>
 </div>
+<div>
+    <span id="ArticleThumberUpNumber">
+        @Model.ThumbUpNumber
+    </span>
+    <button type="button" id="btnLike">Like this Article!</button>
+</div>
 
-<button type="button" id="btnLike">Like this Article!</button>
 
 <p>
     @*@Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |*@
@@ -98,7 +103,10 @@
             $("#btnLike").click(function () {
 
                 $.post("@Url.Action("ThumberUp", "Articles")", { "articleId":@Model.Id }, function (data, textStatus) {
-                    alert(data.n)
+
+                    $("#ArticleThumberUpNumber").text(data.n)
+
+                    //alert(data.n)
                     //data contains the JSON object
                     //textStatus contains the status: success, error, etc
                 }, "json");
@@ -106,8 +114,11 @@
 
 
                 $(".LikeComment").click(function (event) {
-                $.post("@Url.Action("ThumberUp", "Comments")", { "commentId": event.target.id }, function (data, textStatus) {
-                    alert(data.n)
+                    $.post("@Url.Action("ThumberUp", "Comments")", { "commentId": event.target.id }, function (data, textStatus) {
+
+                        $("#CommentThumberUpNumber").text(data.n)
+
+                    //alert(data.n)
                     //data contains the JSON object
                     //textStatus contains the status: success, error, etc
                 }, "json");
