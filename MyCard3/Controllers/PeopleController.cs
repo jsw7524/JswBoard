@@ -96,6 +96,8 @@ namespace MyCard3.Controllers
             {
                 me.Person1.Add(friend);
                 friend.Person1.Add(me);
+                db.NotificationSet.Add(new Notification { PersonId = me.Id, Time = DateTime.Now, Content = $"You got a new friend! {friend.Name}" });
+                db.NotificationSet.Add(new Notification { PersonId = friend.Id, Time = DateTime.Now, Content = $"You got a new friend! {me.Name}" });
             }
             db.SaveChanges();
             return View("Card", db.People.Where(p => p.Id == partnerId).FirstOrDefault());
