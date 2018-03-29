@@ -49,6 +49,16 @@
     @RenderSection("scripts", required: false)
 
     <script>
+        function UpdateNotifications(data) {
+            //alert(data)
+            NotificationsArray = JSON.parse(data.responseText);
+            NotificationsHTML=""
+            NotificationsArray.forEach(function (e) {
+                NotificationsHTML += "<a class=\"dropdown-item\" href=\"#\">" + e +"</a>"
+            })
+            $("#MyNotifications").html(NotificationsHTML)
+        }
+
         $(document).ready(function () {
             $("#LinkNotification").click(function () {
                 $("#MyNotifications").toggle()
