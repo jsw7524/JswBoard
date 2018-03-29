@@ -10,55 +10,72 @@
 <p>
     @*@Html.ActionLink("Create New", "Create")*@
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Gender)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Birthday)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.authenticationId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Picture)
-        </th>
-        <th></th>
-    </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @*@Html.DisplayFor(modelItem => item.Name)*@
-            @Html.ActionLink(item.Name, "Card", new { id = item.Id })
-        </td>
-        <td>
+<div class="container">
+
+    @foreach (var item in Model)
+    {
+    <div class="row">
+        <div class="col">
+            <img src="@("/Content/Images/Photo"+@item.authenticationId+".png")" alt="Card image" style="width:50%">
+        </div>
+        <div class="col">
+            @Html.DisplayFor(modelItem => item.Name)
+        </div>
+        <div class="col">
             @Html.DisplayFor(modelItem => item.Gender)
-        </td>
-        <td>
+        </div>
+        <div class="col">
             @Html.DisplayFor(modelItem => item.Birthday)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.authenticationId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Picture)
-        </td>
-        <td>
-            @Html.ActionLink("Messages", "Index", "Messages", new { Id=item.Id }, null) 
-           @* @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
-        </td>
-    </tr>
-}
+        </div>
+        <div class="col">
+            @Html.ActionLink("Messages", "Index", "Messages", new { Id = item.Id }, null)
+        </div>
+    </div>
+    }
+</div>
 
-</table>
+
+
+@*<table class="table">
+        <tr>
+            <th>
+
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Birthday)
+            </th>
+
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                <img  src="@("/Content/Images/Photo"+@item.authenticationId+".png")" alt="Card image" style="width:25%">
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+                @Html.ActionLink(item.Name, "Card", new { id = item.Id })
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Birthday)
+            </td>
+
+            <td>
+                @Html.ActionLink("Messages", "Index", "Messages", new { Id = item.Id }, null)
+                @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            </td>
+        </tr>
+    }
+
+    </table>*@
