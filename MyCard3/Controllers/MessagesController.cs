@@ -51,6 +51,7 @@ namespace MyCard3.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
         public ActionResult Create([Bind(Include = "Id,SendPersonId,MessageContent,Time")] Message message)
         {
             if (ModelState.IsValid)
@@ -67,7 +68,7 @@ namespace MyCard3.Controllers
                 return RedirectToAction("Index",new { id= friend.Id});
             }
 
-            ViewBag.SendPersonId = new SelectList(db.People, "Id", "Name", message.SendPersonId);
+            //ViewBag.SendPersonId = new SelectList(db.People, "Id", "Name", message.SendPersonId);
             return View(message);
         }
 

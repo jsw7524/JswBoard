@@ -28,8 +28,17 @@ namespace MyCard3.Controllers
                 comment.ThumberUpNumber += 1;
                 switch (comment.ThumberUpNumber)
                 {
-                    case 10:
-                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 10 ThumbUp in {comment.Article.Title}" });
+                    case 100:
+                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 100 ThumbUp in {comment.Article.Title}" });
+                        break;
+                    case 60:
+                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 60 ThumbUp in {comment.Article.Title}" });
+                        break;
+                    case 30:
+                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 30 ThumbUp in {comment.Article.Title}" });
+                        break;
+                    case 15:
+                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 15 ThumbUp in {comment.Article.Title}" });
                         break;
                     case 5:
                         db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 5 ThumbUp in {comment.Article.Title}" });

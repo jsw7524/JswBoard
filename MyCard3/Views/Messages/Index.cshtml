@@ -1,5 +1,5 @@
 ﻿@model IEnumerable<MyCard3.Models.Message>
-
+@using MyCard3.Models;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,40 +8,82 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Send Message", "Create",new {id= ViewBag.SendMessageToID })
+    @Html.ActionLink("Send Message", "Create", new { id = ViewBag.SendMessageToID })
 </p>
 <table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MessageContent)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Time)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SendPerson.Name)
-        </th>
-        <th></th>
-    </tr>
+    @*<tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MessageContent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SendPerson.Name)
+            </th>
+            <th></th>
+        </tr>*@
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MessageContent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Time)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.SendPerson.Name)
-        </td>
-        <td>
-            @*@Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })*@
-        </td>
-    </tr>
-}
+    <div class="container">
+        @foreach (var item in Model)
+        {
+            <div class="row">
+                @{
+
+                    Person currentUser = Session["CurrentUserData"] as Person;
+                    if (currentUser.Id == item.SendPersonId)
+                    {
+                        <div class="col-lg-2">
+                        </div>
+                        <div class="col-lg-8 text-right">
+                            @Html.Raw(item.MessageContent)
+                        </div>
+                        <div class="col-lg-2">
+                            @Html.DisplayFor(modelItem => item.SendPerson.Name)
+                        </div>
+                    }
+                    else
+                    {
+
+                        <div class="col-lg-2">
+                            @Html.DisplayFor(modelItem => item.SendPerson.Name)
+                        </div>
+                        <div class="col-lg-8">
+                            @Html.Raw(item.MessageContent)
+                        </div>
+                        <div class="col-lg-2">
+                        </div>
+                    }
+
+                }
+
+            </div>
+
+
+            @*<tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SendPerson.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Time)
+                    </td>
+
+                    @*<td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div name="MessageContent" style="background-color: rgb(243, 242, 238)">
+                            @Html.Raw(item.MessageContent)
+                        </div>
+                    </td>
+                </tr>*@
+        }
+    </div>
 
 </table>
-@Html.ActionLink("List of Friends","ListFriends", "People")
+@Html.ActionLink("List of Friends", "ListFriends", "People")

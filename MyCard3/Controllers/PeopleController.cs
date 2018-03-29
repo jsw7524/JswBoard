@@ -148,7 +148,6 @@ namespace MyCard3.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
             return View(person);
         }
 
