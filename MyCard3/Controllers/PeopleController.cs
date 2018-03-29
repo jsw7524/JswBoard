@@ -17,7 +17,6 @@ namespace MyCard3.Controllers
     {
         private MyCardContainer db = new MyCardContainer();
 
-
         public ActionResult GetMyNotifications()
         {
             Person currentUser = Session["CurrentUserData"] as Person;
