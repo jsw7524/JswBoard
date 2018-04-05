@@ -336,12 +336,12 @@ namespace MyCard3.Controllers
             {
                 return RedirectToAction("Login");
             }
-
             // Sign in the user with this external login provider if the user already has a login
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
             {
                 case SignInStatus.Success:
+                    UserManager.UpdateLastLoginDate(loginInfo.Email);  //???????????HOW????????????
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
