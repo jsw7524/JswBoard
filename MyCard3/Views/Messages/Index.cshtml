@@ -6,47 +6,47 @@
 }
 
 @*@section header {
-    .bubble
-    {
-    position: relative;
-    width: 315px;
-    height: 160px;
-    padding: 0px;
-    background: #9CFFFF;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius: 10px;
-    border: #7F7F7F solid 5px;
-    }
+        .bubble
+        {
+        position: relative;
+        width: 315px;
+        height: 160px;
+        padding: 0px;
+        background: #9CFFFF;
+        -webkit-border-radius: 10px;
+        -moz-border-radius: 10px;
+        border-radius: 10px;
+        border: #7F7F7F solid 5px;
+        }
 
-    .bubble:after
-    {
-    content: '';
-    position: absolute;
-    border-style: solid;
-    border-width: 15px 0 15px 15px;
-    border-color: transparent #9CFFFF;
-    display: block;
-    width: 0;
-    z-index: 1;
-    right: -15px;
-    top: 24px;
-    }
+        .bubble:after
+        {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 15px 0 15px 15px;
+        border-color: transparent #9CFFFF;
+        display: block;
+        width: 0;
+        z-index: 1;
+        right: -15px;
+        top: 24px;
+        }
 
-    .bubble:before
-    {
-    content: '';
-    position: absolute;
-    border-style: solid;
-    border-width: 19px 0 19px 19px;
-    border-color: transparent #7F7F7F;
-    display: block;
-    width: 0;
-    z-index: 0;
-    right: -24px;
-    top: 20px;
-    }
-}*@
+        .bubble:before
+        {
+        content: '';
+        position: absolute;
+        border-style: solid;
+        border-width: 19px 0 19px 19px;
+        border-color: transparent #7F7F7F;
+        display: block;
+        width: 0;
+        z-index: 0;
+        right: -24px;
+        top: 20px;
+        }
+    }*@
 
 <h2>Index</h2>
 
@@ -74,40 +74,22 @@
                 @{
 
                     Person currentUser = Session["CurrentUserData"] as Person;
-                    if (currentUser.Id == item.SendPersonId)
-                    {
-                        <div class="col-lg-2">
-                        </div>
-                        <div class="col-lg-8">
-                            @Html.Raw(item.MessageContent)
-                        </div>
-                        <div class="col-lg-2 ">
-                            <div>
-                                @Html.DisplayFor(modelItem => item.SendPerson.Name)
-                            </div>
-                            <div>
-                                @Html.DisplayFor(modelItem => item.Time)
-                            </div>
 
-                        </div>
-                    }
-                    else
-                    {
 
-                        <div class="col-lg-2 ">
-                            <div>
-                                @Html.DisplayFor(modelItem => item.SendPerson.Name)
-                            </div>
-                            <div>
-                                @Html.DisplayFor(modelItem => item.Time)
-                            </div>
+                    <div class="col-lg-2 ">
+                        <div>
+                            @Html.DisplayFor(modelItem => item.SendPerson.Name)
                         </div>
-                        <div class="col-lg-8 ">
-                            @Html.Raw(item.MessageContent)
+                        <div>
+                            @Html.DisplayFor(modelItem => item.Time)
                         </div>
-                        <div class="col-lg-3">
-                        </div>
-                    }
+                    </div>
+                    <div class="col-lg-4 ">
+                        @Html.Raw(item.MessageContent)
+                    </div>
+                    <div class="col-lg-6">
+                    </div>
+
 
                 }
 
