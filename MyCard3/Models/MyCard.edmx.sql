@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/27/2018 23:21:00
+-- Date Created: 04/05/2018 18:27:53
 -- Generated from EDMX file: D:\SourceCode\CSharp\MyCard3\MyCard3\Models\MyCard.edmx
 -- --------------------------------------------------
 
@@ -50,6 +50,12 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_PersonNotification]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[NotificationSet] DROP CONSTRAINT [FK_PersonNotification];
 GO
+IF OBJECT_ID(N'[dbo].[FK_PersonCommentThumberUp]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CommentThumberUpSet] DROP CONSTRAINT [FK_PersonCommentThumberUp];
+GO
+IF OBJECT_ID(N'[dbo].[FK_CommentCommentThumberUp]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CommentThumberUpSet] DROP CONSTRAINT [FK_CommentCommentThumberUp];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -79,6 +85,9 @@ GO
 IF OBJECT_ID(N'[dbo].[NotificationSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[NotificationSet];
 GO
+IF OBJECT_ID(N'[dbo].[CommentThumberUpSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CommentThumberUpSet];
+GO
 IF OBJECT_ID(N'[dbo].[Friends]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Friends];
 GO
@@ -95,7 +104,8 @@ CREATE TABLE [dbo].[People] (
     [Birthday] nvarchar(max)  NOT NULL,
     [authenticationId] nvarchar(128)  NOT NULL,
     [Description] nvarchar(max)  NULL,
-    [Picture] varbinary(max)  NULL
+    [Picture] varbinary(max)  NULL,
+    [Department] nvarchar(100)  NULL
 );
 GO
 

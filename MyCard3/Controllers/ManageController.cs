@@ -11,6 +11,7 @@ using MyCard3.Models;
 namespace MyCard3.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class ManageController : Controller
     {
         private ApplicationSignInManager _signInManager;

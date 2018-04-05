@@ -80,6 +80,7 @@
     <Property Name="authenticationId" Type="nvarchar" Nullable="false" MaxLength="128" />
     <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Picture" Type="varbinary(max)" Nullable="true" />
+    <Property Name="Department" Type="nvarchar" Nullable="true" MaxLength="100" />
   </EntityType>
   <EntityType Name="ArticleSet">
     <Key>
@@ -402,6 +403,7 @@
           <NavigationProperty Name="ArticleThumberUp" Relationship="MyCard.PersonArticleThumberUp" FromRole="Person" ToRole="ArticleThumberUp" />
           <NavigationProperty Name="Notification" Relationship="MyCard.PersonNotification" FromRole="Person" ToRole="Notification" />
           <NavigationProperty Name="CommentThumberUp" Relationship="MyCard.PersonCommentThumberUp" FromRole="Person" ToRole="CommentThumberUp" />
+          <Property Name="Department" Type="String" Nullable="true" Unicode="true" MaxLength="100" />
           </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -635,6 +637,7 @@
           <ScalarProperty Name="authenticationId" ColumnName="authenticationId" />
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Picture" ColumnName="Picture" />
+          <ScalarProperty Name="Department" ColumnName="Department" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

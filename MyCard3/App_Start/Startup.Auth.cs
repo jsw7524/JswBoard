@@ -58,11 +58,11 @@ namespace MyCard3
             //   appId: "",
             //   appSecret: "");
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+            {
+                ClientId = "235799612738-lfd0rkgtbc7k7o81eah9k67g6iot4ad5.apps.googleusercontent.com",
+                ClientSecret = "zaNPFFOOUOtlllmIFfGB9QMN"
+            });
         }
     }
 }

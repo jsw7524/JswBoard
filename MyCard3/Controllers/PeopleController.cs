@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 
 namespace MyCard3.Controllers
 {
+    [RequireHttps]
     public class PeopleController : Controller
     {
         private MyCardContainer db = new MyCardContainer();

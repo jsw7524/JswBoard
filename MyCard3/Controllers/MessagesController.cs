@@ -10,6 +10,7 @@ using MyCard3.Models;
 
 namespace MyCard3.Controllers
 {
+    [RequireHttps]
     public class MessagesController : Controller
     {
         private MyCardContainer db = new MyCardContainer();

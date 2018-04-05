@@ -12,6 +12,7 @@ using MyCard3.Models;
 
 namespace MyCard3.Controllers
 {
+    [RequireHttps]
     public class ArticlesController : Controller
     {
         private MyCardContainer db = new MyCardContainer();

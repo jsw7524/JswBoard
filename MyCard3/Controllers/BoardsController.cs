@@ -11,6 +11,7 @@ using MyCard3.Models;
 
 namespace MyCard3.Controllers
 {
+    [RequireHttps]
     public class BoardsController : Controller
     {
         private MyCardContainer db = new MyCardContainer();
