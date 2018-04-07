@@ -60,8 +60,8 @@ namespace MyCard3
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "235799612738-lfd0rkgtbc7k7o81eah9k67g6iot4ad5.apps.googleusercontent.com",
-                ClientSecret = "zaNPFFOOUOtlllmIFfGB9QMN"
+                ClientId = "235799612738-5q8nau2ni46tmn70cas526ke7q98pl0r.apps.googleusercontent.com",
+                ClientSecret = "mU429raaxwaPgrJzc5ckLc51"
             });
         }
     }
