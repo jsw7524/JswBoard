@@ -336,12 +336,26 @@ namespace MyCard3.Controllers
             {
                 return RedirectToAction("Login");
             }
-
             // Sign in the user with this external login provider if the user already has a login
             var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
             switch (result)
             {
                 case SignInStatus.Success:
+                    //UserManager.UpdateLastLoginDate(loginInfo.Email);  //???????????HOW????????????
+
+                    if (Request.Cookies["LastLoginDate"] != null)
+                    {
+                        HttpCookie lastLoginDateCookie = Request.Cookies["LastLoginDate"];
+                        Session["LastLoginDate"] = (DateTime.Parse(lastLoginDateCookie.Value)).ToString("s");
+                    }
+                    else
+                    {
+                        Session["LastLoginDate"] = DateTime.Now;
+                    }
+                    HttpCookie aCookie = new HttpCookie("LastLoginDate");
+                    aCookie.Value = DateTime.Now.ToString("s");
+                    aCookie.Expires = DateTime.Now.AddDays(10);
+                    Response.Cookies.Add(aCookie);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");

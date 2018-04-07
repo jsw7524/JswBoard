@@ -21,7 +21,7 @@ namespace MyCard3.Controllers
         public ActionResult GetMyNotifications()
         {
             Person currentUser = Session["CurrentUserData"] as Person;
-            var myNotifications=db.NotificationSet.Where(n => n.PersonId == currentUser.Id).Select(n =>  n.Content);
+            var myNotifications=db.NotificationSet.Where(n => n.PersonId == currentUser.Id).OrderBy(n=>n.Time).Take(10).Select(n=>new { Content= n.Content, Time=n.Time }); //???order???
             //<a class="dropdown-menu" href="#">A</a>
             var json = JsonConvert.SerializeObject(myNotifications);
             //return Json(json,JsonRequestBehavior.AllowGet);

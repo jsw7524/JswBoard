@@ -35,10 +35,23 @@ namespace MyCard3
     // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
+
+
         public ApplicationUserManager(IUserStore<ApplicationUser> store)
             : base(store)
         {
         }
+
+        //public void UpdateLastLoginDate( string mail)
+        //{
+        //    using (ApplicationDbContext db = new ApplicationDbContext())
+        //    {
+        //        var user=db.Users.Where(a => a.Email == mail).FirstOrDefault();
+        //        user.LastLoginDate = user.CurrentLoginDate;
+        //        user.CurrentLoginDate = DateTime.Now;
+        //        db.SaveChanges();
+        //    }
+        //}
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {

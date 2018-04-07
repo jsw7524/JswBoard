@@ -50,17 +50,25 @@
     @RenderSection("scripts", required: false)
 
     <script>
+        var NewNotifications = 0;
         function UpdateNotifications(data) {
             //alert(data)
             NotificationsArray = JSON.parse(data.responseText);
-            NotificationsHTML=""
+            NotificationsHTML = ""
+            lastLoginData="@(Session["LastLoginDate"])"
             NotificationsArray.forEach(function (e) {
-                NotificationsHTML += "<a class=\"dropdown-item\" href=\"#\">" + e +"</a>"
+                if (lastLoginData > e.Time) {
+                    NotificationsHTML += "<a class=\"dropdown-item\" href=\"#\">AAAA" + e.Content + "</a>"
+                }
+                else {
+                    NotificationsHTML += "<a class=\"dropdown-item bg-primary\" href=\"#\">BBBB" + e.Content + "</a>"
+                }    
             })
             $("#MyNotifications").html(NotificationsHTML)
         }
 
         $(document).ready(function () {
+
             $("#LinkNotification").click(function () {
                 $("#MyNotifications").toggle()
             });
