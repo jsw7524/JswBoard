@@ -42,17 +42,16 @@ namespace MyCard3
         {
         }
 
-        public void UpdateLastLoginDate( string mail)
-        {
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                var user=db.Users.Where(a => a.Email == mail).FirstOrDefault();
-                user.LastLoginDate = user.CurrentLoginDate;
-                user.CurrentLoginDate = DateTime.Now;
-                db.SaveChanges();
-            }
-
-        }
+        //public void UpdateLastLoginDate( string mail)
+        //{
+        //    using (ApplicationDbContext db = new ApplicationDbContext())
+        //    {
+        //        var user=db.Users.Where(a => a.Email == mail).FirstOrDefault();
+        //        user.LastLoginDate = user.CurrentLoginDate;
+        //        user.CurrentLoginDate = DateTime.Now;
+        //        db.SaveChanges();
+        //    }
+        //}
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context) 
         {
