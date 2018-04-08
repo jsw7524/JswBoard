@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using MyCard3.App_Code;
 using MyCard3.Models;
 using Newtonsoft.Json;
 
@@ -21,10 +22,22 @@ namespace MyCard3.Controllers
         public ActionResult GetMyNotifications()
         {
             Person currentUser = Session["CurrentUserData"] as Person;
-            var myNotifications=db.NotificationSet.Where(n => n.PersonId == currentUser.Id).OrderBy(n=>n.Time).Take(10).Select(n=>new { Content= n.Content, Time=n.Time }); //???order???
+            var myNotifications=db.NotificationSet.Where(n => n.PersonId == currentUser.Id).OrderBy(n=>n.Time).Select(n=>new { Content= n.Content, Time=n.Time }); //???order???
             //<a class="dropdown-menu" href="#">A</a>
             var json = JsonConvert.SerializeObject(myNotifications);
             //return Json(json,JsonRequestBehavior.AllowGet);
+            SetReadLastNotificationCookie.SetCookie(this);
+            return Content(json);
+        }
+
+        public ActionResult HasNewNotifications()
+        {
+            Person currentUser = Session["CurrentUserData"] as Person;
+            var myNotifications = db.NotificationSet.Where(n => n.PersonId == currentUser.Id).OrderBy(n => n.Time).Select(n => new { Content = n.Content, Time = n.Time }); //???order???
+            //<a class="dropdown-menu" href="#">A</a>
+            var json = JsonConvert.SerializeObject(myNotifications);
+            //return Json(json,JsonRequestBehavior.AllowGet);
+            //SetReadLastNotificationCookie.SetCookie(this);
             return Content(json);
         }
 

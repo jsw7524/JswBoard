@@ -15,7 +15,6 @@
         <div class="dropdown">
             @Ajax.ActionLink("Notifications",
                   "GetMyNotifications", "People", null, new AjaxOptions { UpdateTargetId = "MyNotifications", InsertionMode = InsertionMode.Replace, OnComplete = "UpdateNotifications" }, new { id = "LinkNotification", @class = "nav-link", data_toggle = "dropdown"})
-            
             <div id="MyNotifications" class="dropdown-menu">
                 <a class="dropdown-item" href="#"></a>
             </div>

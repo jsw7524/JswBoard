@@ -52,26 +52,38 @@
     <script>
         var NewNotifications = 0;
         function UpdateNotifications(data) {
+            if (typeof (data) == "object") {
+                NotificationsArray = JSON.parse(data.responseText);
+            }
+            else{
+                NotificationsArray = JSON.parse(data);
+            }
             //alert(data)
-            NotificationsArray = JSON.parse(data.responseText);
+
             NotificationsHTML = ""
             lastLoginData="@(Session["LastLoginDate"])"
             NotificationsArray.forEach(function (e) {
                 if (lastLoginData > e.Time) {
-                    NotificationsHTML += "<a class=\"dropdown-item\" href=\"#\">AAAA" + e.Content + "</a>"
+                    NotificationsHTML += "<a class=\"dropdown-item\" href=\"#\">" + e.Content + "</a>"
                 }
                 else {
-                    NotificationsHTML += "<a class=\"dropdown-item bg-primary\" href=\"#\">BBBB" + e.Content + "</a>"
-                }    
+                    NotificationsHTML += "<a class=\"dropdown-item bg-primary\" href=\"#\">" + e.Content + "</a>"
+                    $("#btnNotifications").addClass("bg-primary")
+                }
             })
             $("#MyNotifications").html(NotificationsHTML)
         }
 
         $(document).ready(function () {
 
+            $.post("@Url.Action("HasNewNotifications", "People")", function (data) {
+                UpdateNotifications(data)
+            });
+
             $("#LinkNotification").click(function () {
                 $("#MyNotifications").toggle()
             });
+
         });
     </script>
 

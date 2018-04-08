@@ -8,7 +8,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using MyCard3.App_Code;
 using MyCard3.Models;
+
 
 namespace MyCard3.Controllers
 {
@@ -342,7 +344,7 @@ namespace MyCard3.Controllers
             {
                 case SignInStatus.Success:
                     //UserManager.UpdateLastLoginDate(loginInfo.Email);  //???????????HOW????????????
-
+                    //SetReadLastNotificationCookie.SetCookie(this);
                     if (Request.Cookies["LastLoginDate"] != null)
                     {
                         HttpCookie lastLoginDateCookie = Request.Cookies["LastLoginDate"];
@@ -350,12 +352,12 @@ namespace MyCard3.Controllers
                     }
                     else
                     {
-                        Session["LastLoginDate"] = DateTime.Now;
+                        Session["LastLoginDate"] = DateTime.Now.ToString("s");
                     }
-                    HttpCookie aCookie = new HttpCookie("LastLoginDate");
-                    aCookie.Value = DateTime.Now.ToString("s");
-                    aCookie.Expires = DateTime.Now.AddDays(10);
-                    Response.Cookies.Add(aCookie);
+                    //HttpCookie aCookie = new HttpCookie("LastLoginDate");
+                    //aCookie.Value = DateTime.Now.ToString("s");
+                    //aCookie.Expires = DateTime.Now.AddDays(10);
+                    //Response.Cookies.Add(aCookie);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
