@@ -22,9 +22,16 @@ namespace MyCard3.Controllers
             //////////////
             Session["CurrentUserAuthenticationID"] = User.Identity.GetUserId();
             string tmp = Session["CurrentUserAuthenticationID"] as string;
-            Session["CurrentUserData"] = db.People.AsNoTracking().Where(p => p.authenticationId == tmp).FirstOrDefault();
+            Person currentUser = db.People.AsNoTracking().Where(p => p.authenticationId == tmp).FirstOrDefault();
+            Session["CurrentUserData"] = currentUser;
             //////////////
-
+            if (currentUser != null)
+            {
+                if (currentUser.HasNewNotification)
+                {
+                    Session["HasNewNotification"] = true;
+                }
+            }
             return View(db.BoardSet.ToList());
         }
 

@@ -81,6 +81,7 @@
     <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
     <Property Name="Picture" Type="varbinary(max)" Nullable="true" />
     <Property Name="Department" Type="nvarchar" Nullable="true" MaxLength="100" />
+    <Property Name="HasNewNotification" Type="bit" Nullable="false" DefaultValue="true" />
   </EntityType>
   <EntityType Name="ArticleSet">
     <Key>
@@ -404,6 +405,7 @@
           <NavigationProperty Name="Notification" Relationship="MyCard.PersonNotification" FromRole="Person" ToRole="Notification" />
           <NavigationProperty Name="CommentThumberUp" Relationship="MyCard.PersonCommentThumberUp" FromRole="Person" ToRole="CommentThumberUp" />
           <Property Name="Department" Type="String" Nullable="true" Unicode="true" MaxLength="100" />
+          <Property Name="HasNewNotification" Type="Boolean" Nullable="false" DefaultValue="true" />
           </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -638,6 +640,7 @@
           <ScalarProperty Name="Description" ColumnName="Description" />
           <ScalarProperty Name="Picture" ColumnName="Picture" />
           <ScalarProperty Name="Department" ColumnName="Department" />
+          <ScalarProperty Name="HasNewNotification" ColumnName="HasNewNotification" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

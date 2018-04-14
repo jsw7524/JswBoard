@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/05/2018 18:27:53
+-- Date Created: 04/14/2018 17:25:26
 -- Generated from EDMX file: D:\SourceCode\CSharp\MyCard3\MyCard3\Models\MyCard.edmx
 -- --------------------------------------------------
 
@@ -105,7 +105,8 @@ CREATE TABLE [dbo].[People] (
     [authenticationId] nvarchar(128)  NOT NULL,
     [Description] nvarchar(max)  NULL,
     [Picture] varbinary(max)  NULL,
-    [Department] nvarchar(100)  NULL
+    [Department] nvarchar(100)  NULL,
+    [HasNewNotification] bit  NOT NULL
 );
 GO
 

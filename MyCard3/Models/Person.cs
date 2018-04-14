@@ -17,6 +17,7 @@ namespace MyCard3.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Person()
         {
+            this.HasNewNotification = true;
             this.Article = new HashSet<Article>();
             this.Comment = new HashSet<Comment>();
             this.Person2 = new HashSet<Person>();
@@ -36,6 +37,7 @@ namespace MyCard3.Models
         public string Description { get; set; }
         public byte[] Picture { get; set; }
         public string Department { get; set; }
+        public bool HasNewNotification { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Article> Article { get; set; }

@@ -54,9 +54,14 @@
 
         function DeleteAndUpdateNotifications(data) {
             UpdateNotifications(data);
-             $.post("@Url.Action("DeleteNotificationCookie", "People")", function (data) {
+             @*$.post("@Url.Action("DeleteNotificationCookie", "People")", function (data) {
                  alert(data);
-            });
+            });*@
+
+            var tzoffset = (new Date()).getTimezoneOffset() * 60000; //offset in milliseconds
+            var localISOTime = (new Date(Date.now() - tzoffset)).toISOString().slice(0, -1);
+            localStorage.lastLoginData = localISOTime;
+
         }
 
 
@@ -70,14 +75,27 @@
             //alert(data)
 
             NotificationsHTML = ""
-            lastLoginData="@(Session["LastLoginDate"])"
+            //lastLoginData="@(Session["LastLoginDate"])"
+            //lastLoginData =(new Date()).toISOString()
+
+
+            //////////////
+            if (localStorage.lastLoginData) {
+                lastLoginData = localStorage.lastLoginData;
+            }
+            else{
+                lastLoginData = "1986-07-24T17:01:51.582"
+            }
+            /////////////
+
+
             NotificationsArray.forEach(function (e) {
                 if (lastLoginData > e.Time) {
                     NotificationsHTML += "<a class=\"dropdown-item\" href=\"#\">" + e.Content + "</a>"
                 }
                 else {
                     NotificationsHTML += "<a class=\"dropdown-item bg-primary\" href=\"#\">" + e.Content + "</a>"
-                    $("#btnNotifications").addClass("bg-primary")
+                    //$("#btnNotifications").addClass("bg-primary")
                 }
             })
             $("#MyNotifications").html(NotificationsHTML)
@@ -91,9 +109,22 @@
 
         $(document).ready(function () {
 
-            $.post("@Url.Action("HasNewNotifications", "People")", function (data) {
+            @*$.post("@Url.Action("HasNewNotifications", "People")", function (data) {
                 UpdateNotifications(data)
-            });
+            });*@
+
+            @{
+                var HasNewNotification = Session["HasNewNotification"];
+                if (HasNewNotification != null)
+                {
+                    if ((Boolean)HasNewNotification == true)
+                    {
+                        <text>$("#btnNotifications").addClass("bg-primary")</text>
+                    }
+                }
+            }
+
+
 
             $("#LinkNotification").click(function () {
                 $("#MyNotifications").toggle()

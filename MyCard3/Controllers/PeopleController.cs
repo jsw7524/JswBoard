@@ -20,11 +20,11 @@ namespace MyCard3.Controllers
         private MyCardContainer db = new MyCardContainer();
 
 
-        public ActionResult DeleteNotificationCookie()
-        {
-            SetReadLastNotificationCookie.DeleteCookie(this);
-            return Content("Hello");
-        }
+        //public ActionResult DeleteNotificationCookie()
+        //{
+        //    SetReadLastNotificationCookie.DeleteCookie(this);
+        //    return Content("Hello");
+        //}
 
         public ActionResult GetMyNotifications()
         {
@@ -33,7 +33,13 @@ namespace MyCard3.Controllers
             //<a class="dropdown-menu" href="#">A</a>
             var json = JsonConvert.SerializeObject(myNotifications);
             //return Json(json,JsonRequestBehavior.AllowGet);
-            SetReadLastNotificationCookie.SetCookie(this);
+            //SetReadLastNotificationCookie.SetCookie(this);
+            if (true==db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().HasNewNotification)
+            {
+                db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().HasNewNotification = false;
+                db.SaveChanges();
+            }
+            Session["HasNewNotification"] = false;
             return Content(json);
         }
 
@@ -118,6 +124,8 @@ namespace MyCard3.Controllers
                 friend.Person1.Add(me);
                 db.NotificationSet.Add(new Notification { PersonId = me.Id, Time = DateTime.Now, Content = $"You got a new friend! {friend.Name}" });
                 db.NotificationSet.Add(new Notification { PersonId = friend.Id, Time = DateTime.Now, Content = $"You got a new friend! {me.Name}" });
+                db.People.Where(p => p.Id == me.Id).FirstOrDefault().HasNewNotification = true;
+                db.People.Where(p => p.Id == friend.Id).FirstOrDefault().HasNewNotification = true;
             }
             db.SaveChanges();
             return View("Card", db.People.Where(p => p.Id == partnerId).FirstOrDefault());
