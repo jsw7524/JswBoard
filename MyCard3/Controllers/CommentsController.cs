@@ -49,7 +49,7 @@ namespace MyCard3.Controllers
                         tmpN = 1;
                         break;
                 }
-                db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got {tmpN} ThumbUp(s) in {comment.Article.Title}" });
+                db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now.ToLocalTime(), Content = $"You got {tmpN} ThumbUp(s) in {comment.Article.Title}" });
                 db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().HasNewNotification = true;
                 db.SaveChanges();
             }

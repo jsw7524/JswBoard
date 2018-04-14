@@ -125,8 +125,8 @@ namespace MyCard3.Controllers
             {
                 me.Person1.Add(friend);
                 friend.Person1.Add(me);
-                db.NotificationSet.Add(new Notification { PersonId = me.Id, Time = DateTime.Now, Content = $"You got a new friend! {friend.Name}" });
-                db.NotificationSet.Add(new Notification { PersonId = friend.Id, Time = DateTime.Now, Content = $"You got a new friend! {me.Name}" });
+                db.NotificationSet.Add(new Notification { PersonId = me.Id, Time = DateTime.Now.ToLocalTime(), Content = $"You got a new friend! {friend.Name}" });
+                db.NotificationSet.Add(new Notification { PersonId = friend.Id, Time = DateTime.Now.ToLocalTime(), Content = $"You got a new friend! {me.Name}" });
                 db.People.Where(p => p.Id == me.Id).FirstOrDefault().HasNewNotification = true;
                 db.People.Where(p => p.Id == friend.Id).FirstOrDefault().HasNewNotification = true;
             }
