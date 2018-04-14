@@ -8,7 +8,9 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using MyCard3.App_Code;
 using MyCard3.Models;
+
 
 namespace MyCard3.Controllers
 {
@@ -342,20 +344,20 @@ namespace MyCard3.Controllers
             {
                 case SignInStatus.Success:
                     //UserManager.UpdateLastLoginDate(loginInfo.Email);  //???????????HOW????????????
-
-                    if (Request.Cookies["LastLoginDate"] != null)
-                    {
-                        HttpCookie lastLoginDateCookie = Request.Cookies["LastLoginDate"];
-                        Session["LastLoginDate"] = (DateTime.Parse(lastLoginDateCookie.Value)).ToString("s");
-                    }
-                    else
-                    {
-                        Session["LastLoginDate"] = DateTime.Now;
-                    }
-                    HttpCookie aCookie = new HttpCookie("LastLoginDate");
-                    aCookie.Value = DateTime.Now.ToString("s");
-                    aCookie.Expires = DateTime.Now.AddDays(10);
-                    Response.Cookies.Add(aCookie);
+                    //SetReadLastNotificationCookie.SetCookie(this);
+                    //if (Request.Cookies["LastLoginDate"] != null)
+                    //{
+                    //    HttpCookie lastLoginDateCookie = Request.Cookies["LastLoginDate"];
+                    //    Session["LastLoginDate"] = (DateTime.Parse(lastLoginDateCookie.Value)).ToString("s");
+                    //}
+                    //else
+                    //{
+                    //    Session["LastLoginDate"] = DateTime.Now.ToString("s");
+                    //}
+                    //HttpCookie aCookie = new HttpCookie("LastLoginDate");
+                    //aCookie.Value = DateTime.Now.ToString("s");
+                    //aCookie.Expires = DateTime.Now.AddDays(10);
+                    //Response.Cookies.Add(aCookie);
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -423,7 +425,7 @@ namespace MyCard3.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            Session.Remove("CurrentUserAuthenticationID");
+            //Session.Remove("CurrentUserAuthenticationID");
             Session.Remove("CurrentUserData");
             return RedirectToAction("Index", "Boards");
         }

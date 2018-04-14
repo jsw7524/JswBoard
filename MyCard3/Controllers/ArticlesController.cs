@@ -33,19 +33,21 @@ namespace MyCard3.Controllers
             {
                 db.ArticleThumberUpSet.Add(new ArticleThumberUp {PersonId= currentUser.Id, ArticleId = articleId });
                 article.ThumbUpNumber += 1;
-
+                int tmpN = 0;
                 switch (article.ThumbUpNumber)
                 {
                     case 10:
-                        db.NotificationSet.Add(new Notification { PersonId = article.PersonId, Time = DateTime.Now, Content = $"You got 10 ThumbUp in {article.Title}" });
+                        tmpN = 10;
                         break;
                     case 5:
-                        db.NotificationSet.Add(new Notification { PersonId = article.PersonId, Time = DateTime.Now, Content = $"You got 5 ThumbUp in {article.Title}" });
+                        tmpN = 5;
                         break;
                     case 1:
-                        db.NotificationSet.Add(new Notification { PersonId = article.PersonId, Time = DateTime.Now, Content = $"You got 1 ThumbUp in {article.Title}" });
+                        tmpN = 1;
                         break;
                 }
+                db.NotificationSet.Add(new Notification { PersonId = article.PersonId, Time = DateTime.Now, Content = $"You got {tmpN} ThumbUp(s) in {article.Title}" });
+                db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().HasNewNotification = true;
                 db.SaveChanges();
             }
             return Json(new { n = article.ThumbUpNumber });

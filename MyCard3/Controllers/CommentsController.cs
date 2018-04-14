@@ -27,27 +27,30 @@ namespace MyCard3.Controllers
             {
                 db.CommentThumberUpSet.Add(new CommentThumberUp { PersonId = currentUser.Id, CommentId = commentId });
                 comment.ThumberUpNumber += 1;
+                int tmpN = 0;
                 switch (comment.ThumberUpNumber)
                 {
                     case 100:
-                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 100 ThumbUp in {comment.Article.Title}" });
+                        tmpN = 100;
                         break;
                     case 60:
-                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 60 ThumbUp in {comment.Article.Title}" });
+                        tmpN = 60;
                         break;
                     case 30:
-                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 30 ThumbUp in {comment.Article.Title}" });
+                        tmpN = 30;
                         break;
                     case 15:
-                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 15 ThumbUp in {comment.Article.Title}" });
+                        tmpN = 15;
                         break;
                     case 5:
-                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 5 ThumbUp in {comment.Article.Title}" });
+                        tmpN = 5;
                         break;
                     case 1:
-                        db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got 1 ThumbUp in {comment.Article.Title}" });
+                        tmpN = 1;
                         break;
                 }
+                db.NotificationSet.Add(new Notification { PersonId = comment.PersonId, Time = DateTime.Now, Content = $"You got {tmpN} ThumbUp(s) in {comment.Article.Title}" });
+                db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().HasNewNotification = true;
                 db.SaveChanges();
             }
             return Json(new { n = comment.ThumberUpNumber });

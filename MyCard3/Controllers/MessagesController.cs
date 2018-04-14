@@ -65,6 +65,7 @@ namespace MyCard3.Controllers
                 message.Time = DateTime.Now;
                 db.Messages.Add(message);
                 db.NotificationSet.Add(new Notification { PersonId = friend.Id, Time = DateTime.Now, Content = $"You got a new message from {me.Name}" });
+                db.People.Where(p => p.Id == friend.Id).FirstOrDefault().HasNewNotification = true;
                 db.SaveChanges();
                 return RedirectToAction("Index",new { id= friend.Id});
             }
