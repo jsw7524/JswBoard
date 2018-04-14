@@ -12,7 +12,7 @@ namespace MyCard3.App_Code
         public static void DeleteCookie(Controller controller)
         {
             HttpCookie aCookie = new HttpCookie("LastLoginDate");
-            aCookie.Expires = DateTime.Now.AddDays(-1d);
+            aCookie.Expires = DateTime.Now.ToLocalTime().AddDays(-1d);
             controller.Response.Cookies.Add(aCookie);
         }
 

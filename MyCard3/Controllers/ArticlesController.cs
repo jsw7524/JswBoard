@@ -46,7 +46,7 @@ namespace MyCard3.Controllers
                         tmpN = 1;
                         break;
                 }
-                db.NotificationSet.Add(new Notification { PersonId = article.PersonId, Time = DateTime.Now, Content = $"You got {tmpN} ThumbUp(s) in {article.Title}" });
+                db.NotificationSet.Add(new Notification { PersonId = article.PersonId, Time = DateTime.Now.ToLocalTime(), Content = $"You got {tmpN} ThumbUp(s) in {article.Title}" });
                 db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().HasNewNotification = true;
                 db.SaveChanges();
             }
@@ -100,7 +100,7 @@ namespace MyCard3.Controllers
         {
             if (ModelState.IsValid)
             {
-                article.Time = DateTime.Now;
+                article.Time = DateTime.Now.ToLocalTime();
                 var authenticationId = User.Identity.GetUserId();
                 article.PersonId = db.People.Where(p => p.authenticationId == authenticationId).FirstOrDefault().Id;
                 article.BoardId = boardId;

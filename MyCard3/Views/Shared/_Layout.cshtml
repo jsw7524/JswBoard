@@ -44,7 +44,7 @@
         @RenderBody()
         <hr>
         <footer>
-            <p>&#xA9; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&#xA9; @DateTime.Now.ToLocalTime().Year - My ASP.NET Application</p>
         </footer>
     </div>@Scripts.Render("~/bundles/jquery") @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)

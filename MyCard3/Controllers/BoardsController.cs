@@ -67,7 +67,7 @@ namespace MyCard3.Controllers
             {
                 db.BoardSet.Add(board);
                 db.SaveChanges();
-                db.ArticleSet.Add(new Article() { Title = "版規", Time = DateTime.Now, BoardId = board.Id, PersonId = 1 });
+                db.ArticleSet.Add(new Article() { Title = "版規", Time = DateTime.Now.ToLocalTime(), BoardId = board.Id, PersonId = 1 });
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
