@@ -29,17 +29,20 @@ namespace MyCard3.Controllers
         public ActionResult GetMyNotifications()
         {
             Person currentUser = Session["CurrentUserData"] as Person;
-            var myNotifications=db.NotificationSet.Where(n => n.PersonId == currentUser.Id).OrderByDescending(n=>n.Time).Select(n=>new { Content= n.Content, Time=n.Time }); //???order???
+            var myNotifications = db.NotificationSet.Where(n => n.PersonId == currentUser.Id).OrderByDescending(n => n.Time).Select(n => new { Content = n.Content, Time = n.Time }); //???order???
             //<a class="dropdown-menu" href="#">A</a>
             var json = JsonConvert.SerializeObject(myNotifications);
             //return Json(json,JsonRequestBehavior.AllowGet);
             //SetReadLastNotificationCookie.SetCookie(this);
-            if (true==db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().HasNewNotification)
+            if (true == db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().HasNewNotification)
             {
                 db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().HasNewNotification = false;
+                currentUser.HasNewNotification = false;
                 db.SaveChanges();
             }
-            Session["HasNewNotification"] = false;
+            //Session["HasNewNotification"] = false;
+
+            Session["CurrentUserData"] = currentUser;
             return Content(json);
         }
 
@@ -55,23 +58,23 @@ namespace MyCard3.Controllers
         }
 
         // GET: People
-        public ActionResult Card(int Id=0)
+        public ActionResult Card(int Id = 0)
         {
             Person currentUser = Session["CurrentUserData"] as Person;
-            if (Id== 0)
+            if (Id == 0)
             {
-                return View(db.People.AsNoTracking().Where(p=>p.Id== currentUser.Id).FirstOrDefault());
+                return View(db.People.AsNoTracking().Where(p => p.Id == currentUser.Id).FirstOrDefault());
             }
             else
             {
-                if (db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().Person2.Select(p=>p.Id).Contains(Id))
+                if (db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().Person2.Select(p => p.Id).Contains(Id))
                 {
                     return View(db.People.AsNoTracking().Where(p => p.Id == Id).FirstOrDefault());
                 }
             }
             return new HttpStatusCodeResult(HttpStatusCode.NotFound);
         }
-        
+
         //public ActionResult Card(int FriendId)
         //{
         //    string tmp = User.Identity.GetUserId();
@@ -84,7 +87,7 @@ namespace MyCard3.Controllers
             {
                 ///string pic = System.IO.Path.GetFileName(file.FileName);
                 string path = System.IO.Path.Combine(
-                                       Server.MapPath("~/Content/Images/"), "Photo"+User.Identity.GetUserId() + ".png");
+                                       Server.MapPath("~/Content/Images/"), "Photo" + User.Identity.GetUserId() + ".png");
                 // file is uploaded
                 file.SaveAs(path);
 
@@ -106,11 +109,11 @@ namespace MyCard3.Controllers
         {
             Person currentUser = Session["CurrentUserData"] as Person;
             int partnerId = db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().B_ID;
-            return View("Card",db.People.Where(p=>p.Id== partnerId).FirstOrDefault());
+            return View("Card", db.People.Where(p => p.Id == partnerId).FirstOrDefault());
         }
 
         [HttpPost]
-        public ActionResult MakeFriend(string message="")
+        public ActionResult MakeFriend(string message = "")
         {
             Person currentUser = Session["CurrentUserData"] as Person;
             int partnerId = db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().B_ID;
@@ -118,7 +121,7 @@ namespace MyCard3.Controllers
             Person friend = db.People.Where(p => p.Id == partnerId).FirstOrDefault();
             db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().A_OK = true;
             db.Matches.Where(p => p.A_ID == friend.Id).FirstOrDefault().B_OK = true;
-            if(true==db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().B_OK)
+            if (true == db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().B_OK)
             {
                 me.Person1.Add(friend);
                 friend.Person1.Add(me);

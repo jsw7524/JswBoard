@@ -345,15 +345,15 @@ namespace MyCard3.Controllers
                 case SignInStatus.Success:
                     //UserManager.UpdateLastLoginDate(loginInfo.Email);  //???????????HOW????????????
                     //SetReadLastNotificationCookie.SetCookie(this);
-                    if (Request.Cookies["LastLoginDate"] != null)
-                    {
-                        HttpCookie lastLoginDateCookie = Request.Cookies["LastLoginDate"];
-                        Session["LastLoginDate"] = (DateTime.Parse(lastLoginDateCookie.Value)).ToString("s");
-                    }
-                    else
-                    {
-                        Session["LastLoginDate"] = DateTime.Now.ToString("s");
-                    }
+                    //if (Request.Cookies["LastLoginDate"] != null)
+                    //{
+                    //    HttpCookie lastLoginDateCookie = Request.Cookies["LastLoginDate"];
+                    //    Session["LastLoginDate"] = (DateTime.Parse(lastLoginDateCookie.Value)).ToString("s");
+                    //}
+                    //else
+                    //{
+                    //    Session["LastLoginDate"] = DateTime.Now.ToString("s");
+                    //}
                     //HttpCookie aCookie = new HttpCookie("LastLoginDate");
                     //aCookie.Value = DateTime.Now.ToString("s");
                     //aCookie.Expires = DateTime.Now.AddDays(10);
@@ -425,7 +425,7 @@ namespace MyCard3.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            Session.Remove("CurrentUserAuthenticationID");
+            //Session.Remove("CurrentUserAuthenticationID");
             Session.Remove("CurrentUserData");
             return RedirectToAction("Index", "Boards");
         }

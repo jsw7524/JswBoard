@@ -20,18 +20,18 @@ namespace MyCard3.Controllers
         public ActionResult Index()
         {
             //////////////
-            Session["CurrentUserAuthenticationID"] = User.Identity.GetUserId();
-            string tmp = Session["CurrentUserAuthenticationID"] as string;
+            //Session["CurrentUserAuthenticationID"] = User.Identity.GetUserId();
+            string tmp = User.Identity.GetUserId();
             Person currentUser = db.People.AsNoTracking().Where(p => p.authenticationId == tmp).FirstOrDefault();
             Session["CurrentUserData"] = currentUser;
             //////////////
-            if (currentUser != null)
-            {
-                if (currentUser.HasNewNotification)
-                {
-                    Session["HasNewNotification"] = true;
-                }
-            }
+            //if (currentUser != null)
+            //{
+            //    if (currentUser.HasNewNotification)
+            //    {
+            //        Session["HasNewNotification"] = true;
+            //    }
+            //}
             return View(db.BoardSet.ToList());
         }
 

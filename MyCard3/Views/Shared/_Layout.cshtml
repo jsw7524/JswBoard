@@ -114,14 +114,20 @@
             });*@
 
             @{
-                var HasNewNotification = Session["HasNewNotification"];
+                MyCard3.Models.Person p = Session["CurrentUserData"] as MyCard3.Models.Person;
+                if (p?.HasNewNotification == true)
+                {
+                    <text>$("#btnNotifications").addClass("bg-primary")</text>
+                }
+
+                @*var HasNewNotification = Session["HasNewNotification"];
                 if (HasNewNotification != null)
                 {
                     if ((Boolean)HasNewNotification == true)
                     {
                         <text>$("#btnNotifications").addClass("bg-primary")</text>
                     }
-                }
+                }*@
             }
 
 
