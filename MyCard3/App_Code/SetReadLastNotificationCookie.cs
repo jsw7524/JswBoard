@@ -9,6 +9,13 @@ namespace MyCard3.App_Code
     public  static class SetReadLastNotificationCookie
     {
 
+        public static void DeleteCookie(Controller controller)
+        {
+            HttpCookie aCookie = new HttpCookie("LastLoginDate");
+            aCookie.Expires = DateTime.Now.AddDays(-1d);
+            controller.Response.Cookies.Add(aCookie);
+        }
+
         public static void SetCookie(Controller controller)
         {
             if (controller.Request.Cookies["LastLoginDate"] != null)

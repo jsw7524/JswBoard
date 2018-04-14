@@ -51,6 +51,15 @@
 
     <script>
         var NewNotifications = 0;
+
+        function DeleteAndUpdateNotifications(data) {
+            UpdateNotifications(data);
+             $.post("@Url.Action("DeleteNotificationCookie", "People")", function (data) {
+                 alert(data);
+            });
+        }
+
+
         function UpdateNotifications(data) {
             if (typeof (data) == "object") {
                 NotificationsArray = JSON.parse(data.responseText);
@@ -72,6 +81,12 @@
                 }
             })
             $("#MyNotifications").html(NotificationsHTML)
+
+            ////////////////
+             @*$.post("@Url.Action("DeleteNotificationCookie", "People")", function (data) {
+                 alert(data);
+            });*@
+            ///////////////
         }
 
         $(document).ready(function () {
