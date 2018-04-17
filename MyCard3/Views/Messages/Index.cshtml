@@ -5,48 +5,57 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@*@section header {
-        .bubble
-        {
-        position: relative;
-        width: 315px;
-        height: 160px;
-        padding: 0px;
-        background: #9CFFFF;
-        -webkit-border-radius: 10px;
-        -moz-border-radius: 10px;
-        border-radius: 10px;
-        border: #7F7F7F solid 5px;
-        }
+@section styles {
+    /* Chat containers */
+    .INcontainer {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px 0;
+    }
 
-        .bubble:after
-        {
-        content: '';
-        position: absolute;
-        border-style: solid;
-        border-width: 15px 0 15px 15px;
-        border-color: transparent #9CFFFF;
-        display: block;
-        width: 0;
-        z-index: 1;
-        right: -15px;
-        top: 24px;
-        }
+    /* Darker chat container */
+    .darker {
+    border-color: #ccc;
+    background-color: #ddd;
+    }
 
-        .bubble:before
-        {
-        content: '';
-        position: absolute;
-        border-style: solid;
-        border-width: 19px 0 19px 19px;
-        border-color: transparent #7F7F7F;
-        display: block;
-        width: 0;
-        z-index: 0;
-        right: -24px;
-        top: 20px;
-        }
-    }*@
+    /* Clear floats */
+    .container::after {
+    content: "";
+    clear: both;
+    display: table;
+    }
+
+    /* Style images */
+    .container img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 20px;
+    border-radius: 50%;
+    }
+
+    /* Style the right image */
+    .container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+    }
+
+    /* Style time text */
+    .time-right {
+    float: right;
+    color: #aaa;
+    }
+
+    /* Style time text */
+    .time-left {
+    float: left;
+    color: #999;
+    }
+}
 
 <h2>Index</h2>
 
@@ -70,55 +79,43 @@
     <div class="container">
         @foreach (var item in Model)
         {
-            <div class="row border">
-                @{
-
-                    Person currentUser = Session["CurrentUserData"] as Person;
 
 
-                    <div class="col-lg-2 ">
-                        <div>
-                            @Html.DisplayFor(modelItem => item.SendPerson.Name)
-                        </div>
-                        <div>
-                            @Html.DisplayFor(modelItem => item.Time)
-                        </div>
-                    </div>
-                    <div class="col-lg-4 ">
-                        @Html.Raw(item.MessageContent)
+            Person currentUser = Session["CurrentUserData"] as Person;
+            if (item.SendPerson.authenticationId != currentUser.authenticationId)
+            {
+                <div class="INcontainer row border">
+                    <div class="col-lg-3">
+                        <img src="@("/Content/Images/Photo" + @item.SendPerson.authenticationId + ".png")" alt="Card image" style="width:50%">
                     </div>
                     <div class="col-lg-6">
+                        @Html.Raw(item.MessageContent)
+                    </div>
+                    <div class="col-lg-3">
+                        <span class="time-right">@Html.DisplayFor(modelItem => item.Time)</span>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="INcontainer darker row border">
+                    <div class="col-lg-3">
+                        <span class="col-lg time-left">@Html.DisplayFor(modelItem => item.Time)</span>
                     </div>
 
 
-                }
+                    <div class="col-lg-6">
+                        @Html.Raw(item.MessageContent)
+                    </div>
 
-            </div>
-
-
-            @*<tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SendPerson.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Time)
-                    </td>
-
-                    @*<td>
-                        @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-                        @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-                        @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-                    </td>
-
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <div name="MessageContent" style="background-color: rgb(243, 242, 238)">
-                            @Html.Raw(item.MessageContent)
-                        </div>
-                    </td>
-                </tr>*@
+                    <div class="col-lg-3">
+                        <img src="@("/Content/Images/Photo" + @item.SendPerson.authenticationId + ".png")" alt="Card image" style="width:50%" class="right">
+                    </div>
+                </div>
+            }
         }
+
+
     </div>
 
 </table>
