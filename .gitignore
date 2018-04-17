@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/MyCard3/App_Start/Startup.Auth.cs
+/MyCard3/Content/Images
