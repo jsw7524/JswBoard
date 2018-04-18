@@ -138,7 +138,7 @@ namespace MyCard3.Controllers
         {
             Person currentUser = Session["CurrentUserData"] as Person;
             Person me = db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault();
-            return View(me.Person2);
+            return View(me.Person2.AsQueryable().Include(p=>p.ReceiveMessage).Include(p=>p.SendMessage));/////
         }
 
         public ActionResult Index()

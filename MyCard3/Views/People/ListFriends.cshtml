@@ -15,23 +15,45 @@
 
     @foreach (var item in Model)
     {
-    <div class="row">
-        <div class="col">
-            <img src="@("/Content/Images/Photo"+@item.authenticationId+".png")" alt="Card image" style="width:50%">
+        <div class="row">
+            <div class="col">
+                <img src="@("/Content/Images/Photo"+@item.authenticationId+".png")" alt="Card image" style="width:50%">
+            </div>
+            <div class="col">
+                @Html.DisplayFor(modelItem => item.Name)
+            </div>
+            @*<div class="col">
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </div>*@
+            <div class="col">
+                @{
+                    string lastMessage = "";
+                    if (item.SendMessage.Last().Time > item.ReceiveMessage.Last().Time)
+                    {
+                        lastMessage = item.SendMessage.Last().MessageContent;
+                    }
+                    else
+                    {
+                        lastMessage = item.ReceiveMessage.Last().MessageContent;
+                    }
+
+                    if (lastMessage.Length >20)
+                    {
+                        lastMessage = lastMessage.Substring(0, 20) + "......";
+                    }
+
+                    @Html.Raw(lastMessage)
+                }
+
+
+            </div>
+            <div class="col">
+                @Html.DisplayFor(modelItem => item.Birthday)
+            </div>
+            <div class="col">
+                @Html.ActionLink("Messages", "Index", "Messages", new { Id = item.Id }, null)
+            </div>
         </div>
-        <div class="col">
-            @Html.DisplayFor(modelItem => item.Name)
-        </div>
-        <div class="col">
-            @Html.DisplayFor(modelItem => item.Gender)
-        </div>
-        <div class="col">
-            @Html.DisplayFor(modelItem => item.Birthday)
-        </div>
-        <div class="col">
-            @Html.ActionLink("Messages", "Index", "Messages", new { Id = item.Id }, null)
-        </div>
-    </div>
     }
 </div>
 
