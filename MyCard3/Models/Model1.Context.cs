@@ -34,5 +34,6 @@ namespace MyCard3.Models
         public virtual DbSet<ArticleThumberUp> ArticleThumberUpSet { get; set; }
         public virtual DbSet<Notification> NotificationSet { get; set; }
         public virtual DbSet<CommentThumberUp> CommentThumberUpSet { get; set; }
+        public virtual DbSet<Friend> Friends { get; set; }
     }
 }

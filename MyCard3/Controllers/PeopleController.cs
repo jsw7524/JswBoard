@@ -67,7 +67,8 @@ namespace MyCard3.Controllers
             }
             else
             {
-                if (db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().Person2.Select(p => p.Id).Contains(Id))
+                //if (db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault().Person2.Select(p => p.Id).Contains(Id))
+                if (db.Friends.Where(p => p.PersonA.Id == currentUser.Id).Select(p => p.PersonB.Id).Contains(Id))
                 {
                     return View(db.People.AsNoTracking().Where(p => p.Id == Id).FirstOrDefault());
                 }
@@ -123,8 +124,9 @@ namespace MyCard3.Controllers
             db.Matches.Where(p => p.A_ID == friend.Id).FirstOrDefault().B_OK = true;
             if (true == db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().B_OK)
             {
-                me.Person1.Add(friend);
-                friend.Person1.Add(me);
+                //me.Person1.Add(friend);
+                //friend.Person1.Add(me);
+                db.Friends.Add(new Friend() { PersonA = me, PersonB= friend, LastMessage=""  });
                 db.NotificationSet.Add(new Notification { PersonId = me.Id, Time = DateTime.Now.ToLocalTime(), Content = $"You got a new friend! {friend.Name}" });
                 db.NotificationSet.Add(new Notification { PersonId = friend.Id, Time = DateTime.Now.ToLocalTime(), Content = $"You got a new friend! {me.Name}" });
                 db.People.Where(p => p.Id == me.Id).FirstOrDefault().HasNewNotification = true;
@@ -136,9 +138,17 @@ namespace MyCard3.Controllers
 
         public ActionResult ListFriends()
         {
+
             Person currentUser = Session["CurrentUserData"] as Person;
+            //use Eagerly loading to avoid multiple queries (discard)
+            //Person me = db.People.Where(p => p.Id == currentUser.Id).Include(p=>p.ReceiveMessage).Include(p=>p.SendMessage).FirstOrDefault();
+            //
             Person me = db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault();
-            return View(me.Person2.AsQueryable().Include(p=>p.ReceiveMessage).Include(p=>p.SendMessage));/////
+            var myFriends = db.Friends.AsEnumerable().Where(f => f.PersonA == me).Select(f => f.PersonB).ToList();
+            IDictionary<int, string> lastMessage =  db.Friends.AsEnumerable()
+                                                        .Select(f => new { key = f.PersonB.Id, LastMessage = f.LastMessage })
+                                                        .ToDictionary(f => f.key,f=>f.LastMessage);
+            return View(new FriendListViewModel() {Friends= myFriends, LastMessage= lastMessage });
         }
 
         public ActionResult Index()

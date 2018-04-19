@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/14/2018 17:25:26
--- Generated from EDMX file: D:\SourceCode\CSharp\MyCard3\MyCard3\Models\MyCard.edmx
+-- Date Created: 04/19/2018 14:32:00
+-- Generated from EDMX file: C:\mycard3\MyCard3\Models\MyCard.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -29,12 +29,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_PersonComment]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CommentSet] DROP CONSTRAINT [FK_PersonComment];
 GO
-IF OBJECT_ID(N'[dbo].[FK_Friends_Person]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Friends] DROP CONSTRAINT [FK_Friends_Person];
-GO
-IF OBJECT_ID(N'[dbo].[FK_Friends_Person1]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Friends] DROP CONSTRAINT [FK_Friends_Person1];
-GO
 IF OBJECT_ID(N'[dbo].[FK_SendMessage]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_SendMessage];
 GO
@@ -55,6 +49,12 @@ IF OBJECT_ID(N'[dbo].[FK_PersonCommentThumberUp]', 'F') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[FK_CommentCommentThumberUp]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CommentThumberUpSet] DROP CONSTRAINT [FK_CommentCommentThumberUp];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PersonFriend]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Friends] DROP CONSTRAINT [FK_PersonFriend];
+GO
+IF OBJECT_ID(N'[dbo].[FK_FriendPerson]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Friends] DROP CONSTRAINT [FK_FriendPerson];
 GO
 
 -- --------------------------------------------------
@@ -186,8 +186,10 @@ GO
 
 -- Creating table 'Friends'
 CREATE TABLE [dbo].[Friends] (
-    [Person1_Id] int  NOT NULL,
-    [Person2_Id] int  NOT NULL
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [LastMessage] nvarchar(max)  NOT NULL,
+    [PersonA_Id] int  NOT NULL,
+    [PersonB_Id] int  NOT NULL
 );
 GO
 
@@ -249,10 +251,10 @@ ADD CONSTRAINT [PK_CommentThumberUpSet]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Person1_Id], [Person2_Id] in table 'Friends'
+-- Creating primary key on [Id] in table 'Friends'
 ALTER TABLE [dbo].[Friends]
 ADD CONSTRAINT [PK_Friends]
-    PRIMARY KEY CLUSTERED ([Person1_Id], [Person2_Id] ASC);
+    PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
 -- --------------------------------------------------
@@ -317,30 +319,6 @@ GO
 CREATE INDEX [IX_FK_PersonComment]
 ON [dbo].[CommentSet]
     ([PersonId]);
-GO
-
--- Creating foreign key on [Person1_Id] in table 'Friends'
-ALTER TABLE [dbo].[Friends]
-ADD CONSTRAINT [FK_Friends_Person]
-    FOREIGN KEY ([Person1_Id])
-    REFERENCES [dbo].[People]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating foreign key on [Person2_Id] in table 'Friends'
-ALTER TABLE [dbo].[Friends]
-ADD CONSTRAINT [FK_Friends_Person1]
-    FOREIGN KEY ([Person2_Id])
-    REFERENCES [dbo].[People]
-        ([Id])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
-GO
-
--- Creating non-clustered index for FOREIGN KEY 'FK_Friends_Person1'
-CREATE INDEX [IX_FK_Friends_Person1]
-ON [dbo].[Friends]
-    ([Person2_Id]);
 GO
 
 -- Creating foreign key on [SendPersonId] in table 'Messages'
@@ -446,6 +424,36 @@ GO
 CREATE INDEX [IX_FK_CommentCommentThumberUp]
 ON [dbo].[CommentThumberUpSet]
     ([CommentId]);
+GO
+
+-- Creating foreign key on [PersonA_Id] in table 'Friends'
+ALTER TABLE [dbo].[Friends]
+ADD CONSTRAINT [FK_PersonFriend]
+    FOREIGN KEY ([PersonA_Id])
+    REFERENCES [dbo].[People]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_PersonFriend'
+CREATE INDEX [IX_FK_PersonFriend]
+ON [dbo].[Friends]
+    ([PersonA_Id]);
+GO
+
+-- Creating foreign key on [PersonB_Id] in table 'Friends'
+ALTER TABLE [dbo].[Friends]
+ADD CONSTRAINT [FK_FriendPerson]
+    FOREIGN KEY ([PersonB_Id])
+    REFERENCES [dbo].[People]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_FriendPerson'
+CREATE INDEX [IX_FK_FriendPerson]
+ON [dbo].[Friends]
+    ([PersonB_Id]);
 GO
 
 -- --------------------------------------------------

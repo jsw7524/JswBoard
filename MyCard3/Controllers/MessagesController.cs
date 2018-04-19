@@ -63,6 +63,8 @@ namespace MyCard3.Controllers
                 Person friend = TempData["ToFriend"] as Person;
                 message.ReceivePerson = db.People.Where(p => p.Id == friend.Id).FirstOrDefault();
                 message.Time = DateTime.Now.ToLocalTime();
+                (db.Friends.Where(f => f.PersonA.Id == me.Id && f.PersonB.Id == friend.Id).FirstOrDefault()).LastMessage = message.MessageContent;
+                (db.Friends.Where(f => f.PersonA.Id == friend.Id && f.PersonB.Id == me.Id).FirstOrDefault()).LastMessage = message.MessageContent;
                 db.Messages.Add(message);
                 db.NotificationSet.Add(new Notification { PersonId = friend.Id, Time = DateTime.Now.ToLocalTime(), Content = $"You got a new message from {me.Name}" });
                 db.People.Where(p => p.Id == friend.Id).FirstOrDefault().HasNewNotification = true;

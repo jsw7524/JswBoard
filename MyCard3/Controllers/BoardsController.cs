@@ -22,7 +22,7 @@ namespace MyCard3.Controllers
             //////////////
             //Session["CurrentUserAuthenticationID"] = User.Identity.GetUserId();
             string tmp = User.Identity.GetUserId();
-            Person currentUser = db.People.AsNoTracking().Where(p => p.authenticationId == tmp).FirstOrDefault();
+            Person currentUser = db.People.AsNoTracking().Where(p => p.authenticationId == tmp).AsEnumerable().FirstOrDefault();
             Session["CurrentUserData"] = currentUser;
             //////////////
             //if (currentUser != null)

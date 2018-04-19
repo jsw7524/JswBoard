@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MyCard3.Models.Person>
+﻿@model MyCard3.Models.FriendListViewModel
 
 @{
     ViewBag.Title = "ListFrineds";
@@ -13,7 +13,7 @@
 
 <div class="container">
 
-    @foreach (var item in Model)
+    @foreach (var item in Model.Friends)
     {
         <div class="row">
             <div class="col">
@@ -26,25 +26,8 @@
                     @Html.DisplayFor(modelItem => item.Gender)
                 </div>*@
             <div class="col">
-                @{
-                    string lastMessage = "";
-                    if (item.SendMessage.Last().Time > item.ReceiveMessage.Last().Time)
-                    {
-                        lastMessage = item.SendMessage.Last().MessageContent;
-                    }
-                    else
-                    {
-                        lastMessage = item.ReceiveMessage.Last().MessageContent;
-                    }
-
-                    if (lastMessage.Length >20)
-                    {
-                        lastMessage = lastMessage.Substring(0, 20) + "......";
-                    }
-
-                    @Html.Raw(lastMessage)
-                }
-
+                @Html.Raw(@Model.LastMessage[@item.Id])
+                
 
             </div>
             <div class="col">

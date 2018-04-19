@@ -12,20 +12,12 @@ namespace MyCard3.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Message
+    public partial class Friend
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Message()
-        {
-            this.MessageContent = "";
-        }
-    
         public int Id { get; set; }
-        public int SendPersonId { get; set; }
-        public string MessageContent { get; set; }
-        public System.DateTime Time { get; set; }
+        public string LastMessage { get; set; }
     
-        public virtual Person SendPerson { get; set; }
-        public virtual Person ReceivePerson { get; set; }
+        public virtual Person PersonA { get; set; }
+        public virtual Person PersonB { get; set; }
     }
 }

@@ -20,13 +20,13 @@ namespace MyCard3.Models
             this.HasNewNotification = true;
             this.Article = new HashSet<Article>();
             this.Comment = new HashSet<Comment>();
-            this.Person2 = new HashSet<Person>();
-            this.Person1 = new HashSet<Person>();
             this.SendMessage = new HashSet<Message>();
             this.ReceiveMessage = new HashSet<Message>();
             this.ArticleThumberUp = new HashSet<ArticleThumberUp>();
             this.Notification = new HashSet<Notification>();
             this.CommentThumberUp = new HashSet<CommentThumberUp>();
+            this.FriendA = new HashSet<Friend>();
+            this.Friend = new HashSet<Friend>();
         }
     
         public int Id { get; set; }
@@ -44,10 +44,6 @@ namespace MyCard3.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comment { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Person> Person2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Person> Person1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Message> SendMessage { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Message> ReceiveMessage { get; set; }
@@ -57,5 +53,9 @@ namespace MyCard3.Models
         public virtual ICollection<Notification> Notification { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommentThumberUp> CommentThumberUp { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Friend> FriendA { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Friend> Friend { get; set; }
     }
 }
