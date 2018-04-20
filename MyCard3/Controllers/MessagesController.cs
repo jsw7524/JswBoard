@@ -59,7 +59,8 @@ namespace MyCard3.Controllers
             {
                 Person me = Session["CurrentUserData"] as Person;
                 message.SendPersonId = me.Id;
-                message.SendPerson = db.People.Where(p => p.Id == me.Id).FirstOrDefault();
+                //message.SendPerson = db.People.Where(p => p.Id == me.Id).FirstOrDefault();
+                message.SendPerson = me;
                 Person friend = TempData["ToFriend"] as Person;
                 message.ReceivePerson = db.People.Where(p => p.Id == friend.Id).FirstOrDefault();
                 message.Time = DateTime.Now.ToLocalTime();

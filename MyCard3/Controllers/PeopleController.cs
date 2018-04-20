@@ -63,7 +63,8 @@ namespace MyCard3.Controllers
             Person currentUser = Session["CurrentUserData"] as Person;
             if (Id == 0)
             {
-                return View(db.People.AsNoTracking().Where(p => p.Id == currentUser.Id).FirstOrDefault());
+                //return View(db.People.AsNoTracking().Where(p => p.Id == currentUser.Id).FirstOrDefault());
+                return View(currentUser);
             }
             else
             {
@@ -118,7 +119,8 @@ namespace MyCard3.Controllers
         {
             Person currentUser = Session["CurrentUserData"] as Person;
             int partnerId = db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().B_ID;
-            Person me = db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault();
+            //Person me = db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault();
+            Person me = currentUser;
             Person friend = db.People.Where(p => p.Id == partnerId).FirstOrDefault();
             db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().A_OK = true;
             db.Matches.Where(p => p.A_ID == friend.Id).FirstOrDefault().B_OK = true;
@@ -143,8 +145,9 @@ namespace MyCard3.Controllers
             //use Eagerly loading to avoid multiple queries (discard)
             //Person me = db.People.Where(p => p.Id == currentUser.Id).Include(p=>p.ReceiveMessage).Include(p=>p.SendMessage).FirstOrDefault();
             //
-            Person me = db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault();
-            var myFriends = db.Friends.AsEnumerable().Where(f => f.PersonA == me).Select(f => f.PersonB).ToList();
+            //Person me = db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault();
+            Person me = currentUser;
+            var myFriends = db.Friends.AsEnumerable().Where(f => f.PersonA.Id == me.Id).Select(f => f.PersonB).ToList();
             IDictionary<int, string> lastMessage =  db.Friends.AsEnumerable()
                                                         .Select(f => new { key = f.PersonB.Id, LastMessage = f.LastMessage })
                                                         .ToDictionary(f => f.key,f=>f.LastMessage);
