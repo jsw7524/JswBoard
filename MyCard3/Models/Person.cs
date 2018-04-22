@@ -18,6 +18,7 @@ namespace MyCard3.Models
         public Person()
         {
             this.HasNewNotification = true;
+            this.ComfirmedUser = false;
             this.Article = new HashSet<Article>();
             this.Comment = new HashSet<Comment>();
             this.SendMessage = new HashSet<Message>();
@@ -38,6 +39,7 @@ namespace MyCard3.Models
         public byte[] Picture { get; set; }
         public string Department { get; set; }
         public bool HasNewNotification { get; set; }
+        public bool ComfirmedUser { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Article> Article { get; set; }

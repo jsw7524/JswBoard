@@ -6,6 +6,7 @@
 
 <h2>Card</h2>
 <div class="container">
+    @Html.ActionLink("Edit", "Edit", new { id = 0, url = Url.Action("Edit") })
     <div class="row">
         <div class="col-md-2">
         </div>
@@ -16,13 +17,13 @@
                 @*------------------------*@
                 @if (User.Identity.GetUserId() == Model.authenticationId)
                 {
-                    using (Html.BeginForm("PhotoUpload", "People", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                    @*using (Html.BeginForm("PhotoUpload", "People", FormMethod.Post, new { enctype = "multipart/form-data" }))
                     {
                         <label for="file">Upload Image:</label>
                         <input type="file" name="file" id="file" style="width: 100%;" />
                         <input type="submit" value="Upload" class="submit" />
 
-                    }
+                    }*@
                 }
                 else
                 {
@@ -30,7 +31,7 @@
                     using (Html.BeginForm())
                     {
                         <input type="hidden" name="message" value="Hello" />
-                        <input type="submit" value="MakeFriend" class="btn btn-primary btn-block"/>
+                        <input type="submit" value="MakeFriend" class="btn btn-primary btn-block" />
                     }
 
                     @*<a href="#" class="btn btn-primary btn-block">See Profile</a>*@

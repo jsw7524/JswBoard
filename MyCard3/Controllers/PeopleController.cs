@@ -19,6 +19,12 @@ namespace MyCard3.Controllers
     {
         private MyCardContainer db = new MyCardContainer();
 
+        public ActionResult MemberList()
+        {
+            return View(db.People);
+        }
+
+
 
         //public ActionResult DeleteNotificationCookie()
         //{
@@ -103,8 +109,26 @@ namespace MyCard3.Controllers
 
             }
             // after successfully uploading redirect the user
-            return RedirectToAction("Card", "People");
+            Person currentUser = Session["CurrentUserData"] as Person;
+            return RedirectToAction("Edit", "People",new {Id= 0 });
         }
+
+        public ActionResult IdCardUpload(HttpPostedFileBase file)
+        {
+            if (file != null)
+            {
+                string path = System.IO.Path.Combine(
+                                       Server.MapPath("~/Content/IdCards/"), "IdCard" + User.Identity.GetUserId() + ".png");
+
+                file.SaveAs(path);
+
+
+            }
+            Person currentUser = Session["CurrentUserData"] as Person;
+            return RedirectToAction("Edit", "People",new { Id= currentUser.Id});
+        }
+
+
 
         public ActionResult MakeFriend()
         {
@@ -126,7 +150,7 @@ namespace MyCard3.Controllers
             {
                 //me.Person1.Add(friend);
                 //friend.Person1.Add(me);
-                db.Friends.Add(new Friend() { PersonA = me, PersonB= friend, LastMessage=""  });
+                db.Friends.Add(new Friend() { PersonA = me, PersonB = friend, LastMessage = "" });
                 db.NotificationSet.Add(new Notification { PersonId = me.Id, Time = DateTime.Now.ToLocalTime(), Content = $"You got a new friend! {friend.Name}" });
                 db.NotificationSet.Add(new Notification { PersonId = friend.Id, Time = DateTime.Now.ToLocalTime(), Content = $"You got a new friend! {me.Name}" });
                 db.People.Where(p => p.Id == me.Id).FirstOrDefault().HasNewNotification = true;
@@ -145,10 +169,10 @@ namespace MyCard3.Controllers
             //
             Person me = db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault();
             var myFriends = db.Friends.AsEnumerable().Where(f => f.PersonA == me).Select(f => f.PersonB).ToList();
-            IDictionary<int, string> lastMessage =  db.Friends.AsEnumerable()
+            IDictionary<int, string> lastMessage = db.Friends.AsEnumerable()
                                                         .Select(f => new { key = f.PersonB.Id, LastMessage = f.LastMessage })
-                                                        .ToDictionary(f => f.key,f=>f.LastMessage);
-            return View(new FriendListViewModel() {Friends= myFriends, LastMessage= lastMessage });
+                                                        .ToDictionary(f => f.key, f => f.LastMessage);
+            return View(new FriendListViewModel() { Friends = myFriends, LastMessage = lastMessage });
         }
 
         public ActionResult Index()
@@ -182,7 +206,7 @@ namespace MyCard3.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Gender,Birthday,Mail,Description,Picture")] Person person)
+        public ActionResult Create([Bind(Include = "Id,Name,Gender,Birthday,Description,Picture")] Person person)
         {
             if (ModelState.IsValid)
             {
@@ -192,9 +216,9 @@ namespace MyCard3.Controllers
             }
             return View(person);
         }
-
-        // GET: People/Edit/5
-        public ActionResult Edit(int? id)
+        /// <summary>
+        /// ////////////////////////
+        public ActionResult AdminEdit(int? id)
         {
             if (id == null)
             {
@@ -213,13 +237,60 @@ namespace MyCard3.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Gender,Birthday,Mail,Description,Picture")] Person person)
+        public ActionResult AdminEdit(Person person, string url)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(person).State = EntityState.Modified;
+                var user = db.People.Find(person.Id);
+                user.Name = person.Name;
+                user.Gender = person.Gender;
+                user.Description = person.Description;
+                user.Birthday = person.Birthday;
+                user.ComfirmedUser = person.ComfirmedUser;
+                user.Department = person.Department;
+                user.ComfirmedUser = person.ComfirmedUser;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Redirect(url);
+            }
+            return View(person);
+        }
+        /// /////////////////////
+
+        // GET: People/Edit/5
+        public ActionResult Edit(int? id=0)
+        {
+            if (id == 0)
+            {
+                Person currentUser = Session["CurrentUserData"] as Person;
+                return View(db.People.AsNoTracking().Where(p => p.Id == currentUser.Id).FirstOrDefault());
+            }
+            Person person = db.People.Find(id);
+            if (person == null)
+            {
+                return HttpNotFound();
+            }
+            return View(person);
+        }
+
+        // POST: People/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Person person, string url)
+        {
+            if (ModelState.IsValid)
+            {
+                Person currentUser = Session["CurrentUserData"] as Person;
+                var user = db.People.Find(currentUser.Id);
+                user.Name = person.Name;
+                user.Gender = person.Gender;
+                user.Description = person.Description;
+                user.Birthday = person.Birthday;
+                user.ComfirmedUser = person.ComfirmedUser;
+                user.Department = person.Department;
+                db.SaveChanges();
+                return Redirect(url);
             }
             return View(person);
         }
