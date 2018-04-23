@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 using MyCard3.App_Code;
 using MyCard3.Models;
 using Newtonsoft.Json;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace MyCard3.Controllers
 {
@@ -26,8 +27,18 @@ namespace MyCard3.Controllers
 
         public ActionResult ToggleComfirmedUser(int id)
         {
+            ApplicationUserManager userMgr = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            Person targetUser = db.People.Find(id);
             var target = db.People.Find(id);
             target.ComfirmedUser = !target.ComfirmedUser;
+            if (target.ComfirmedUser)
+            {
+                userMgr.AddToRole(targetUser.authenticationId, "ConfirmedUser");
+            }
+            else
+            {
+                userMgr.RemoveFromRole(targetUser.authenticationId, "ConfirmedUser");
+            }
             db.SaveChanges();
             return Json(target.ComfirmedUser, JsonRequestBehavior.AllowGet);
         }
@@ -117,7 +128,7 @@ namespace MyCard3.Controllers
             }
             // after successfully uploading redirect the user
             Person currentUser = Session["CurrentUserData"] as Person;
-            return RedirectToAction("Edit", "People",new {Id= 0 });
+            return RedirectToAction("Edit", "People", new { Id = 0 });
         }
 
         public ActionResult IdCardUpload(HttpPostedFileBase file)
@@ -132,7 +143,7 @@ namespace MyCard3.Controllers
 
             }
             Person currentUser = Session["CurrentUserData"] as Person;
-            return RedirectToAction("Edit", "People",new { Id= 0});
+            return RedirectToAction("Edit", "People", new { Id = 0 });
         }
 
 
@@ -264,7 +275,7 @@ namespace MyCard3.Controllers
         /// /////////////////////
 
         // GET: People/Edit/5
-        public ActionResult Edit(int? id=0)
+        public ActionResult Edit(int? id = 0)
         {
             if (id == 0)
             {

@@ -158,7 +158,7 @@ namespace MyCard3.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-
+                    UserManager.AddToRole(user.Id, "UnConfirmedUser");
                     using (MyCardContainer db = new MyCardContainer())
                     {
                         newUser.authenticationId = user.Id;

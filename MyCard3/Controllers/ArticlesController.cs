@@ -66,6 +66,7 @@ namespace MyCard3.Controllers
 
         // GET: Articles/Details/5
         [Authorize]
+        [ArticleAuthorAuthorizeAttribute(Roles = "BoardAdmin,ConfirmedUser,ArticleOwner")]
         public ActionResult Details(int? id)
         {
             if (id == null)
