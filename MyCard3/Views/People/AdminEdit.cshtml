@@ -20,15 +20,6 @@
     @*//////////////////////////////////////////////////////*@
     <img class="card-img-top" src="@("/Content/Images/Photo"+Model.authenticationId+".png")" alt="Card image" style="width:50%">
     @*------------------------*@
-
-    @using (Html.BeginForm("PhotoUpload", "People", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <label for="file">Upload Image:</label>
-        <input type="file" name="file" id="file" style="width: 100%;" />
-        <input type="submit" value="Upload" class="submit" />
-
-    }
-
     @*//////////////////////////////////////////////////////*@
 
 
@@ -121,15 +112,6 @@
     @*//////////////////////////////////////////////////////*@
     <img class="card-img-top" src="@("/Content/IdCards/IdCard"+Model.authenticationId+".png")" alt="Card image" style="width:50%">
     @*------------------------*@
-
-    @using (Html.BeginForm("IdCardUpload", "People", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <label for="file">Upload Image:</label>
-        <input type="file" name="file" id="file" style="width: 100%;" />
-        <input type="submit" value="Upload" class="submit" />
-
-    }
-
     @*//////////////////////////////////////////////////////*@
 
 </div>

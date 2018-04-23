@@ -24,6 +24,13 @@ namespace MyCard3.Controllers
             return View(db.People);
         }
 
+        public ActionResult ToggleComfirmedUser(int id)
+        {
+            var target = db.People.Find(id);
+            target.ComfirmedUser = !target.ComfirmedUser;
+            db.SaveChanges();
+            return Json(target.ComfirmedUser, JsonRequestBehavior.AllowGet);
+        }
 
 
         //public ActionResult DeleteNotificationCookie()
@@ -125,7 +132,7 @@ namespace MyCard3.Controllers
 
             }
             Person currentUser = Session["CurrentUserData"] as Person;
-            return RedirectToAction("Edit", "People",new { Id= currentUser.Id});
+            return RedirectToAction("Edit", "People",new { Id= 0});
         }
 
 

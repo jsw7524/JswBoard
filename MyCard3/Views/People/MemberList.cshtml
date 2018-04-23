@@ -13,6 +13,10 @@
 <table class="table">
     <tr>
         <th>
+            IdCard
+        </th>
+
+        <th>
             @Html.DisplayNameFor(model => model.Id)
         </th>
         <th>
@@ -36,6 +40,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Department)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ComfirmedUser)
+        </th>
         @*<th>
             @Html.DisplayNameFor(model => model.HasNewNotification)
         </th>*@
@@ -44,6 +51,9 @@
 
 @foreach (var item in Model) {
     <tr>
+        <td style="width:20%">
+            <img class="card-img-top" src="@("/Content/IdCards/IdCard"+item.authenticationId+".png")" alt="Card image" style="width:50%">
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Id)
         </td>
@@ -67,6 +77,18 @@
         </td>*@
         <td>
             @Html.DisplayFor(modelItem => item.Department)
+        </td>
+        <td>
+            <div id=@("ComfirmedUserStatus"+@item.Id)>
+                @Html.DisplayFor(modelItem => item.ComfirmedUser)
+            </div>
+
+
+            @*@Ajax.ActionLink("set", "ToggleComfirmedUser")*@
+            @Ajax.ActionLink("set",
+               "ToggleComfirmedUser", "People", new { id = @item.Id, }, new AjaxOptions { UpdateTargetId = "ComfirmedUserStatus" + item.Id, InsertionMode = InsertionMode.Replace}, null)
+
+
         </td>
         @*<td>
             @Html.DisplayFor(modelItem => item.HasNewNotification)
