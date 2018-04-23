@@ -82,6 +82,7 @@
     <Property Name="Picture" Type="varbinary(max)" Nullable="true" />
     <Property Name="Department" Type="nvarchar" Nullable="true" MaxLength="100" />
     <Property Name="HasNewNotification" Type="bit" Nullable="false" DefaultValue="true" />
+    <Property Name="ComfirmedUser" Type="bit" Nullable="false" DefaultValue="false" />
   </EntityType>
   <EntityType Name="ArticleSet">
     <Key>
@@ -412,6 +413,7 @@
           <Property Name="HasNewNotification" Type="Boolean" Nullable="false" DefaultValue="true" />
           <NavigationProperty Name="FriendA" Relationship="MyCard.PersonFriend" FromRole="Person" ToRole="Friend" />
           <NavigationProperty Name="Friend" Relationship="MyCard.FriendPerson" FromRole="Person" ToRole="Friend" />
+          <Property Name="ComfirmedUser" Type="Boolean" Nullable="false" DefaultValue="false" />
           </EntityType>
         <EntityType Name="Article">
           <Key>
@@ -660,6 +662,7 @@
           <ScalarProperty Name="Picture" ColumnName="Picture" />
           <ScalarProperty Name="Department" ColumnName="Department" />
           <ScalarProperty Name="HasNewNotification" ColumnName="HasNewNotification" />
+          <ScalarProperty Name="ComfirmedUser" ColumnName="ComfirmedUser" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -818,7 +821,7 @@
         <EntityTypeShape EntityType="MyCard.CommentThumberUp" Width="1.5" PointX="7.375" PointY="6.125" />
         <AssociationConnector Association="MyCard.PersonCommentThumberUp" />
         <AssociationConnector Association="MyCard.CommentCommentThumberUp" />
-        <EntityTypeShape EntityType="MyCard.Friend" Width="1.5" PointX="4" PointY="6.625" />
+        <EntityTypeShape EntityType="MyCard.Friend" Width="1.5" PointX="4.125" PointY="6.25" />
         <AssociationConnector Association="MyCard.PersonFriend" />
         <AssociationConnector Association="MyCard.FriendPerson" />
         </Diagram>

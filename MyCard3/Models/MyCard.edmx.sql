@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/19/2018 14:32:00
--- Generated from EDMX file: C:\mycard3\MyCard3\Models\MyCard.edmx
+-- Date Created: 04/22/2018 23:07:50
+-- Generated from EDMX file: D:\SourceCode\CSharp\MyCard3\MyCard3\Models\MyCard.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -106,7 +106,8 @@ CREATE TABLE [dbo].[People] (
     [Description] nvarchar(max)  NULL,
     [Picture] varbinary(max)  NULL,
     [Department] nvarchar(100)  NULL,
-    [HasNewNotification] bit  NOT NULL
+    [HasNewNotification] bit  NOT NULL,
+    [ComfirmedUser] bit  NOT NULL
 );
 GO
 

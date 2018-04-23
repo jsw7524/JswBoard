@@ -2,20 +2,36 @@
 
 @{
     ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Edit</h2>
+@*//////////////////////////////////////////////////////*@
+<img class="card-img-top" src="@("/Content/Images/Photo"+Model.authenticationId+".png")" alt="Card image" style="width:50%">
+@*------------------------*@
 
+@using (Html.BeginForm("PhotoUpload", "People", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <label for="file">Upload Image:</label>
+    <input type="file" name="file" id="file" style="width: 100%;" />
+    <input type="submit" value="Upload" class="submit" />
 
-@using (Html.BeginForm())
+}
+
+@*//////////////////////////////////////////////////////*@
+
+@using (Html.BeginForm(new { Id = Model.Id, url = Url.Action("Card") }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Person</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
+
+
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -43,13 +59,13 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Mail, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Mail, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Mail, "", new { @class = "text-danger" })
-            </div>
-        </div>
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.authenticationId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.authenticationId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.authenticationId, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -68,17 +84,58 @@
         </div>
 
         <div class="form-group">
+            @Html.LabelFor(model => model.Department, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.ComfirmedUser, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.ComfirmedUser)
+                        @Html.ValidationMessageFor(model => model.ComfirmedUser, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>*@
+
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.HasNewNotification, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.HasNewNotification)
+                        @Html.ValidationMessageFor(model => model.HasNewNotification, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>*@
+
+        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
+
+
+        @*//////////////////////////////////////////////////////*@
+        <img class="card-img-top" src="@("/Content/IdCards/IdCard"+Model.authenticationId+".png")" alt="Card image" style="width:50%">
+        @*------------------------*@
+
+        @using (Html.BeginForm("IdCardUpload", "People", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <label for="file">Upload Image:</label>
+            <input type="file" name="file" id="file" style="width: 100%;" />
+            <input type="submit" value="Upload" class="submit" />
+
+        }
+
+        @*//////////////////////////////////////////////////////*@
+
     </div>
 }
 
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
