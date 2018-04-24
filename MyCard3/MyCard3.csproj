@@ -434,6 +434,7 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\People\MemberList.cshtml" />
     <Content Include="Views\People\AdminEdit.cshtml" />
+    <Content Include="Views\Articles\HotArticles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

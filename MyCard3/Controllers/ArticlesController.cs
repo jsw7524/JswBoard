@@ -23,6 +23,11 @@ namespace MyCard3.Controllers
             int i = 1;
         }
 
+        public ActionResult HotArticles()
+        {
+            return PartialView(db.ArticleSet.OrderByDescending(a => a.ThumbUpNumber).Take(10));
+        }
+
         [HttpPost]
         public ActionResult ThumberUp(int articleId)
         {
