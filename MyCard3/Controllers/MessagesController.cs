@@ -59,8 +59,8 @@ namespace MyCard3.Controllers
             {
                 Person me = Session["CurrentUserData"] as Person;
                 message.SendPersonId = me.Id;
-                //message.SendPerson = db.People.Where(p => p.Id == me.Id).FirstOrDefault();
-                message.SendPerson = me;
+                message.SendPerson = db.People.Where(p => p.Id == me.Id).FirstOrDefault();
+                //message.SendPerson = me;// cannot use this, EF would treat me instance as a new one and add it to db.
                 Person friend = TempData["ToFriend"] as Person;
                 message.ReceivePerson = db.People.Where(p => p.Id == friend.Id).FirstOrDefault();
                 message.Time = DateTime.Now.ToLocalTime();

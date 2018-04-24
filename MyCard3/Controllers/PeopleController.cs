@@ -188,8 +188,8 @@ namespace MyCard3.Controllers
             Person me = db.People.Where(p => p.Id == currentUser.Id).FirstOrDefault();
             var myFriends = db.Friends.AsEnumerable().Where(f => f.PersonA == me).Select(f => f.PersonB).ToList();
             IDictionary<int, string> lastMessage = db.Friends.AsEnumerable()
-                                                        .Select(f => new { key = f.PersonB.Id, LastMessage = f.LastMessage })
-                                                        .ToDictionary(f => f.key, f => f.LastMessage);
+                                                        //.Select(f => new { key = f.PersonB.Id, LastMessage = f.LastMessage })
+                                                        .ToDictionary(f => f.PersonB.Id, f => f.LastMessage);
             return View(new FriendListViewModel() { Friends = myFriends, LastMessage = lastMessage });
         }
 

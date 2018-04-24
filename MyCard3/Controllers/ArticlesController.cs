@@ -83,6 +83,7 @@ namespace MyCard3.Controllers
         }
 
         // GET: Articles/Create
+        [Authorize(Roles = "BoardAdmin,ConfirmedUser")]
         public ActionResult Create(int boardId = 1)
         {
             //ViewBag.BoardId = new SelectList(db.BoardSet, "Id", "Name");
@@ -97,6 +98,7 @@ namespace MyCard3.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
+        [Authorize(Roles = "BoardAdmin,ConfirmedUser")]
         public ActionResult Create([Bind(Include = "Id,Title,Content")] Article article, int boardId = 1)
         {
             if (ModelState.IsValid)
