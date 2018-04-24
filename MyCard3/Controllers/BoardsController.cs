@@ -36,6 +36,7 @@ namespace MyCard3.Controllers
         }
 
         // GET: Boards/Details/5
+        [Authorize(Roles = "BoardAdmin")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -51,6 +52,7 @@ namespace MyCard3.Controllers
         }
 
         // GET: Boards/Create
+        [Authorize(Roles = "BoardAdmin")]
         public ActionResult Create()
         {
             return View();
@@ -61,6 +63,7 @@ namespace MyCard3.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "BoardAdmin")]
         public ActionResult Create([Bind(Include = "Id,Name")] Board board)
         {
             if (ModelState.IsValid)
@@ -76,6 +79,7 @@ namespace MyCard3.Controllers
         }
 
         // GET: Boards/Edit/5
+        [Authorize(Roles = "BoardAdmin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,6 +99,7 @@ namespace MyCard3.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "BoardAdmin")]
         public ActionResult Edit([Bind(Include = "Id,Name")] Board board)
         {
             if (ModelState.IsValid)
@@ -107,6 +112,7 @@ namespace MyCard3.Controllers
         }
 
         // GET: Boards/Delete/5
+        [Authorize(Roles = "BoardAdmin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -124,6 +130,7 @@ namespace MyCard3.Controllers
         // POST: Boards/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "BoardAdmin")]
         public ActionResult DeleteConfirmed(int id)
         {
             Board board = db.BoardSet.Find(id);
