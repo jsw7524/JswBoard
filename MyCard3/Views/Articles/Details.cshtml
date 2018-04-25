@@ -89,7 +89,12 @@
     @Html.ActionLink("Back to List", "Index", new { boardId = Model.BoardId })
 </p>
 <p>
-    @Html.ActionLink("Create New Comments", "Create", "Comments", new { articleId = Model.Id, personId = Model.PersonId }, null)
+    @{
+        if (!Model.IsNoComment)
+        {
+            @Html.ActionLink("Create New Comments", "Create", "Comments", new { articleId = Model.Id, personId = Model.PersonId }, null)
+        }
+    }
 </p>
 @{
     Html.RenderPartial("~/Views/Comments/CommentList.cshtml", Model.Comment);

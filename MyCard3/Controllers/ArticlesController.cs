@@ -66,7 +66,7 @@ namespace MyCard3.Controllers
             ////////////// order articles
             var startDate = DateTime.Now.ToLocalTime().AddMonths(-3);
             var articleSet = db.ArticleSet.AsNoTracking().Where(a => a.BoardId == boardId)
-                .Where(a =>  (!a.IsHidden && a.Time > startDate) || a.IsOnTop).ToList();
+                .Where(a =>  (!a.IsHidden && a.Time > startDate) || a.IsOnTop ).ToList();
             articleSet = articleSet.OrderByDescending(a => a.IsOnTop).ThenByDescending(a => a.Time).ToList();
             //////////////
             ViewData["BoardName"] = articleSet.FirstOrDefault().Board.Name;
