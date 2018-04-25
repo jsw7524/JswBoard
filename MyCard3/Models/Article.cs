@@ -29,6 +29,9 @@ namespace MyCard3.Models
         public int BoardId { get; set; }
         public int PersonId { get; set; }
         public int ThumbUpNumber { get; set; }
+        public bool IsOnTop { get; set; }
+        public bool IsNoComment { get; set; }
+        public bool IsHidden { get; set; }
     
         public virtual Board Board { get; set; }
         public virtual Person Person { get; set; }

@@ -4,326 +4,329 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="MyCard.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <EntityContainer Name="MyCardStoreContainer">
-    <EntitySet Name="People" EntityType="MyCard.Store.People" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ArticleSet" EntityType="MyCard.Store.ArticleSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="BoardSet" EntityType="MyCard.Store.BoardSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="CommentSet" EntityType="MyCard.Store.CommentSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Matches" EntityType="MyCard.Store.Matches" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Messages" EntityType="MyCard.Store.Messages" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ArticleThumberUpSet" EntityType="MyCard.Store.ArticleThumberUpSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="NotificationSet" EntityType="MyCard.Store.NotificationSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="CommentThumberUpSet" EntityType="MyCard.Store.CommentThumberUpSet" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Friends" EntityType="MyCard.Store.Friends" store:Type="Tables" Schema="dbo" />
-    <AssociationSet Name="BoardArticle" Association="MyCard.Store.BoardArticle">
-      <End Role="Board" EntitySet="BoardSet" />
-      <End Role="Article" EntitySet="ArticleSet" />
-    </AssociationSet>
-    <AssociationSet Name="PersonArticle" Association="MyCard.Store.PersonArticle">
-      <End Role="Person" EntitySet="People" />
-      <End Role="Article" EntitySet="ArticleSet" />
-    </AssociationSet>
-    <AssociationSet Name="ArticleComment" Association="MyCard.Store.ArticleComment">
-      <End Role="Article" EntitySet="ArticleSet" />
-      <End Role="Comment" EntitySet="CommentSet" />
-    </AssociationSet>
-    <AssociationSet Name="PersonComment" Association="MyCard.Store.PersonComment">
-      <End Role="Person" EntitySet="People" />
-      <End Role="Comment" EntitySet="CommentSet" />
-    </AssociationSet>
-    <AssociationSet Name="SendMessage" Association="MyCard.Store.SendMessage">
-      <End Role="Person" EntitySet="People" />
-      <End Role="Message" EntitySet="Messages" />
-    </AssociationSet>
-    <AssociationSet Name="ReceiveMessage" Association="MyCard.Store.ReceiveMessage">
-      <End Role="Message" EntitySet="Messages" />
-      <End Role="Person" EntitySet="People" />
-    </AssociationSet>
-    <AssociationSet Name="PersonArticleThumberUp" Association="MyCard.Store.PersonArticleThumberUp">
-      <End Role="Person" EntitySet="People" />
-      <End Role="ArticleThumberUp" EntitySet="ArticleThumberUpSet" />
-    </AssociationSet>
-    <AssociationSet Name="ArticleArticleThumberUp" Association="MyCard.Store.ArticleArticleThumberUp">
-      <End Role="Article" EntitySet="ArticleSet" />
-      <End Role="ArticleThumberUp" EntitySet="ArticleThumberUpSet" />
-    </AssociationSet>
-    <AssociationSet Name="PersonNotification" Association="MyCard.Store.PersonNotification">
-      <End Role="Person" EntitySet="People" />
-      <End Role="Notification" EntitySet="NotificationSet" />
-    </AssociationSet>
-    <AssociationSet Name="PersonCommentThumberUp" Association="MyCard.Store.PersonCommentThumberUp">
-      <End Role="Person" EntitySet="People" />
-      <End Role="CommentThumberUp" EntitySet="CommentThumberUpSet" />
-    </AssociationSet>
-    <AssociationSet Name="CommentCommentThumberUp" Association="MyCard.Store.CommentCommentThumberUp">
-      <End Role="Comment" EntitySet="CommentSet" />
-      <End Role="CommentThumberUp" EntitySet="CommentThumberUpSet" />
-    </AssociationSet>
-    <AssociationSet Name="PersonFriend" Association="MyCard.Store.PersonFriend">
-      <End Role="Person" EntitySet="People" />
-      <End Role="Friend" EntitySet="Friends" />
-    </AssociationSet>
-    <AssociationSet Name="FriendPerson" Association="MyCard.Store.FriendPerson">
-      <End Role="Friend" EntitySet="Friends" />
-      <End Role="Person" EntitySet="People" />
-    </AssociationSet>
-  </EntityContainer>
-  <EntityType Name="People">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="64" />
-    <Property Name="Gender" Type="bit" Nullable="false" />
-    <Property Name="Birthday" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="authenticationId" Type="nvarchar" Nullable="false" MaxLength="128" />
-    <Property Name="Description" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="Picture" Type="varbinary(max)" Nullable="true" />
-    <Property Name="Department" Type="nvarchar" Nullable="true" MaxLength="100" />
-    <Property Name="HasNewNotification" Type="bit" Nullable="false" DefaultValue="true" />
-    <Property Name="ComfirmedUser" Type="bit" Nullable="false" DefaultValue="false" />
-  </EntityType>
-  <EntityType Name="ArticleSet">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="64" />
-    <Property Name="Time" Type="datetime" Nullable="false" />
-    <Property Name="Content" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="BoardId" Type="int" Nullable="false" />
-    <Property Name="PersonId" Type="int" Nullable="false" />
-    <Property Name="ThumbUpNumber" Type="int" Nullable="false" DefaultValue="0" />
-  </EntityType>
-  <EntityType Name="BoardSet">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="64" />
-  </EntityType>
-  <EntityType Name="CommentSet">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Opinion" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="ArticleId" Type="int" Nullable="false" />
-    <Property Name="PersonId" Type="int" Nullable="false" />
-    <Property Name="ThumberUpNumber" Type="int" Nullable="false" DefaultValue="0" />
-  </EntityType>
-  <EntityType Name="Matches">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="A_ID" Type="int" Nullable="false" />
-    <Property Name="B_ID" Type="int" Nullable="false" />
-    <Property Name="A_OK" Type="bit" Nullable="true" />
-    <Property Name="B_OK" Type="bit" Nullable="true" />
-  </EntityType>
-  <EntityType Name="Messages">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="SendPersonId" Type="int" Nullable="false" />
-    <Property Name="MessageContent" Type="nvarchar(max)" Nullable="true" DefaultValue="" />
-    <Property Name="Time" Type="datetime" Nullable="false" />
-    <Property Name="ReceivePerson_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="ArticleThumberUpSet">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="PersonId" Type="int" Nullable="false" />
-    <Property Name="ArticleId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="NotificationSet">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="PersonId" Type="int" Nullable="false" />
-    <Property Name="Content" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="Time" Type="datetime" Nullable="false" />
-  </EntityType>
-  <EntityType Name="CommentThumberUpSet">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="PersonId" Type="int" Nullable="false" />
-    <Property Name="CommentId" Type="int" Nullable="false" />
-  </EntityType>
-  <EntityType Name="Friends">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="LastMessage" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="PersonA_Id" Type="int" Nullable="false" />
-    <Property Name="PersonB_Id" Type="int" Nullable="false" />
-  </EntityType>
-  <Association Name="BoardArticle">
-    <End Role="Board" Type="MyCard.Store.BoardSet" Multiplicity="1" />
-    <End Role="Article" Type="MyCard.Store.ArticleSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Board">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Article">
-        <PropertyRef Name="BoardId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="PersonArticle">
-    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
-    <End Role="Article" Type="MyCard.Store.ArticleSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Article">
-        <PropertyRef Name="PersonId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="ArticleComment">
-    <End Role="Article" Type="MyCard.Store.ArticleSet" Multiplicity="1" />
-    <End Role="Comment" Type="MyCard.Store.CommentSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Article">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Comment">
-        <PropertyRef Name="ArticleId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="PersonComment">
-    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
-    <End Role="Comment" Type="MyCard.Store.CommentSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Comment">
-        <PropertyRef Name="PersonId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="SendMessage">
-    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
-    <End Role="Message" Type="MyCard.Store.Messages" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Message">
-        <PropertyRef Name="SendPersonId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="ReceiveMessage">
-    <End Role="Message" Type="MyCard.Store.Messages" Multiplicity="*" />
-    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Message">
-        <PropertyRef Name="ReceivePerson_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="PersonArticleThumberUp">
-    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
-    <End Role="ArticleThumberUp" Type="MyCard.Store.ArticleThumberUpSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ArticleThumberUp">
-        <PropertyRef Name="PersonId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="ArticleArticleThumberUp">
-    <End Role="Article" Type="MyCard.Store.ArticleSet" Multiplicity="1" />
-    <End Role="ArticleThumberUp" Type="MyCard.Store.ArticleThumberUpSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Article">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="ArticleThumberUp">
-        <PropertyRef Name="ArticleId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="PersonNotification">
-    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
-    <End Role="Notification" Type="MyCard.Store.NotificationSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Notification">
-        <PropertyRef Name="PersonId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="PersonCommentThumberUp">
-    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
-    <End Role="CommentThumberUp" Type="MyCard.Store.CommentThumberUpSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="CommentThumberUp">
-        <PropertyRef Name="PersonId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="CommentCommentThumberUp">
-    <End Role="Comment" Type="MyCard.Store.CommentSet" Multiplicity="1" />
-    <End Role="CommentThumberUp" Type="MyCard.Store.CommentThumberUpSet" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Comment">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="CommentThumberUp">
-        <PropertyRef Name="CommentId" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="PersonFriend">
-    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
-    <End Role="Friend" Type="MyCard.Store.Friends" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Friend">
-        <PropertyRef Name="PersonA_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FriendPerson">
-    <End Role="Friend" Type="MyCard.Store.Friends" Multiplicity="*" />
-    <End Role="Person" Type="MyCard.Store.People" Multiplicity="1" />
-    <ReferentialConstraint>
-      <Principal Role="Person">
-        <PropertyRef Name="Id" />
-      </Principal>
-      <Dependent Role="Friend">
-        <PropertyRef Name="PersonB_Id" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-</Schema></edmx:StorageModels>
+    <Schema Namespace="MyCard.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ArticleSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="BoardId" Type="int" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="ThumbUpNumber" Type="int" Nullable="false" />
+          <Property Name="IsOnTop" Type="bit" Nullable="false" />
+          <Property Name="IsNoComment" Type="bit" Nullable="false" />
+          <Property Name="IsHidden" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ArticleThumberUpSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="ArticleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BoardSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CommentSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Opinion" Type="nvarchar(max)" />
+          <Property Name="ArticleId" Type="int" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="ThumberUpNumber" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CommentThumberUpSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="CommentId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Friends">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastMessage" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PersonA_Id" Type="int" Nullable="false" />
+          <Property Name="PersonB_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Matches">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="A_ID" Type="int" Nullable="false" />
+          <Property Name="B_ID" Type="int" Nullable="false" />
+          <Property Name="A_OK" Type="bit" />
+          <Property Name="B_OK" Type="bit" />
+        </EntityType>
+        <EntityType Name="Messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SendPersonId" Type="int" Nullable="false" />
+          <Property Name="MessageContent" Type="nvarchar(max)" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+          <Property Name="ReceivePerson_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NotificationSet">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PersonId" Type="int" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="Time" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="64" Nullable="false" />
+          <Property Name="Gender" Type="bit" Nullable="false" />
+          <Property Name="Birthday" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="authenticationId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Picture" Type="varbinary(max)" />
+          <Property Name="Department" Type="nvarchar" MaxLength="100" />
+          <Property Name="HasNewNotification" Type="bit" Nullable="false" />
+          <Property Name="ComfirmedUser" Type="bit" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ArticleArticleThumberUp">
+          <End Role="ArticleSet" Type="Self.ArticleSet" Multiplicity="1" />
+          <End Role="ArticleThumberUpSet" Type="Self.ArticleThumberUpSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArticleSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleThumberUpSet">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ArticleComment">
+          <End Role="ArticleSet" Type="Self.ArticleSet" Multiplicity="1" />
+          <End Role="CommentSet" Type="Self.CommentSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ArticleSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommentSet">
+              <PropertyRef Name="ArticleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BoardArticle">
+          <End Role="BoardSet" Type="Self.BoardSet" Multiplicity="1" />
+          <End Role="ArticleSet" Type="Self.ArticleSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BoardSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleSet">
+              <PropertyRef Name="BoardId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentCommentThumberUp">
+          <End Role="CommentSet" Type="Self.CommentSet" Multiplicity="1" />
+          <End Role="CommentThumberUpSet" Type="Self.CommentThumberUpSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommentSet">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommentThumberUpSet">
+              <PropertyRef Name="CommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FriendPerson">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="PersonB_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonArticle">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="ArticleSet" Type="Self.ArticleSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleSet">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonArticleThumberUp">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="ArticleThumberUpSet" Type="Self.ArticleThumberUpSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ArticleThumberUpSet">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonComment">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="CommentSet" Type="Self.CommentSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommentSet">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonCommentThumberUp">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="CommentThumberUpSet" Type="Self.CommentThumberUpSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommentThumberUpSet">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonFriend">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="Friends" Type="Self.Friends" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Friends">
+              <PropertyRef Name="PersonA_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PersonNotification">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="NotificationSet" Type="Self.NotificationSet" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="NotificationSet">
+              <PropertyRef Name="PersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReceiveMessage">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="ReceivePerson_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SendMessage">
+          <End Role="People" Type="Self.People" Multiplicity="1" />
+          <End Role="Messages" Type="Self.Messages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="People">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Messages">
+              <PropertyRef Name="SendPersonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MyCardStoreContainer">
+          <EntitySet Name="ArticleSet" EntityType="Self.ArticleSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ArticleThumberUpSet" EntityType="Self.ArticleThumberUpSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BoardSet" EntityType="Self.BoardSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommentSet" EntityType="Self.CommentSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CommentThumberUpSet" EntityType="Self.CommentThumberUpSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Friends" EntityType="Self.Friends" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Matches" EntityType="Self.Matches" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Messages" EntityType="Self.Messages" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotificationSet" EntityType="Self.NotificationSet" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ArticleArticleThumberUp" Association="Self.FK_ArticleArticleThumberUp">
+            <End Role="ArticleSet" EntitySet="ArticleSet" />
+            <End Role="ArticleThumberUpSet" EntitySet="ArticleThumberUpSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ArticleComment" Association="Self.FK_ArticleComment">
+            <End Role="ArticleSet" EntitySet="ArticleSet" />
+            <End Role="CommentSet" EntitySet="CommentSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BoardArticle" Association="Self.FK_BoardArticle">
+            <End Role="BoardSet" EntitySet="BoardSet" />
+            <End Role="ArticleSet" EntitySet="ArticleSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommentCommentThumberUp" Association="Self.FK_CommentCommentThumberUp">
+            <End Role="CommentSet" EntitySet="CommentSet" />
+            <End Role="CommentThumberUpSet" EntitySet="CommentThumberUpSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FriendPerson" Association="Self.FK_FriendPerson">
+            <End Role="People" EntitySet="People" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonArticle" Association="Self.FK_PersonArticle">
+            <End Role="People" EntitySet="People" />
+            <End Role="ArticleSet" EntitySet="ArticleSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonArticleThumberUp" Association="Self.FK_PersonArticleThumberUp">
+            <End Role="People" EntitySet="People" />
+            <End Role="ArticleThumberUpSet" EntitySet="ArticleThumberUpSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonComment" Association="Self.FK_PersonComment">
+            <End Role="People" EntitySet="People" />
+            <End Role="CommentSet" EntitySet="CommentSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonCommentThumberUp" Association="Self.FK_PersonCommentThumberUp">
+            <End Role="People" EntitySet="People" />
+            <End Role="CommentThumberUpSet" EntitySet="CommentThumberUpSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonFriend" Association="Self.FK_PersonFriend">
+            <End Role="People" EntitySet="People" />
+            <End Role="Friends" EntitySet="Friends" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PersonNotification" Association="Self.FK_PersonNotification">
+            <End Role="People" EntitySet="People" />
+            <End Role="NotificationSet" EntitySet="NotificationSet" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReceiveMessage" Association="Self.FK_ReceiveMessage">
+            <End Role="People" EntitySet="People" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SendMessage" Association="Self.FK_SendMessage">
+            <End Role="People" EntitySet="People" />
+            <End Role="Messages" EntitySet="Messages" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MyCard" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -409,7 +412,7 @@
           <NavigationProperty Name="ArticleThumberUp" Relationship="MyCard.PersonArticleThumberUp" FromRole="Person" ToRole="ArticleThumberUp" />
           <NavigationProperty Name="Notification" Relationship="MyCard.PersonNotification" FromRole="Person" ToRole="Notification" />
           <NavigationProperty Name="CommentThumberUp" Relationship="MyCard.PersonCommentThumberUp" FromRole="Person" ToRole="CommentThumberUp" />
-          <Property Name="Department" Type="String" Nullable="true" Unicode="true" MaxLength="100" />
+          <Property Name="Department" Type="String" Nullable="true" Unicode="true" MaxLength="100" FixedLength="false" />
           <Property Name="HasNewNotification" Type="Boolean" Nullable="false" DefaultValue="true" />
           <NavigationProperty Name="FriendA" Relationship="MyCard.PersonFriend" FromRole="Person" ToRole="Friend" />
           <NavigationProperty Name="Friend" Relationship="MyCard.FriendPerson" FromRole="Person" ToRole="Friend" />
@@ -430,6 +433,9 @@
           <NavigationProperty Name="Comment" Relationship="MyCard.ArticleComment" FromRole="Article" ToRole="Comment" />
           <Property Name="ThumbUpNumber" Type="Int32" Nullable="false" DefaultValue="0" />
           <NavigationProperty Name="ArticleThumberUp" Relationship="MyCard.ArticleArticleThumberUp" FromRole="Article" ToRole="ArticleThumberUp" />
+          <Property Name="IsOnTop" Type="Boolean" Nullable="false" />
+          <Property Name="IsNoComment" Type="Boolean" Nullable="false" />
+          <Property Name="IsHidden" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Board">
           <Key>
@@ -518,8 +524,8 @@
           <NavigationProperty Name="SendPerson" Relationship="MyCard.SendMessage" FromRole="Message" ToRole="Person" />
           <Property Name="SendPersonId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ReceivePerson" Relationship="MyCard.ReceiveMessage" FromRole="Message" ToRole="Person" />
-          <Property Name="MessageContent" Type="String" Nullable="true" Unicode="true" MaxLength="Max" DefaultValue="" />
-          <Property Name="Time" Type="DateTime" Nullable="false" />
+          <Property Name="MessageContent" Type="String" Nullable="true" Unicode="true" MaxLength="Max" DefaultValue="" FixedLength="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="SendMessage">
           <End Type="MyCard.Person" Role="Person" Multiplicity="1" />
@@ -577,8 +583,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="PersonId" Type="Int32" Nullable="false" />
-          <Property Name="Content" Type="String" Nullable="true" Unicode="true" />
-          <Property Name="Time" Type="DateTime" Nullable="false" />
+          <Property Name="Content" Type="String" Nullable="true" Unicode="true" MaxLength="Max" FixedLength="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Person" Relationship="MyCard.PersonNotification" FromRole="Notification" ToRole="Person" />
         </EntityType>
         <Association Name="PersonNotification">
@@ -634,7 +640,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="PersonA" Relationship="MyCard.PersonFriend" FromRole="Friend" ToRole="Person" />
           <NavigationProperty Name="PersonB" Relationship="MyCard.FriendPerson" FromRole="Friend" ToRole="Person" />
-          <Property Name="LastMessage" Type="String" Nullable="false" />
+          <Property Name="LastMessage" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
         </EntityType>
         <Association Name="PersonFriend">
           <End Type="MyCard.Person" Role="Person" Multiplicity="1" />
@@ -669,7 +675,10 @@
     <EntitySetMapping Name="ArticleSet">
       <EntityTypeMapping TypeName="IsTypeOf(MyCard.Article)">
         <MappingFragment StoreEntitySet="ArticleSet">
-          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="IsHidden" ColumnName="IsHidden" />
+                <ScalarProperty Name="IsNoComment" ColumnName="IsNoComment" />
+                <ScalarProperty Name="IsOnTop" ColumnName="IsOnTop" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Time" ColumnName="Time" />
           <ScalarProperty Name="Content" ColumnName="Content" />

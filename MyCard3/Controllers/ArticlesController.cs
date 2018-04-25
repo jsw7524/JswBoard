@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -36,7 +37,7 @@ namespace MyCard3.Controllers
             Article article = db.ArticleSet.Where(a => a.Id == articleId).FirstOrDefault();
             if (!db.ArticleThumberUpSet.Where(tu => (tu.PersonId == currentUser.Id) && (tu.ArticleId == articleId)).Any())
             {
-                db.ArticleThumberUpSet.Add(new ArticleThumberUp {PersonId= currentUser.Id, ArticleId = articleId });
+                db.ArticleThumberUpSet.Add(new ArticleThumberUp { PersonId = currentUser.Id, ArticleId = articleId });
                 article.ThumbUpNumber += 1;
                 int tmpN = 0;
                 switch (article.ThumbUpNumber)
@@ -58,15 +59,19 @@ namespace MyCard3.Controllers
             return Json(new { n = article.ThumbUpNumber });
         }
 
-
         // GET: Articles
         [Authorize]
         public ActionResult Index(int? boardId = 1)
         {
-            var articleSet = db.ArticleSet.AsNoTracking().Where(a => a.BoardId == boardId).ToList();
+            ////////////// order articles
+            var startDate = DateTime.Now.ToLocalTime().AddMonths(-3);
+            var articleSet = db.ArticleSet.AsNoTracking().Where(a => a.BoardId == boardId)
+                .Where(a =>  (!a.IsHidden && a.Time > startDate) || a.IsOnTop).ToList();
+            articleSet = articleSet.OrderByDescending(a => a.IsOnTop).ThenByDescending(a => a.Time).ToList();
+            //////////////
             ViewData["BoardName"] = articleSet.FirstOrDefault().Board.Name;
             ViewData["BoardId"] = articleSet.FirstOrDefault().Board.Id;
-            return View(articleSet.ToList());
+            return View(articleSet);
         }
 
         // GET: Articles/Details/5
