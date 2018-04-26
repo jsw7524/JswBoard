@@ -146,13 +146,14 @@ namespace MyCard3.Controllers
             return RedirectToAction("Edit", "People", new { Id = 0 });
         }
 
-
-
         public ActionResult MakeFriend()
         {
             Person currentUser = Session["CurrentUserData"] as Person;
-            int partnerId = db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault().B_ID;
-            return View("Card", db.People.Where(p => p.Id == partnerId).FirstOrDefault());
+            var matchOne = db.Matches.Where(p => p.A_ID == currentUser.Id).FirstOrDefault();
+            int partnerId = matchOne?.B_ID??0;
+            //return View("Card", db.People.Where(p => p.Id == partnerId).FirstOrDefault());
+            var friend = db.People.Where(p => p.Id == partnerId).FirstOrDefault();
+            return View("Card", friend?? new Person() { Id = 0, Name = "NoName", authenticationId = "123", Birthday = "19860724", Description = "Comfirm Id First" });
         }
 
         [HttpPost]
