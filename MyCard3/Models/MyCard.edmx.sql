@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/22/2018 23:07:50
+-- Date Created: 04/26/2018 00:50:12
 -- Generated from EDMX file: D:\SourceCode\CSharp\MyCard3\MyCard3\Models\MyCard.edmx
 -- --------------------------------------------------
 
@@ -17,55 +17,55 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[FK_BoardArticle]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ArticleSet] DROP CONSTRAINT [FK_BoardArticle];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PersonArticle]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ArticleSet] DROP CONSTRAINT [FK_PersonArticle];
+IF OBJECT_ID(N'[dbo].[FK_ArticleArticleThumberUp]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ArticleThumberUpSet] DROP CONSTRAINT [FK_ArticleArticleThumberUp];
 GO
 IF OBJECT_ID(N'[dbo].[FK_ArticleComment]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CommentSet] DROP CONSTRAINT [FK_ArticleComment];
 GO
-IF OBJECT_ID(N'[dbo].[FK_PersonComment]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CommentSet] DROP CONSTRAINT [FK_PersonComment];
-GO
-IF OBJECT_ID(N'[dbo].[FK_SendMessage]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_SendMessage];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ReceiveMessage]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_ReceiveMessage];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PersonArticleThumberUp]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ArticleThumberUpSet] DROP CONSTRAINT [FK_PersonArticleThumberUp];
-GO
-IF OBJECT_ID(N'[dbo].[FK_ArticleArticleThumberUp]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ArticleThumberUpSet] DROP CONSTRAINT [FK_ArticleArticleThumberUp];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PersonNotification]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[NotificationSet] DROP CONSTRAINT [FK_PersonNotification];
-GO
-IF OBJECT_ID(N'[dbo].[FK_PersonCommentThumberUp]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CommentThumberUpSet] DROP CONSTRAINT [FK_PersonCommentThumberUp];
+IF OBJECT_ID(N'[dbo].[FK_BoardArticle]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ArticleSet] DROP CONSTRAINT [FK_BoardArticle];
 GO
 IF OBJECT_ID(N'[dbo].[FK_CommentCommentThumberUp]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CommentThumberUpSet] DROP CONSTRAINT [FK_CommentCommentThumberUp];
 GO
+IF OBJECT_ID(N'[dbo].[FK_FriendPerson]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Friends] DROP CONSTRAINT [FK_FriendPerson];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PersonArticle]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ArticleSet] DROP CONSTRAINT [FK_PersonArticle];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PersonArticleThumberUp]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ArticleThumberUpSet] DROP CONSTRAINT [FK_PersonArticleThumberUp];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PersonComment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CommentSet] DROP CONSTRAINT [FK_PersonComment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_PersonCommentThumberUp]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[CommentThumberUpSet] DROP CONSTRAINT [FK_PersonCommentThumberUp];
+GO
 IF OBJECT_ID(N'[dbo].[FK_PersonFriend]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Friends] DROP CONSTRAINT [FK_PersonFriend];
 GO
-IF OBJECT_ID(N'[dbo].[FK_FriendPerson]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Friends] DROP CONSTRAINT [FK_FriendPerson];
+IF OBJECT_ID(N'[dbo].[FK_PersonNotification]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[NotificationSet] DROP CONSTRAINT [FK_PersonNotification];
+GO
+IF OBJECT_ID(N'[dbo].[FK_ReceiveMessage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_ReceiveMessage];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SendMessage]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Messages] DROP CONSTRAINT [FK_SendMessage];
 GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
 
-IF OBJECT_ID(N'[dbo].[People]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[People];
-GO
 IF OBJECT_ID(N'[dbo].[ArticleSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ArticleSet];
+GO
+IF OBJECT_ID(N'[dbo].[ArticleThumberUpSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ArticleThumberUpSet];
 GO
 IF OBJECT_ID(N'[dbo].[BoardSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[BoardSet];
@@ -73,23 +73,23 @@ GO
 IF OBJECT_ID(N'[dbo].[CommentSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CommentSet];
 GO
+IF OBJECT_ID(N'[dbo].[CommentThumberUpSet]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[CommentThumberUpSet];
+GO
+IF OBJECT_ID(N'[dbo].[Friends]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Friends];
+GO
 IF OBJECT_ID(N'[dbo].[Matches]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Matches];
 GO
 IF OBJECT_ID(N'[dbo].[Messages]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Messages];
 GO
-IF OBJECT_ID(N'[dbo].[ArticleThumberUpSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ArticleThumberUpSet];
-GO
 IF OBJECT_ID(N'[dbo].[NotificationSet]', 'U') IS NOT NULL
     DROP TABLE [dbo].[NotificationSet];
 GO
-IF OBJECT_ID(N'[dbo].[CommentThumberUpSet]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[CommentThumberUpSet];
-GO
-IF OBJECT_ID(N'[dbo].[Friends]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Friends];
+IF OBJECT_ID(N'[dbo].[People]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[People];
 GO
 
 -- --------------------------------------------------
@@ -119,7 +119,10 @@ CREATE TABLE [dbo].[ArticleSet] (
     [Content] nvarchar(max)  NULL,
     [BoardId] int  NOT NULL,
     [PersonId] int  NOT NULL,
-    [ThumbUpNumber] int  NOT NULL
+    [ThumbUpNumber] int  NOT NULL,
+    [IsOnTop] bit  NOT NULL,
+    [IsNoComment] bit  NOT NULL,
+    [IsHidden] bit  NOT NULL
 );
 GO
 
