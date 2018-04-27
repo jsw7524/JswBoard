@@ -16,13 +16,12 @@ namespace MyCard3.Controllers
     {
         private MyCardContainer db = new MyCardContainer();
 
-
         [HttpPost]
         public ActionResult ThumberUp(int commentId)
         {
             int i = 1;
             Person currentUser = Session["CurrentUserData"] as Person;
-            Comment comment = db.CommentSet.Where(c => c.Id == commentId).Include(c=>c.Article).FirstOrDefault();
+            Comment comment = db.CommentSet.Where(c => c.Id == commentId).Include(c => c.Article).FirstOrDefault();
             if (!db.CommentThumberUpSet.Where(tu => (tu.PersonId == currentUser.Id) && (tu.CommentId == commentId)).Any())
             {
                 db.CommentThumberUpSet.Add(new CommentThumberUp { PersonId = currentUser.Id, CommentId = commentId });
@@ -79,6 +78,7 @@ namespace MyCard3.Controllers
         //}
 
         // GET: Comments/Create
+        [Authorize(Roles = "BoardAdmin,ConfirmedUser")]
         public ActionResult Create(int articleId = 1, int personId = 1)
         {
             ViewBag.ArticleId = articleId;
@@ -92,6 +92,7 @@ namespace MyCard3.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
+        [Authorize(Roles = "BoardAdmin,ConfirmedUser")]
         public ActionResult Create([Bind(Include = "Id,Opinion,ArticleId,PersonId")] Comment comment, int articleId = 0)
         {
             if (ModelState.IsValid)
@@ -104,7 +105,6 @@ namespace MyCard3.Controllers
                 return RedirectToAction("Details", "Articles", new { Id = articleId });
             }
             return RedirectToAction("Details", "Articles", new { Id = articleId });
-
         }
 
         // GET: Comments/Edit/5
