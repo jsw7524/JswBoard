@@ -19,7 +19,7 @@ namespace MyCard3.Controllers
     public class PeopleController : Controller
     {
         private MyCardContainer db = new MyCardContainer();
-
+        [AuthorizeAttribute(Roles = "BoardAdmin")]
         public ActionResult MemberList()
         {
             return View(db.People);
